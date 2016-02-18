@@ -14,7 +14,7 @@ namespace ORM
 
         [NotMapped]
         public int Size => Content?.Length ?? 0;
-        public int TodoTaskRefID { get; set; }
+        public int TodoTaskRefId { get; set; }
 
         public virtual TodoTask TodoTask { get; set; }
     }

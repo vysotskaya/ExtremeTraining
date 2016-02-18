@@ -8,8 +8,8 @@ namespace ORM
     {
         [Required]
         public string Name { get; set; }
-        public int TodoTaskRefID { get; set; }
-        public int StateRefID { get; set; }
+        public int TodoTaskRefId { get; set; }
+        public int StateRefId { get; set; }
 
         public virtual TodoTask TodoTask { get; set; }
         public virtual State State { get; set; }

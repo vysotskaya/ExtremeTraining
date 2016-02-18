@@ -12,8 +12,8 @@ namespace ORM
 
         [Required]
         public DateTime CreationDate { get; set; }
-        public int UserRefID { get; set; }
-        public int TodoTaskRefID { get; set; }
+        public int UserRefId { get; set; }
+        public int TodoTaskRefId { get; set; }
 
         public virtual User User { get; set; }
         public virtual TodoTask TodoTask { get; set; }

@@ -12,8 +12,8 @@ namespace ORM
         public string Name { get; set; }
         public string Note { get; set; }
         public DateTime CreationDate { get; set; }
-        public int TodoListRefID { get; set; }
-        public int StateRefID { get; set; }
+        public int TodoListRefId { get; set; }
+        public int StateRefId { get; set; }
 
         public virtual TodoList TodoList { get; set; }
         public virtual ICollection<TodoSubtask> TodoSubtasks { get; set; } = new List<TodoSubtask>();
