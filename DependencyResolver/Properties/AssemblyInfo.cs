@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ORM")]
+[assembly: AssemblyTitle("DependencyResolver")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ORM")]
+[assembly: AssemblyProduct("DependencyResolver")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("059dd075-bfdb-4292-89cc-a14f4171d82d")]
+[assembly: Guid("5bdd6aec-acff-425c-b233-487c6aec4b18")]
 
 // Version information for an assembly consists of the following four values:
 //
