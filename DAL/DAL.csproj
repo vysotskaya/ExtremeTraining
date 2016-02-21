@@ -49,7 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Concrete\CommentRepository.cs" />
+    <Compile Include="Concrete\FileRepository.cs" />
+    <Compile Include="Concrete\StateRepository.cs" />
+    <Compile Include="Concrete\TodoSubtaskRepository.cs" />
     <Compile Include="Concrete\UnitOfWork.cs" />
+    <Compile Include="Mappers\DalCommentMapper.cs" />
+    <Compile Include="Mappers\DalFileMapper.cs" />
+    <Compile Include="Mappers\DalStateMapper.cs" />
+    <Compile Include="Mappers\DalTodoSubtaskMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -57,14 +65,16 @@
       <Project>{51ECD5F6-F389-4653-BD21-DB946F01DD09}</Project>
       <Name>DAL.Interface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ORM\ORM.csproj">
+      <Project>{059dd075-bfdb-4292-89cc-a14f4171d82d}</Project>
+      <Name>ORM</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mappers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
