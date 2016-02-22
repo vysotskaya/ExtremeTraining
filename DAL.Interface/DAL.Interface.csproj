@@ -40,10 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DalEntities\DalTodoList.cs" />
+    <Compile Include="DalEntities\DalTodoTask.cs" />
+    <Compile Include="DalEntities\DalUser.cs" />
     <Compile Include="DalEntities\IEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\ITodoListRepository.cs" />
+    <Compile Include="Repositories\ITodoTaskRepository.cs" />
     <Compile Include="Repositories\IUnitOfWork.cs" />
+    <Compile Include="Repositories\IUserRepository.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
