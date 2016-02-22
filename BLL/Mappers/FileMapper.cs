@@ -13,6 +13,7 @@ namespace BLL.Mappers
                 Id = bllEntity.Id,
                 Name = bllEntity.Name,
                 Content = bllEntity.Content,
+                Size = bllEntity.Size,
                 CreationDate = bllEntity.CreationDate,
                 TodoTaskRefId = bllEntity.TodoTaskRefId
             };
@@ -25,6 +26,7 @@ namespace BLL.Mappers
                 Id = dalEntity.Id,
                 Name = dalEntity.Name,
                 Content = dalEntity.Content,
+                Size = dalEntity.Size,
                 CreationDate = dalEntity.CreationDate,
                 TodoTaskRefId = dalEntity.TodoTaskRefId
             };

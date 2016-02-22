@@ -9,8 +9,8 @@ namespace DAL.Interface.DalEntities
         public string Name { get; set; }
         public Byte[] Content { get; set; }
         public DateTime CreationDate { get; set; }
-        
-        public int Size => Content?.Length ?? 0;
+
+        public int Size { get; set; }
         public int TodoTaskRefId { get; set; }
     }
 }

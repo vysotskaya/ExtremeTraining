@@ -1,9 +1,8 @@
 ﻿using System;
 namespace BLL.Interface.BllEntities
 {
-    public class CommentEntity
+    public class CommentEntity: BaseEntity
     {
-        public int Id { get; set; }
         public string Content { get; set; }
         public DateTime CreationDate { get; set; }
         public int UserRefId { get; set; }

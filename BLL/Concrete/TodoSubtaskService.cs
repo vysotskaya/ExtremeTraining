@@ -53,9 +53,6 @@ namespace BLL.Concrete
             return _subtaskRepository.GetByTaskId(taskId).Select(subtask => subtask.ToBllToDoSubtask());
         }
 
-        public IEnumerable<TodoSubtaskEntity> GetBySateId(int stateId)
-        {
-            return _subtaskRepository.GetBySate(stateId).Select(subtask => subtask.ToBllToDoSubtask());
-        }
+        
     }
 }

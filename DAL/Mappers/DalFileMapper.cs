@@ -25,6 +25,7 @@ namespace DAL.Mappers
                 Name = entity.Name,
                 Content = entity.Content,
                 CreationDate = entity.CreationDate,
+                Size = entity.Size,
                 TodoTaskRefId = entity.TodoTaskRefId
             };
         }

@@ -8,7 +8,6 @@ namespace BLL.Interface.Services
     {
         IEnumerable<TodoSubtaskEntity> GetAll();
         IEnumerable<TodoSubtaskEntity> GetByTaskId(int taskId);
-        IEnumerable<TodoSubtaskEntity> GetBySateId(int stateId);
         TodoSubtaskEntity GetById(int key);
         void Create(TodoSubtaskEntity entity);
         void Update(TodoSubtaskEntity entity);

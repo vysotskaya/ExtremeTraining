@@ -2,14 +2,13 @@
 
 namespace BLL.Interface.BllEntities
 {
-    public class FileEntity
+    public class FileEntity: BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public Byte[] Content { get; set; }
         public DateTime CreationDate { get; set; }
 
-        public int Size => Content?.Length ?? 0;
+        public int Size { get; set; }
         public int TodoTaskRefId { get; set; }
     }
 }

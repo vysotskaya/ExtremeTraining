@@ -3,9 +3,8 @@
 
 namespace BLL.Interface.BllEntities
 {
-    public class StateEntity
+    public class StateEntity: BaseEntity
     {
-        public int Id { get; set; }
         public string StateName { get; set; }
 
     }

@@ -22,10 +22,10 @@ namespace DAL.Concrete
 
         public void Delete(DalComment entity)
         {
-            if (context.Set<Comment>().Any(comment => comment.Id == entity.Id))
+            var removeComment = context.Set<Comment>().FirstOrDefault(comment => comment.Id == entity.Id);
+            if (removeComment != null)
             {
-                var comment = entity.ToComment();
-                context.Set<Comment>().Remove(comment);
+                context.Set<Comment>().Remove(removeComment);
             }
         }
 

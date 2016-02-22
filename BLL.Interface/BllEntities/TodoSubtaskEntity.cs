@@ -2,9 +2,8 @@
 
 namespace BLL.Interface.BllEntities
 {
-    public class TodoSubtaskEntity
+    public class TodoSubtaskEntity: BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public int TodoTaskRefId { get; set; }
         public int StateRefId { get; set; }

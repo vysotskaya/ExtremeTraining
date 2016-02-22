@@ -22,11 +22,11 @@ namespace DAL.Concrete
 
         public void Delete(DalTodoSubtask entity)
         {
-            if (context.Set<TodoSubtask>().Any(subtask => subtask.Id == entity.Id))
+            var removeSubtask = context.Set<TodoSubtask>().FirstOrDefault(subtask => subtask.Id == entity.Id);
+            if (removeSubtask != null)
             {
-                var todoSubtask = entity.ToTodoSubtask();
-                context.Set<TodoSubtask>().Remove(todoSubtask);
-            }          
+                context.Set<TodoSubtask>().Remove(removeSubtask);
+            }
         }
 
         public IEnumerable<DalTodoSubtask> GetAll()
@@ -44,12 +44,6 @@ namespace DAL.Concrete
             throw new NotImplementedException();
         }
 
-        public IEnumerable<DalTodoSubtask> GetBySate(int stateId)
-        {
-            return context.Set<TodoSubtask>().Where(subtask => subtask.StateRefId == stateId)
-                .Select(subrask => subrask.ToDalTodoSubtask());
-        }
-
         public IEnumerable<DalTodoSubtask> GetByTaskId(int taskId)
         {
             return context.Set<TodoSubtask>().Where(subtask => subtask.TodoTaskRefId == taskId)
@@ -58,11 +52,7 @@ namespace DAL.Concrete
 
         public void Update(DalTodoSubtask entity)
         {
-            //if (context.Set<TodoSubtask>().Any(subtask => subtask.Id == entity.Id))
-            //{
-            //    var updateEntity = entity.ToTodoSubtask();
-            //    context.Entry(updateEntity).State = EntityState.Modified;
-            //}
+
             var subtask = context.Entry(entity);
             foreach (var property in subtask.OriginalValues.PropertyNames)//subtask.GetType().GetTypeInfo().DeclaredProperties
             {

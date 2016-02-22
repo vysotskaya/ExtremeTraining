@@ -22,10 +22,10 @@ namespace DAL.Concrete
 
         public void Delete(DalFile entity)
         {
-            if (context.Set<File>().Any(file => file.Id == entity.Id))
+            var removeFile = context.Set<File>().FirstOrDefault(file => file.Id == entity.Id);
+            if (removeFile != null)
             {
-                var file = entity.ToFile();
-                context.Set<File>().Remove(file);
+                context.Set<File>().Remove(removeFile);
             }
         }
 
