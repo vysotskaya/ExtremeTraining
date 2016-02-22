@@ -4,8 +4,8 @@ using DAL.Interface.DalEntities;
 
 namespace DAL.Interface.Repositories
 {
-    public interface ICommentRepository: IRepository<DalComment>
+    public interface ITodoSubtaskRepository : IRepository<DalTodoSubtask>
     {
-        IEnumerable<DalComment> GetByTaskId(int taskId);
+        IEnumerable<DalTodoSubtask> GetByTaskId(int taskId);
     }
 }

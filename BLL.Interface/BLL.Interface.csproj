@@ -40,12 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BllEntities\CommentEntity.cs" />
+    <Compile Include="BllEntities\FileEntity.cs" />
+    <Compile Include="BllEntities\BaseEntity.cs" />
+    <Compile Include="BllEntities\StateEntity.cs" />
+    <Compile Include="BllEntities\TodoSubtaskEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ICommentService.cs" />
+    <Compile Include="Services\IFileService.cs" />
+    <Compile Include="Services\IStateService.cs" />
+    <Compile Include="Services\ITodoSubtaskService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BllEntities\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
