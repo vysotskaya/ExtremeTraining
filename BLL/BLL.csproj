@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,11 +41,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Concrete\TodoListService.cs" />
+    <Compile Include="Concrete\TodoTaskService.cs" />
+    <Compile Include="Concrete\UserService.cs" />
+    <Compile Include="Mappers\TodoListMapper.cs" />
+    <Compile Include="Mappers\TodoTaskMapper.cs" />
+    <Compile Include="Mappers\UserMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Concrete\" />
-    <Folder Include="Mappers\" />
+    <ProjectReference Include="..\BLL.Interface\BLL.Interface.csproj">
+      <Project>{523B0C80-4740-4C11-BBC2-6FFC5CF79CE0}</Project>
+      <Name>BLL.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL.Interface\DAL.Interface.csproj">
+      <Project>{51ECD5F6-F389-4653-BD21-DB946F01DD09}</Project>
+      <Name>DAL.Interface</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,6 @@
 ﻿using System.Data.Entity;
+using BLL.Concrete;
+using BLL.Interface.Services;
 using DAL.Concrete;
 using DAL.Interface.Repositories;
 using Ninject;
@@ -32,8 +34,15 @@ namespace DependencyResolver
                 kernel.Bind<DbContext>().To<EntityContext>().InSingletonScope();
             }
 
-            //kernel.Bind<IRepositoryName>().To<ConcreteRepository>();
- 
+            kernel.Bind<IUserRepository>().To<UserRepository>();
+            kernel.Bind<IUserService>().To<UserService>();
+
+            kernel.Bind<ITodoListRepository>().To<TodoListRepository>();
+            kernel.Bind<ITodoListService>().To<TodoListService>();
+
+            kernel.Bind<ITodoTaskRepository>().To<TodoTaskRepository>();
+            kernel.Bind<ITodoTaskService>().To<TodoTaskService>();
+
         }
     }
 }
