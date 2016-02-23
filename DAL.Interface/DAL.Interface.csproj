@@ -41,6 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DalEntities\DalComment.cs" />
+	<Compile Include="DalEntities\DalUser.cs" />
+	<Compile Include="DalEntities\DalTodoList.cs" />
+	<Compile Include="DalEntities\DalTodoTask.cs" />
     <Compile Include="DalEntities\DalFile.cs" />
     <Compile Include="DalEntities\DalState.cs" />
     <Compile Include="DalEntities\DalTodoSubtask.cs" />
@@ -51,6 +54,9 @@
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\IStateRepository.cs" />
     <Compile Include="Repositories\ITodoSubtaskRepository.cs" />
+	<Compile Include="Repositories\ITodoListRepository.cs" />
+	<Compile Include="Repositories\ITodoTaskRepository.cs" />
+	<Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\IUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup />

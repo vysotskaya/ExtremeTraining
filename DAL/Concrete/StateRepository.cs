@@ -12,17 +12,22 @@ namespace DAL.Concrete
 {
     public class StateRepository : IStateRepository
     {
-        private readonly DbContext context;
+        private readonly DbContext _dbContext;
+
+        public StateRepository(DbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
         public void Create(DalState entity)
         {
             var state = entity.ToState();
-            context.Set<State>().Add(state);
+            _dbContext.Set<State>().Add(state);
         }
 
         public DalState GetById(int key)
         {
-            return context.Set<State>().FirstOrDefault(state => state.Id == key)?.ToDalState();
+            return _dbContext.Set<State>().FirstOrDefault(state => state.Id == key)?.ToDalState();
         }
 
 
