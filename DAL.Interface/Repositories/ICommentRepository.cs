@@ -8,5 +8,6 @@ namespace DAL.Interface.Repositories
 {
     public interface ICommentRepository : IRepository<DalComment>
     {
+        IEnumerable<DalComment> GetByTaskId(int taskId);
     }
 }
