@@ -49,6 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
+    <Compile Include="Concrete\TodoListRepository.cs" />
+    <Compile Include="Concrete\TodoTaskRepository.cs" />
+    <Compile Include="Concrete\UnitOfWork.cs" />
+    <Compile Include="Concrete\UserRepository.cs" />
+    <Compile Include="Mappers\TodoListMapper.cs" />
+    <Compile Include="Mappers\TodoTaskMapper.cs" />
+    <Compile Include="Mappers\UserMapper.cs" />
+=======
     <Compile Include="Concrete\CommentRepository.cs" />
     <Compile Include="Concrete\FileRepository.cs" />
     <Compile Include="Concrete\StateRepository.cs" />
@@ -58,6 +67,7 @@
     <Compile Include="Mappers\DalFileMapper.cs" />
     <Compile Include="Mappers\DalStateMapper.cs" />
     <Compile Include="Mappers\DalTodoSubtaskMapper.cs" />
+>>>>>>> refs/remotes/origin/Kate-branch
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

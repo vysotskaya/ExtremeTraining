@@ -32,6 +32,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+<<<<<<< HEAD
+    <Reference Include="System.Drawing" />
+=======
+>>>>>>> refs/remotes/origin/Kate-branch
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,6 +44,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
+    <Compile Include="BllEntities\IEntity.cs" />
+    <Compile Include="BllEntities\TodoListEntity.cs" />
+    <Compile Include="BllEntities\TodoTaskEntity.cs" />
+    <Compile Include="BllEntities\UserEntity.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ITodoListService.cs" />
+    <Compile Include="Services\ITodoTaskService.cs" />
+    <Compile Include="Services\IUserService.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+=======
     <Compile Include="BllEntities\CommentEntity.cs" />
     <Compile Include="BllEntities\FileEntity.cs" />
     <Compile Include="BllEntities\StateEntity.cs" />
@@ -58,5 +81,6 @@
   </Target>
   <Target Name="AfterBuild">
   </Target>
+>>>>>>> refs/remotes/origin/Kate-branch
   -->
 </Project>
