@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="BllEntities\CommentEntity.cs" />
     <Compile Include="BllEntities\FileEntity.cs" />
-    <Compile Include="BllEntities\BaseEntity.cs" />
     <Compile Include="BllEntities\StateEntity.cs" />
     <Compile Include="BllEntities\TodoSubtaskEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
