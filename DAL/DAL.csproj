@@ -49,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="Concrete\TodoListRepository.cs" />
     <Compile Include="Concrete\TodoTaskRepository.cs" />
     <Compile Include="Concrete\UnitOfWork.cs" />
@@ -57,17 +56,14 @@
     <Compile Include="Mappers\TodoListMapper.cs" />
     <Compile Include="Mappers\TodoTaskMapper.cs" />
     <Compile Include="Mappers\UserMapper.cs" />
-=======
     <Compile Include="Concrete\CommentRepository.cs" />
     <Compile Include="Concrete\FileRepository.cs" />
     <Compile Include="Concrete\StateRepository.cs" />
     <Compile Include="Concrete\TodoSubtaskRepository.cs" />
-    <Compile Include="Concrete\UnitOfWork.cs" />
     <Compile Include="Mappers\DalCommentMapper.cs" />
     <Compile Include="Mappers\DalFileMapper.cs" />
     <Compile Include="Mappers\DalStateMapper.cs" />
     <Compile Include="Mappers\DalTodoSubtaskMapper.cs" />
->>>>>>> refs/remotes/origin/Kate-branch
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -86,11 +82,4 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
