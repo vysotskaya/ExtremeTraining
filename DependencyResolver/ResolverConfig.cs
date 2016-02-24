@@ -42,16 +42,16 @@ namespace DependencyResolver
 
             kernel.Bind<ITodoTaskRepository>().To<TodoTaskRepository>();
             kernel.Bind<ITodoTaskService>().To<TodoTaskService>();
-			
-			kernel.Bind<ICommentRepository>().To<CommentRepository>();
+
+            kernel.Bind<ICommentRepository>().To<CommentRepository>();
             kernel.Bind<ICommentService>().To<CommentService>();
-			
+
             kernel.Bind<IFileRepository>().To<FileRepository>();
             kernel.Bind<IFileService>().To<FileService>();
-			
+
             kernel.Bind<ITodoSubtaskRepository>().To<TodoSubtaskRepository>();
             kernel.Bind<ITodoSubtaskService>().To<TodoSubtaskService>();
-			
+
             kernel.Bind<IStateRepository>().To<StateRepository>();
             kernel.Bind<IStateService>().To<StateService>();
 

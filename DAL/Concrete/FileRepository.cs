@@ -12,20 +12,25 @@ namespace DAL.Concrete
 {
     public class FileRepository : IFileRepository
     {
-        private readonly DbContext context;
+        private readonly DbContext _dbContext;
+
+        public FileRepository(DbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
         public void Create(DalFile entity)
         {
             var file = entity?.ToFile();
-            context.Set<File>().Add(file);
+            _dbContext.Set<File>().Add(file);
         }
 
         public void Delete(DalFile entity)
         {
-            var removeFile = context.Set<File>().FirstOrDefault(file => file.Id == entity.Id);
+            var removeFile = _dbContext.Set<File>().FirstOrDefault(file => file.Id == entity.Id);
             if (removeFile != null)
             {
-                context.Set<File>().Remove(removeFile);
+                _dbContext.Set<File>().Remove(removeFile);
             }
         }
 
@@ -36,7 +41,7 @@ namespace DAL.Concrete
 
         public DalFile GetById(int key)
         {
-            return context.Set<File>().FirstOrDefault(file => file.Id == key)?.ToDalFile();
+            return _dbContext.Set<File>().FirstOrDefault(file => file.Id == key)?.ToDalFile();
         }
 
         public DalFile GetByPredicate(Expression<Func<DalFile, bool>> expression)
@@ -46,7 +51,7 @@ namespace DAL.Concrete
 
         public IEnumerable<DalFile> GetByTaskId(int taskId)
         {
-            return context.Set<File>().Where(file => file.TodoTaskRefId == taskId)
+            return _dbContext.Set<File>().Where(file => file.TodoTaskRefId == taskId)
                 .Select(file => file.ToDalFile());
         }
 

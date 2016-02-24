@@ -12,20 +12,25 @@ namespace DAL.Concrete
 {
     public class TodoSubtaskRepository : ITodoSubtaskRepository
     {
-        private readonly DbContext context;
+        private readonly DbContext _dbContext;
+
+        public TodoSubtaskRepository(DbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
         public void Create(DalTodoSubtask entity)
         {
             var todoSubtask = entity.ToTodoSubtask();
-            context.Set<TodoSubtask>().Add(todoSubtask);
+            _dbContext.Set<TodoSubtask>().Add(todoSubtask);
         }
 
         public void Delete(DalTodoSubtask entity)
         {
-            var removeSubtask = context.Set<TodoSubtask>().FirstOrDefault(subtask => subtask.Id == entity.Id);
+            var removeSubtask = _dbContext.Set<TodoSubtask>().FirstOrDefault(subtask => subtask.Id == entity.Id);
             if (removeSubtask != null)
             {
-                context.Set<TodoSubtask>().Remove(removeSubtask);
+                _dbContext.Set<TodoSubtask>().Remove(removeSubtask);
             }
         }
 
@@ -36,7 +41,7 @@ namespace DAL.Concrete
 
         public DalTodoSubtask GetById(int key)
         {
-            return context.Set<TodoSubtask>().FirstOrDefault(subtask => subtask.Id == key)?.ToDalTodoSubtask();
+            return _dbContext.Set<TodoSubtask>().FirstOrDefault(subtask => subtask.Id == key)?.ToDalTodoSubtask();
         }
 
         public DalTodoSubtask GetByPredicate(Expression<Func<DalTodoSubtask, bool>> expression)
@@ -46,14 +51,14 @@ namespace DAL.Concrete
 
         public IEnumerable<DalTodoSubtask> GetByTaskId(int taskId)
         {
-            return context.Set<TodoSubtask>().Where(subtask => subtask.TodoTaskRefId == taskId)
+            return _dbContext.Set<TodoSubtask>().Where(subtask => subtask.TodoTaskRefId == taskId)
                 .Select(subtask => subtask.ToDalTodoSubtask());
         }
 
         public void Update(DalTodoSubtask entity)
         {
 
-            var subtask = context.Entry(entity);
+            var subtask = _dbContext.Entry(entity);
             foreach (var property in subtask.OriginalValues.PropertyNames)//subtask.GetType().GetTypeInfo().DeclaredProperties
             {
                 var original = subtask.Property(property).OriginalValue;
