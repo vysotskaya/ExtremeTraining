@@ -11,8 +11,28 @@
   <bind service="Epam.Wunderlist.DataServices.UserProfileServices.IUserProfileService, Epam.Wunderlist.DataServices"
             to="Epam.Wunderlist.DataServices.UserProfileServices.UserProfileService, Epam.Wunderlist.DataServices" />
   
-  <bind service="Epam.Wunderlist.DataAccess.Interfaces.Repositories.ITaskStateRepository, Epam.Wunderlist.DataAccess.Interfaces"
-            to="Epam.Wunderlist.DataAccess.MSSql.Concrete.TaskStateRepository, Epam.Wunderlist.DataAccess.MSSql" />
+  <bind service="Epam.Wunderlist.DataAccess.Interfaces.Repositories.ITaskStateRepository, Epam.Wunderlist.DataAccess.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+            to="Epam.Wunderlist.DataAccess.MSSql.Concrete.TaskStateRepository, Epam.Wunderlist.DataAccess.MSSql, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
   <bind service="Epam.Wunderlist.DataServices.TaskStateServices.ITaskStateService, Epam.Wunderlist.DataServices"
             to="Epam.Wunderlist.DataServices.TaskStateServices.TaskStateService, Epam.Wunderlist.DataServices" />
+
+  <bind service="Epam.Wunderlist.DataAccess.Interfaces.Repositories.IAttachedTaskFileRepository, Epam.Wunderlist.DataAccess.Interfaces"
+            to="Epam.Wunderlist.DataAccess.MSSql.Concrete.AttachedTaskFileRepository, Epam.Wunderlist.DataAccess.MSSql" />
+  <bind service="Epam.Wunderlist.DataServices.AttachedTaskFileServices.IAttachedTaskFileService, Epam.Wunderlist.DataServices"
+            to="Epam.Wunderlist.DataServices.AttachedTaskFileServices.AttachedTaskFileService, Epam.Wunderlist.DataServices" />
+
+  <bind service="Epam.Wunderlist.DataAccess.Interfaces.Repositories.ITodoListRepository, Epam.Wunderlist.DataAccess.Interfaces"
+            to="Epam.Wunderlist.DataAccess.MSSql.Concrete.TodoListRepository, Epam.Wunderlist.DataAccess.MSSql" />
+  <bind service="Epam.Wunderlist.DataServices.TodoListServices.ITodoListService, Epam.Wunderlist.DataServices"
+            to="Epam.Wunderlist.DataServices.TodoListServices.TodoListService, Epam.Wunderlist.DataServices" />
+
+  <bind service="Epam.Wunderlist.DataAccess.Interfaces.Repositories.ITodoSubtaskRepository, Epam.Wunderlist.DataAccess.Interfaces"
+            to="Epam.Wunderlist.DataAccess.MSSql.Concrete.TodoSubtaskRepository, Epam.Wunderlist.DataAccess.MSSql" />
+  <bind service="Epam.Wunderlist.DataServices.TodoSubtaskServices.ITodoSubtaskService, Epam.Wunderlist.DataServices"
+            to="Epam.Wunderlist.DataServices.TodoSubtaskServices.TodoSubtaskService, Epam.Wunderlist.DataServices" />
+
+  <bind service="Epam.Wunderlist.DataAccess.Interfaces.Repositories.ITodoTaskRepository, Epam.Wunderlist.DataAccess.Interfaces"
+          to="Epam.Wunderlist.DataAccess.MSSql.Concrete.TodoTaskRepository, Epam.Wunderlist.DataAccess.MSSql" />
+  <bind service="Epam.Wunderlist.DataServices.TodoTaskServices.ITodoTaskService, Epam.Wunderlist.DataServices"
+            to="Epam.Wunderlist.DataServices.TodoTaskServices.TodoTaskService, Epam.Wunderlist.DataServices" />
 </module>

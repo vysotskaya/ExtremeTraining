@@ -6,7 +6,7 @@ namespace Epam.Wunderlist.DataAccess.MSSqlDbModel
     public class DbModelContext : DbContext
     {
         public DbModelContext() 
-            : base("DbModelContext")
+            : base("name=DbModelContext")
         {
             Database.SetInitializer(new WunderlistDbInitializer());
         }

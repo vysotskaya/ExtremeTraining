@@ -1,12 +1,13 @@
 ﻿using System.Drawing;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Epam.Wunderlist.DataAccess.Entities
 {
-    public class UserProfile : IEntity
+    public class UserProfile : IdentityUser, IEntity
     {
-        public int Id { get; set; }
+        new public int Id { get; set; }
         public string Name { get; set; }
-        public string Email { get; set; }
+        new public string Email { get; set; }
         public string Password { get; set; }
         public Image Avatar { get; set; }  
     }

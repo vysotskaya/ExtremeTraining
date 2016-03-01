@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using AutoMapper;
 using Epam.Wunderlist.DataAccess.Entities;
 using Epam.Wunderlist.DataAccess.Interfaces.Repositories;
+using Epam.Wunderlist.DataAccess.MSSql.Convertor;
 using Epam.Wunderlist.DataAccess.MSSqlDbModel;
 
 namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
@@ -18,16 +19,19 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
         {
             _dbContext = dbContext;
             Mapper.Initialize(cfg => {
-                cfg.CreateMap<UserProfileDbModel, UserProfile>();
+                cfg.CreateMap<UserProfileDbModel, UserProfile>()
+                    .ForMember(x => x.Avatar, y => y.MapFrom(s => s.Avatar.ByteArrayToImage()));
                 cfg.CreateMap<UserProfile, UserProfileDbModel>()
-                    .ForSourceMember(x => x.Id, y => y.Ignore());
+                    .ForSourceMember(x => x.Id, y => y.Ignore())
+                    .ForMember(x => x.Avatar, y => y.MapFrom(s => s.Avatar.ImageToByteArray()));
             });
         }
 
         public IEnumerable<UserProfile> GetAll()
         {
-            return _dbContext.Set<UserProfileDbModel>().ToList()
-                .Select(u => Mapper.Map<UserProfileDbModel, UserProfile>(u));
+            var users = _dbContext.Set<UserProfileDbModel>().ToList();
+            var mappedUsers = users.Select(u => Mapper.Map<UserProfileDbModel, UserProfile>(u));
+            return mappedUsers;
         }
 
         public UserProfile GetById(int key)
@@ -41,10 +45,10 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
             throw new NotImplementedException();
         }
 
-        public void Create(UserProfile entity)
+        public bool Create(UserProfile entity)
         {
             var user = Mapper.Map<UserProfile, UserProfileDbModel>(entity);
-            _dbContext.Set<UserProfileDbModel>().Add(user);
+            return _dbContext.Set<UserProfileDbModel>().Add(user) != null;
         }
 
         public void Update(UserProfile entity)

@@ -2,6 +2,7 @@
 using Epam.Wunderlist.DependencyResolver;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
+using Ninject.Extensions.Xml;
 
 namespace Epam.Wunderlist.UnitTests
 {
@@ -13,14 +14,14 @@ namespace Epam.Wunderlist.UnitTests
         [TestInitialize]
         public void Initialize()
         {
-            _kernel = new StandardKernel();
+            var settings = new NinjectSettings { LoadExtensions = false };
+            _kernel = new StandardKernel(settings, new XmlExtensionModule());
             _kernel.ConfigurateResolver();
         }
 
         [TestMethod]
         public void GetByIdTaskState()
         {
-            //var assemblyName = typeof(UnitOfWork).AssemblyQualifiedName;
             var id = 1;
             ITaskStateRepository taskStateRepository = _kernel.Get<ITaskStateRepository>();
             var state = taskStateRepository.GetById(id);

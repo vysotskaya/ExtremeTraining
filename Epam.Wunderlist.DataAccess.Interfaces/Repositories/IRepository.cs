@@ -10,7 +10,7 @@ namespace Epam.Wunderlist.DataAccess.Interfaces.Repositories
         IEnumerable<TEntity> GetAll();
         TEntity GetById(int key);
         TEntity GetByPredicate(Expression<Func<TEntity, bool>> expression);
-        void Create(TEntity entity);
+        bool Create(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);
     }

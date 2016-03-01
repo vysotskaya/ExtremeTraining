@@ -7,6 +7,7 @@ using AutoMapper;
 using Epam.Wunderlist.DataAccess.Entities;
 using Epam.Wunderlist.DataAccess.Interfaces.Repositories;
 using Epam.Wunderlist.DataAccess.MSSqlDbModel;
+using Ninject;
 
 namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
 {
@@ -14,6 +15,7 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
     {
         private readonly DbContext _dbContext;
 
+        [Inject]
         public TaskStateRepository(DbContext dbContext)
         {
             _dbContext = dbContext;
@@ -24,10 +26,10 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
             });
         }
 
-        public void Create(TaskState entity)
+        public bool Create(TaskState entity)
         {
             var state = Mapper.Map<TaskState, TaskStateDbModel>(entity);
-            _dbContext.Set<TaskStateDbModel>().Add(state);
+            return _dbContext.Set<TaskStateDbModel>().Add(state) != null;
         }
 
         public TaskState GetById(int key)

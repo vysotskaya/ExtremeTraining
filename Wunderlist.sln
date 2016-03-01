@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Wunderlist.DataAccess.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Wunderlist.UnitTests", "Epam.Wunderlist.UnitTests\Epam.Wunderlist.UnitTests.csproj", "{FB750077-7F30-4D99-A709-B9532224BAA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Wunderlist.MvcPL", "Epam.Wunderlist.MvcPL\Epam.Wunderlist.MvcPL.csproj", "{44A717C4-40CC-469C-A6C3-5EF25675A3AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{FB750077-7F30-4D99-A709-B9532224BAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB750077-7F30-4D99-A709-B9532224BAA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB750077-7F30-4D99-A709-B9532224BAA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44A717C4-40CC-469C-A6C3-5EF25675A3AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44A717C4-40CC-469C-A6C3-5EF25675A3AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44A717C4-40CC-469C-A6C3-5EF25675A3AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44A717C4-40CC-469C-A6C3-5EF25675A3AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
