@@ -10,5 +10,6 @@ namespace BLL.Interface.Services
         void CreateUser(UserEntity user);
         void UpdateUser(UserEntity user);
         void DeleteUser(UserEntity user);
+        UserEntity GetUserByEmail(string email);
     }
 }

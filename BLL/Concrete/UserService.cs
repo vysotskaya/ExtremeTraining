@@ -45,5 +45,13 @@ namespace BLL.Concrete
             _userRepository.Delete(user.ToDalUser());
             _unitOfWork.Commit();
         }
+
+        public UserEntity GetUserByEmail(string email)
+        {
+            //todo GetByPredicate
+
+            return _userRepository.GetAll()
+                .FirstOrDefault(u => u.Email == email).ToUserEntity(); 
+        }
     }
 }
