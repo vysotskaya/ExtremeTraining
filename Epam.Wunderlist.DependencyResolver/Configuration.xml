@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<module name="WunderlistConfigurationModule">
+  <bind service="Epam.Wunderlist.DataAccess.Interfaces.Repositories.IUnitOfWork, Epam.Wunderlist.DataAccess.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+          to="Epam.Wunderlist.DataAccess.MSSql.Concrete.UnitOfWork, Epam.Wunderlist.DataAccess.MSSql, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+  
+  <bind service="System.Data.Entity.DbContext, EntityFramework"
+            to="Epam.Wunderlist.DataAccess.MSSqlDbModel.DbModelContext, Epam.Wunderlist.DataAccess.MSSqlDbModel" />
+  
+  <bind service="Epam.Wunderlist.DataAccess.Interfaces.Repositories.IUserProfileRepository, Epam.Wunderlist.DataAccess.Interfaces"
+            to="Epam.Wunderlist.DataAccess.MSSql.Concrete.UserProfileRepository, Epam.Wunderlist.DataAccess.MSSql" />
+  <bind service="Epam.Wunderlist.DataServices.UserProfileServices.IUserProfileService, Epam.Wunderlist.DataServices"
+            to="Epam.Wunderlist.DataServices.UserProfileServices.UserProfileService, Epam.Wunderlist.DataServices" />
+  
+  <bind service="Epam.Wunderlist.DataAccess.Interfaces.Repositories.ITaskStateRepository, Epam.Wunderlist.DataAccess.Interfaces"
+            to="Epam.Wunderlist.DataAccess.MSSql.Concrete.TaskStateRepository, Epam.Wunderlist.DataAccess.MSSql" />
+  <bind service="Epam.Wunderlist.DataServices.TaskStateServices.ITaskStateService, Epam.Wunderlist.DataServices"
+            to="Epam.Wunderlist.DataServices.TaskStateServices.TaskStateService, Epam.Wunderlist.DataServices" />
+</module>

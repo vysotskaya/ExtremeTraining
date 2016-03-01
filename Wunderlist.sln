@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ORM", "ORM\ORM.csproj", "{059DD075-BFDB-4292-89CC-A14F4171D82D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Wunderlist.DataAccess.MSSqlDbModel", "Epam.Wunderlist.DataAccess.MSSqlDbModel\Epam.Wunderlist.DataAccess.MSSqlDbModel.csproj", "{059DD075-BFDB-4292-89CC-A14F4171D82D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL.Interface", "DAL.Interface\DAL.Interface.csproj", "{51ECD5F6-F389-4653-BD21-DB946F01DD09}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Wunderlist.DataAccess.Interfaces", "Epam.Wunderlist.DataAccess.Interfaces\Epam.Wunderlist.DataAccess.Interfaces.csproj", "{51ECD5F6-F389-4653-BD21-DB946F01DD09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{9C59518D-51D7-40F5-9E78-F9980A12D006}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Wunderlist.DataAccess.MSSql", "Epam.Wunderlist.DataAccess.MSSql\Epam.Wunderlist.DataAccess.MSSql.csproj", "{9C59518D-51D7-40F5-9E78-F9980A12D006}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL.Interface", "BLL.Interface\BLL.Interface.csproj", "{523B0C80-4740-4C11-BBC2-6FFC5CF79CE0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Wunderlist.DataServices", "Epam.Wunderlist.DataServices\Epam.Wunderlist.DataServices.csproj", "{523B0C80-4740-4C11-BBC2-6FFC5CF79CE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{952F1423-B5CF-4DE9-A1CF-233CFE117BF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Wunderlist.DependencyResolver", "Epam.Wunderlist.DependencyResolver\Epam.Wunderlist.DependencyResolver.csproj", "{5BDD6AEC-ACFF-425C-B233-487C6AEC4B18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyResolver", "DependencyResolver\DependencyResolver.csproj", "{5BDD6AEC-ACFF-425C-B233-487C6AEC4B18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Wunderlist.DataAccess.Entities", "Epam.Wunderlist.DataAccess.Entities\Epam.Wunderlist.DataAccess.Entities.csproj", "{10FCE89D-6248-4BA3-B98C-5E49390C718D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcPL", "MvcPL\MvcPL.csproj", "{44A717C4-40CC-469C-A6C3-5EF25675A3AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Wunderlist.UnitTests", "Epam.Wunderlist.UnitTests\Epam.Wunderlist.UnitTests.csproj", "{FB750077-7F30-4D99-A709-B9532224BAA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,18 +39,18 @@ Global
 		{523B0C80-4740-4C11-BBC2-6FFC5CF79CE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{523B0C80-4740-4C11-BBC2-6FFC5CF79CE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{523B0C80-4740-4C11-BBC2-6FFC5CF79CE0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{952F1423-B5CF-4DE9-A1CF-233CFE117BF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{952F1423-B5CF-4DE9-A1CF-233CFE117BF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{952F1423-B5CF-4DE9-A1CF-233CFE117BF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{952F1423-B5CF-4DE9-A1CF-233CFE117BF2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5BDD6AEC-ACFF-425C-B233-487C6AEC4B18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5BDD6AEC-ACFF-425C-B233-487C6AEC4B18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BDD6AEC-ACFF-425C-B233-487C6AEC4B18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BDD6AEC-ACFF-425C-B233-487C6AEC4B18}.Release|Any CPU.Build.0 = Release|Any CPU
-		{44A717C4-40CC-469C-A6C3-5EF25675A3AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{44A717C4-40CC-469C-A6C3-5EF25675A3AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{44A717C4-40CC-469C-A6C3-5EF25675A3AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{44A717C4-40CC-469C-A6C3-5EF25675A3AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10FCE89D-6248-4BA3-B98C-5E49390C718D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10FCE89D-6248-4BA3-B98C-5E49390C718D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10FCE89D-6248-4BA3-B98C-5E49390C718D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10FCE89D-6248-4BA3-B98C-5E49390C718D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB750077-7F30-4D99-A709-B9532224BAA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB750077-7F30-4D99-A709-B9532224BAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB750077-7F30-4D99-A709-B9532224BAA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB750077-7F30-4D99-A709-B9532224BAA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
