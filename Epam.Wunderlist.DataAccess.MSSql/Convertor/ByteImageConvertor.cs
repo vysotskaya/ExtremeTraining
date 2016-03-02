@@ -20,7 +20,7 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Convertor
 
         public static Image ByteArrayToImage(this Byte[] byteArrayIn)
         {
-            if (byteArrayIn != null)
+            if (byteArrayIn != null && byteArrayIn.Length != 0)
             {
                 MemoryStream ms = new MemoryStream(byteArrayIn);
                 Image returnImage = Image.FromStream(ms);

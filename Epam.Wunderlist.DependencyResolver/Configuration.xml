@@ -4,7 +4,8 @@
           to="Epam.Wunderlist.DataAccess.MSSql.Concrete.UnitOfWork, Epam.Wunderlist.DataAccess.MSSql, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
   
   <bind service="System.Data.Entity.DbContext, EntityFramework"
-            to="Epam.Wunderlist.DataAccess.MSSqlDbModel.DbModelContext, Epam.Wunderlist.DataAccess.MSSqlDbModel" />
+            to="Epam.Wunderlist.DataAccess.MSSqlDbModel.DbModelContext, Epam.Wunderlist.DataAccess.MSSqlDbModel"
+            scope="singleton"/>
   
   <bind service="Epam.Wunderlist.DataAccess.Interfaces.Repositories.IUserProfileRepository, Epam.Wunderlist.DataAccess.Interfaces"
             to="Epam.Wunderlist.DataAccess.MSSql.Concrete.UserProfileRepository, Epam.Wunderlist.DataAccess.MSSql" />

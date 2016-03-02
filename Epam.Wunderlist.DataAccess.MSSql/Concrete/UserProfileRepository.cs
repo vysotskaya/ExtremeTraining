@@ -47,8 +47,9 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
 
         public bool Create(UserProfile entity)
         {
-            var user = Mapper.Map<UserProfile, UserProfileDbModel>(entity);
-            return _dbContext.Set<UserProfileDbModel>().Add(user) != null;
+            UserProfileDbModel user = Mapper.Map<UserProfile, UserProfileDbModel>(entity);
+            var addedUserProfile = _dbContext.Set<UserProfileDbModel>().Add(user);
+            return addedUserProfile != null;
         }
 
         public void Update(UserProfile entity)

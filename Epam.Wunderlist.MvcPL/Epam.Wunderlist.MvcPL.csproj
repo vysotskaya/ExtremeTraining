@@ -121,6 +121,10 @@
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ninject.Extensions.Xml, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Extensions.Xml.3.2.0.0\lib\net45-full\Ninject.Extensions.Xml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.Web.Common.3.2.3.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
       <Private>True</Private>
@@ -224,8 +228,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\WunderlistDb.mdf" />
-    <Content Include="App_Data\WunderlistDb_log.ldf" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\wl_icon.png" />
@@ -275,6 +277,7 @@
     <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Views\Validate\" />
   </ItemGroup>
   <ItemGroup>
@@ -289,6 +292,14 @@
     <ProjectReference Include="..\Epam.Wunderlist.DataAccess.Entities\Epam.Wunderlist.DataAccess.Entities.csproj">
       <Project>{10fce89d-6248-4ba3-b98c-5e49390c718d}</Project>
       <Name>Epam.Wunderlist.DataAccess.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Wunderlist.DataAccess.Interfaces\Epam.Wunderlist.DataAccess.Interfaces.csproj">
+      <Project>{51ecd5f6-f389-4653-bd21-db946f01dd09}</Project>
+      <Name>Epam.Wunderlist.DataAccess.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Wunderlist.DataAccess.MSSql\Epam.Wunderlist.DataAccess.MSSql.csproj">
+      <Project>{9c59518d-51d7-40f5-9e78-f9980a12d006}</Project>
+      <Name>Epam.Wunderlist.DataAccess.MSSql</Name>
     </ProjectReference>
     <ProjectReference Include="..\Epam.Wunderlist.DataServices\Epam.Wunderlist.DataServices.csproj">
       <Project>{523B0C80-4740-4C11-BBC2-6FFC5CF79CE0}</Project>

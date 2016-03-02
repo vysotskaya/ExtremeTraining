@@ -1,3 +1,5 @@
+using Ninject.Extensions.Xml;
+
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Epam.Wunderlist.MvcPL.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Epam.Wunderlist.MvcPL.App_Start.NinjectWebCommon), "Stop")]
 
@@ -41,7 +43,9 @@ namespace Epam.Wunderlist.MvcPL.App_Start
         /// <returns>The created kernel.</returns>
         private static IKernel CreateKernel()
         {
-            var kernel = new StandardKernel();
+            //var kernel = new StandardKernel();
+            var settings = new NinjectSettings { LoadExtensions = false };
+            var kernel = new StandardKernel(settings, new XmlExtensionModule());
             try
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
@@ -50,7 +54,7 @@ namespace Epam.Wunderlist.MvcPL.App_Start
                 RegisterServices(kernel);
                 return kernel;
             }
-            catch
+            catch (Exception ex)
             {
                 kernel.Dispose();
                 throw;
