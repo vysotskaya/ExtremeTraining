@@ -20,12 +20,8 @@ namespace Epam.Wunderlist.MvcPL.Controllers
 
         public JsonResult IsUserEmailExist(string email)
         {
-            var userExist = _userProfileService.GetByEmail(email) == null;
-            if (String.CompareOrdinal(User.Identity.Name, email) == 0)
-            {
-                userExist = false;
-            }
-            return Json(!userExist, JsonRequestBehavior.AllowGet);
+            var userExist = _userProfileService.GetByEmail(email);
+            return Json(userExist == null, JsonRequestBehavior.AllowGet);
         }
     }
 }

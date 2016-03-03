@@ -20,10 +20,12 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
             _dbContext = dbContext;
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<UserProfileDbModel, UserProfile>()
-                    .ForMember(x => x.Avatar, y => y.MapFrom(s => s.Avatar.ByteArrayToImage()));
+                    .ForMember(x => x.Avatar, y => y.MapFrom(s => s.Avatar.ByteArrayToImage()))
+                    .ForMember(x => x.UserName, y => y.MapFrom(s => s.Name));
                 cfg.CreateMap<UserProfile, UserProfileDbModel>()
                     .ForSourceMember(x => x.Id, y => y.Ignore())
-                    .ForMember(x => x.Avatar, y => y.MapFrom(s => s.Avatar.ImageToByteArray()));
+                    .ForMember(x => x.Avatar, y => y.MapFrom(s => s.Avatar.ImageToByteArray()))
+                    .ForMember(x => x.Name, y => y.MapFrom(s => s.UserName)); ;
             });
         }
 
@@ -64,7 +66,8 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
                 return;
             }
             existedUser.State = EntityState.Modified;
-            existedUser.Entity.Name = entity.Name;
+            //existedUser.Entity.Name = entity.Name;
+            existedUser.Entity.Name = entity.UserName;
             existedUser.Entity.Email = entity.Email;
             existedUser.Entity.Password = entity.Password;
         }

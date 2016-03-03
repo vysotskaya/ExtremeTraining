@@ -220,6 +220,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Identity\IdentityUserExtentions.cs" />
     <Compile Include="Identity\IdentityUserProfileManager.cs" />
     <Compile Include="Identity\IdentityUserStore.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
@@ -230,9 +231,11 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\twodevices%402x.png" />
     <Content Include="Content\images\wl_icon.png" />
     <Content Include="Content\styles\common.css" />
     <Content Include="Content\styles\font_lato_default.css" />
+    <Content Include="Content\styles\login.css" />
     <Content Include="Content\styles\main.css" />
     <Content Include="Content\styles\menubar.css" />
     <Content Include="Content\styles\signup.css" />
@@ -251,6 +254,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />

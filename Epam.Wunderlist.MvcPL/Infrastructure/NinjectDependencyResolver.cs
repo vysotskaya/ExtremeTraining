@@ -17,7 +17,7 @@ namespace Epam.Wunderlist.MvcPL.Infrastructure
         }
 
         public object GetService(Type type)
-        {
+       {
             return _kernel.TryGet(type);
         }
 

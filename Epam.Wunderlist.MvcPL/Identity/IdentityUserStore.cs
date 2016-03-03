@@ -6,10 +6,16 @@ using Microsoft.AspNet.Identity;
 
 namespace Epam.Wunderlist.MvcPL.Identity
 {
-    public class IdentityUserStore : IUserStore<UserProfile>, IUserPasswordStore<UserProfile>
+    public class IdentityUserStore : IUserStore<UserProfile, int>, IUserPasswordStore<UserProfile, int>
     {
         private IUserProfileService UserProfileService => 
             (IUserProfileService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof (IUserProfileService));
+
+        public Task<UserProfile> FindByIdAsync(int userId)
+        {
+            UserProfile user = UserProfileService.GetById(userId);
+            return Task.FromResult<UserProfile>(user);
+        }
 
         public Task<UserProfile> FindByNameAsync(string email)
         {
