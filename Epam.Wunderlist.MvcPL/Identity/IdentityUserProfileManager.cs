@@ -43,7 +43,7 @@ namespace Epam.Wunderlist.MvcPL.Identity
             //return Task.FromResult(identity);
             ClaimsIdentity claim = new ClaimsIdentity(authenticationType, 
                 ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            //claim.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString(), ClaimValueTypes.String));
+            claim.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString(), ClaimValueTypes.String));
             claim.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserName, ClaimValueTypes.String));
             claim.AddClaim(new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.String));
             claim.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider",

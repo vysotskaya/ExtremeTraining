@@ -47,11 +47,12 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
             throw new NotImplementedException();
         }
 
-        public bool Create(UserProfile entity)
+        public int Create(UserProfile entity)
         {
             UserProfileDbModel user = Mapper.Map<UserProfile, UserProfileDbModel>(entity);
             var addedUserProfile = _dbContext.Set<UserProfileDbModel>().Add(user);
-            return addedUserProfile != null;
+            _dbContext.SaveChanges();
+            return user.Id;
         }
 
         public void Update(UserProfile entity)

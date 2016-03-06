@@ -25,10 +25,12 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
             });
         }
 
-        public bool Create(AttachedTaskFile entity)
+        public int Create(AttachedTaskFile entity)
         {
             var file = Mapper.Map<AttachedTaskFile, AttachedTaskFileDbModel>(entity);
-            return _dbContext.Set<AttachedTaskFileDbModel>().Add(file) != null;
+            _dbContext.Set<AttachedTaskFileDbModel>().Add(file);
+            _dbContext.SaveChanges();
+            return file.Id;
         }
 
         public void Delete(AttachedTaskFile entity)

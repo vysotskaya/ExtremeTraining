@@ -40,10 +40,12 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
             throw new NotImplementedException();
         }
 
-        public bool Create(TodoTask entity)
+        public int Create(TodoTask entity)
         {
             var todoTask = Mapper.Map<TodoTask, TodoTaskDbModel>(entity);
-            return _dbContext.Set<TodoTaskDbModel>().Add(todoTask) != null;
+            _dbContext.Set<TodoTaskDbModel>().Add(todoTask);
+            _dbContext.SaveChanges();
+            return  todoTask.Id;
         }
 
         public void Update(TodoTask entity)

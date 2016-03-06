@@ -35,7 +35,7 @@ namespace Epam.Wunderlist.DataServices.UserProfileServices
         {
             var result = _userProfileRepository.Create(entity);
             _unitOfWork.Commit();
-            return result;
+            return result != 0;
         }
 
         public void Update(UserProfile entity)

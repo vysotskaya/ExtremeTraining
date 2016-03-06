@@ -26,10 +26,12 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
             });
         }
 
-        public bool Create(TaskState entity)
+        public int Create(TaskState entity)
         {
             var state = Mapper.Map<TaskState, TaskStateDbModel>(entity);
-            return _dbContext.Set<TaskStateDbModel>().Add(state) != null;
+            _dbContext.Set<TaskStateDbModel>().Add(state);
+            _dbContext.SaveChanges();
+            return state.Id;
         }
 
         public TaskState GetById(int key)
