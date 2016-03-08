@@ -233,6 +233,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PartialsController.cs" />
     <Compile Include="Controllers\TodoListController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />
     <Compile Include="Controllers\WunderlistController.cs" />
@@ -262,7 +263,6 @@
     <Content Include="Content\styles\menubar.css" />
     <Content Include="Content\styles\signup.css" />
     <Content Include="Content\styles\styleWunderlist.css" />
-    <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -298,7 +298,8 @@
     <Content Include="Scripts\AngularUI\ui-router.min.js" />
     <Content Include="Scripts\app\app.js" />
     <Content Include="Scripts\app\main.js" />
-    <Content Include="Scripts\app\todolistServices.js" />
+    <Content Include="Scripts\app\todolistService.js" />
+    <Content Include="Scripts\app\todotaskService.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -316,6 +317,7 @@
     <Content Include="Scripts\angular-cookies.min.js.map" />
     <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
+    <Content Include="favicon.ico" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
@@ -1096,8 +1098,7 @@
     <Content Include="Views\Wunderlist\wunderlist.cshtml" />
     <Content Include="Views\Partials\lists.cshtml" />
     <Content Include="Views\Partials\tasks.cshtml" />
-    <Content Include="Views\Wunderlist\Partials\lists.html" />
-    <Content Include="Views\Wunderlist\Partials\tasks.html" />
+    <Content Include="Views\Partials\editTodoListModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -35,6 +35,7 @@ function chooseTaskOwnerList(id) {
         var element = lists[index];
         if (element.hasAttribute('class', 'slidebarItem-owner-list-active')) {
             element.removeAttribute('class', 'slidebarItem-owner-list-active');
+            $('#' + element.id).children('a').children('span').css('class', 'list-options').prop('hidden', true);
         }
     }
     //lists.forEach(function (element, index, array) {
@@ -43,16 +44,21 @@ function chooseTaskOwnerList(id) {
     //    }
     //});
     $('#' + id).addClass('slidebarItem-owner-list-active');
+    $('#' + id).children('a').children('span').css('class', 'list-options').prop('hidden', false);
 }
 
 function addTaskList(){
 	$('#addListModal').show();
 }
 
-function inputNameOfList(){
+function addTaskList() {
+    $('#editListModal').show();
+}
 
-		$('#saveButtonId').button({'aria-disabled' : false});
-		$('#saveButtonId').removeClass("submit-full-blue-disabled").addClass("submit-full-blue-enable");		
+function inputNameOfList(id){
+
+		$('#' + id).button({'aria-disabled' : false});
+		$('#' + id).removeClass("submit-full-blue-disabled").addClass("submit-full-blue-enable");		
 	
 }
 
@@ -68,6 +74,11 @@ function disableSave(){
 function stopCreatingList(){
 	$('#addListModal').hide();
 }
+
+function stopCreatingList() {
+    $('#editListModal').hide();
+}
+
 function userMenuShow(){
 	if($( '#user-popover').is(':visible')){
 		$('#user-popover').hide();
