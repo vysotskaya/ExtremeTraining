@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Epam.Wunderlist.DataAccess.Entities;
 using Epam.Wunderlist.DataServices.TodoListServices;
@@ -37,6 +35,17 @@ namespace Epam.Wunderlist.MvcPL.Controllers
         {
             var createdId = _todoListService.Create(todoList);
             return createdId;
+        }
+
+        public void Put(int id, [FromBody]TodoList todoList)
+        {
+            _todoListService.Update(todoList);
+        }
+
+        public void Delete(int todoListId)
+        {
+            var todoList = _todoListService.GetById(todoListId);
+            _todoListService.Delete(todoList);
         }
     }
 }

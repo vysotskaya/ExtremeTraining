@@ -55,6 +55,7 @@ app.controller('wunderlistAppController',['todoListService', '$scope', '$http', 
     };
 
     $scope.editTodoList = function () {
+        debugger;
         if ($scope.editedTodoList.TodoListName == "") {
             return;
         }
@@ -63,6 +64,7 @@ app.controller('wunderlistAppController',['todoListService', '$scope', '$http', 
                 $scope.lists[i].TodoListName = $scope.editedTodoList.TodoListName;
             }
         });
+        todoListService.updateTodoList($scope.editedTodoList);
     }
 
     $scope.deleteTodoList = function(listId) {
@@ -71,6 +73,7 @@ app.controller('wunderlistAppController',['todoListService', '$scope', '$http', 
                 $scope.lists.splice(i, 1);
             }
         });
+        //todoListService.deleteTodolist(listId);
     }
 }]);
 

@@ -50,10 +50,10 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
 
         public void Update(TodoList entity)
         {
-            var updatedTodoList = Mapper.Map<TodoList, TodoListDbModel>(entity);
+            //var updatedTodoList = Mapper.Map<TodoList, TodoListDbModel>(entity);
             var existedTodoList = _dbContext.Entry<TodoListDbModel>
                 (
-                    _dbContext.Set<TodoListDbModel>().Find(updatedTodoList.Id)
+                    _dbContext.Set<TodoListDbModel>().Find(entity.Id)
                 );
             if (existedTodoList == null)
             {
