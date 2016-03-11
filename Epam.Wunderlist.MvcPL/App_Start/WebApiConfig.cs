@@ -12,9 +12,9 @@ namespace Epam.Wunderlist.MvcPL
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "DefaultWithActionApi",
-                routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                name: "GetManyTodoTaskApi",
+                routeTemplate: "api/todolists/{todoListId}/{controller}",
+                defaults: new { todoListId = RouteParameter.Optional }
             );
 
             config.Routes.MapHttpRoute(
@@ -22,6 +22,15 @@ namespace Epam.Wunderlist.MvcPL
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+                name: "DefaultWithActionApi",
+                routeTemplate: "api/{controller}/{action}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+            
+
+            
         }
     }
 }

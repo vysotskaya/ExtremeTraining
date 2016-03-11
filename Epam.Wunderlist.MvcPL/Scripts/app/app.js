@@ -1,15 +1,13 @@
 ﻿var app = angular.module('wunderlistApp', ['ngResource', 'ui.router']);
 
-app.controller('wunderlistAppController',['todoListService', '$scope', '$http', function (todoListService, $scope, $http) {
-    //$scope.lists = [{ "TodoListName": "first", "Id": "1", "UserProfileRefId": "1" },
-    //               { "TodoListName": "second", "Id": "2", "UserProfileRefId": "1" },
-    //               { "TodoListName": "third", "Id": "3", "UserProfileRefId": "1" }];
-    //$scope.lists = todoListService.getTodolists();
+app.controller('wunderlistAppController',['todoListService', '$scope', function (todoListService, $scope) {
+
     $scope.getTodoLists = function() {
         todoListService.getTodolists(function (response) {
             $scope.lists = response;
         });
     };
+
     $scope.getTodoLists();
 
     $scope.selectTodoList = function (listId, listName) {
@@ -17,30 +15,23 @@ app.controller('wunderlistAppController',['todoListService', '$scope', '$http', 
     }
 
     $scope.todoList = {};
+
+
     $scope.addNewTodoList = function (userId) {
         if ($scope.todoList.TodoListName == "") {
             return;
         }
-        debugger;
         $scope.todoList.UserProfileRefId = userId;
-        $http({
-            url: 'http://localhost:53028/api/TodoList/Post',
-            method: 'POST',
-            data: { 'Id': 0, 'UserProfileRefId': $scope.todoList.UserProfileRefId, 'TodoListName': $scope.todoList.TodoListName }
-        }).then(function (response) {
-            debugger;
-            console.log(response);
-            $scope.lists.push({ TodoListName: $scope.todoList.TodoListName, Id: response, UserProfileRefId: $scope.todoList.UserProfileRefId });
-            $scope.todoList.TodoListName = "";
-            console.log($scope.lists);
+        todoListService.addTodolist($scope.todoList, function(data) {
+            $scope.lists.push(
+            {
+                TodoListName: $scope.todoList.TodoListName,
+                Id: data.data,
+                UserProfileRefId: $scope.todoList.UserProfileRefId
+            });
+             $scope.todoList.TodoListName = "";
         });
-        //$http.post('http://localhost:53028/api/TodoList/Post', )
-        //todoListService.addTodolist($scope.todoList, function (response) {
-        //    debugger;
-        //    console.log(response);
-        //});
-        //$scope.getTodoLists();
-    }
+    };
 
     $scope.editedTodoList = {};
 
@@ -55,7 +46,6 @@ app.controller('wunderlistAppController',['todoListService', '$scope', '$http', 
     };
 
     $scope.editTodoList = function () {
-        debugger;
         if ($scope.editedTodoList.TodoListName == "") {
             return;
         }
@@ -65,51 +55,56 @@ app.controller('wunderlistAppController',['todoListService', '$scope', '$http', 
             }
         });
         todoListService.updateTodoList($scope.editedTodoList);
+        $scope.selectedTodoListName = $scope.editedTodoList.TodoListName;
     }
 
-    $scope.deleteTodoList = function(listId) {
+    $scope.deleteTodoList = function (listId) {
         angular.forEach($scope.lists, function (u, i) {
             if (u.Id === listId) {
                 $scope.lists.splice(i, 1);
             }
         });
-        //todoListService.deleteTodolist(listId);
+        todoListService.deleteTodolist(listId);
+        $scope.selectedTodoListName = "";
     }
 }]);
 
 app.controller('todoTaskController', ['$scope', '$stateParams', 'todoTaskService', function ($scope, $stateParams, todoTaskService) {
-    $scope.tasks = todoTaskService.find($stateParams.id);
+    todoTaskService.getTodotasksByListId($stateParams.id, function (response) {
+        $scope.tasks = response;
+    });
+
+    //$scope.tasks = todoTaskService.find($stateParams.id);
     $scope.selectedListId = $stateParams.id;
 
-    $scope.makeActiveTask = function(id) {
+    $scope.updateStateTodoTask = function (id, state) {
         angular.forEach($scope.tasks, function (u, i) {
             if (u.Id === id) {
-                $scope.tasks[i].TaskStateRefId = 1;
+                $scope.tasks[i].TaskStateRefId = state;
+                todoTaskService.updateTodotask($scope.tasks[i]);
             }
         });
     };
-
-    $scope.makeCompletedTask = function (id) {
-        angular.forEach($scope.tasks, function (u, i) {
-            if (u.Id === id) {
-                $scope.tasks[i].TaskStateRefId = 2;
-            }
-        });
-    };
-
+ 
     $scope.addNewTodoTask = function (listId) {
-        debugger;
-        if ($scope.newTodoTaskName != "") {
-            var id = $scope.tasks[$scope.tasks.length - 1].Id + 1;
-            $scope.tasks.push({ TodoTaskName: $scope.newTodoTaskName, TaskStateRefId: 1, Id: id });
-            $scope.newTodoTaskName = "";
+        if ($scope.newTodoTaskName == "") {
+            return;
         }
+        var todoTask = {
+            TodoTaskName: $scope.newTodoTaskName,
+            DateAdded: new Date(),
+            TaskStateRefId: 1,
+            TodoListRefId: listId
+        };
+        todoTaskService.addTodotask(todoTask, function (data) {
+            $scope.tasks.push(JSON.parse(data.data));
+            $scope.newTodoTaskName = "";
+        });
     };
 }]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
-    debugger;
     $stateProvider
         .state('todoTasks', {
             url: 'todolists/:id/todotasks',

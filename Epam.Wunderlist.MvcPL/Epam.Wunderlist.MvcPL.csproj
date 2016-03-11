@@ -235,6 +235,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PartialsController.cs" />
     <Compile Include="Controllers\TodoListController.cs" />
+    <Compile Include="Controllers\TodoTaskController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />
     <Compile Include="Controllers\WunderlistController.cs" />
     <Compile Include="Global.asax.cs">

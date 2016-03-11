@@ -29,7 +29,6 @@ function chooseTaskList(id)
  	}
 }
 function chooseTaskOwnerList(id) {
-    debugger;
     var lists = $("li[name='listItem']");
     for (var index = 0; index < lists.length; ++index) {
         var element = lists[index];
@@ -38,11 +37,6 @@ function chooseTaskOwnerList(id) {
             $('#' + element.id).children('a').children('span').css('class', 'list-options').prop('hidden', true);
         }
     }
-    //lists.forEach(function (element, index, array) {
-    //    if (element.hasClass('slidebarItem-owner-list-active')) {
-    //        element.removeClass('slidebarItem-owner-list-active');
-    //    }
-    //});
     $('#' + id).addClass('slidebarItem-owner-list-active');
     $('#' + id).children('a').children('span').css('class', 'list-options').prop('hidden', false);
 }

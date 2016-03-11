@@ -37,14 +37,16 @@ namespace Epam.Wunderlist.MvcPL.Controllers
             return createdId;
         }
 
+        [HttpPut]
         public void Put(int id, [FromBody]TodoList todoList)
         {
             _todoListService.Update(todoList);
         }
 
-        public void Delete(int todoListId)
+        [HttpDelete]
+        public void Delete(int id)
         {
-            var todoList = _todoListService.GetById(todoListId);
+            var todoList = _todoListService.GetById(id);
             _todoListService.Delete(todoList);
         }
     }

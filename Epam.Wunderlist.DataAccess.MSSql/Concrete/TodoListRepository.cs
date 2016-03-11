@@ -17,11 +17,6 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
         public TodoListRepository(DbContext dbContext)
         {
             _dbContext = dbContext;
-            Mapper.Initialize(cfg => {
-                cfg.CreateMap<TodoListDbModel, TodoList>();
-                cfg.CreateMap<TodoList, TodoListDbModel>()
-                    .ForSourceMember(x => x.Id, y => y.Ignore());
-            });
         }
 
         public IEnumerable<TodoList> GetAll()
@@ -32,7 +27,7 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
         public TodoList GetById(int key)
         {
             var todoList = _dbContext.Set<TodoListDbModel>().FirstOrDefault(l => l.Id == key);
-            return Mapper.Map<TodoListDbModel, TodoList>(todoList);
+            return Mapper.DynamicMap<TodoListDbModel, TodoList>(todoList);
         }
 
         public TodoList GetByPredicate(Expression<Func<TodoList, bool>> expression)
@@ -42,7 +37,7 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
 
         public int Create(TodoList entity)
         {
-            var todoList = Mapper.Map<TodoList, TodoListDbModel>(entity);
+            var todoList = Mapper.DynamicMap<TodoList, TodoListDbModel>(entity);
             _dbContext.Set<TodoListDbModel>().Add(todoList);
             _dbContext.SaveChanges();
             return todoList.Id;
@@ -72,9 +67,10 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
 
         public ICollection<TodoList> GetByUserId(int userId)
         {
-            return _dbContext.Set<TodoListDbModel>()
-                    .Where(l => l.UserProfileRefId == userId).ToList()
-                    .Select(l => Mapper.Map<TodoListDbModel, TodoList>(l)).ToList();
+            var result = _dbContext.Set<TodoListDbModel>()
+                .Where(l => l.UserProfileRefId == userId).ToList()
+                .Select(l => Mapper.DynamicMap<TodoListDbModel, TodoList>(l)).ToList();
+            return result;
         }
     }
 }

@@ -25,10 +25,11 @@ namespace Epam.Wunderlist.DataServices.TodoTaskServices
             return _todoTaskRepository.GetById(id);
         }
 
-        public void Create(TodoTask entity)
+        public TodoTask Create(TodoTask entity)
         {
-            _todoTaskRepository.Create(entity);
+            var id = _todoTaskRepository.Create(entity);
             _unitOfWork.Commit();
+            return id != 0 ? _todoTaskRepository.GetById(id) : null;
         }
 
         public void Update(TodoTask entity)

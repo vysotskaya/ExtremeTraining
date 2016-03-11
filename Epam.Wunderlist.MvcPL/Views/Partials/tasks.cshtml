@@ -38,7 +38,7 @@
         <li ng-repeat="task in tasks | filter: { TaskStateRefId: '1' }" tabindex="0" class="task-item" draggable="true">
             <div class="taskItem-body">
                 <label class="checkbox-inline">
-                    <input type="checkbox" ng-click="makeCompletedTask(task.Id);">
+                    <input type="checkbox" ng-click="updateStateTodoTask(task.Id, 2);">
                     <div class="taskItem-titleWrapper" tabindex="-1" aria-hidden="true">
                         <span class="taskItem-titleWrapper-title" ng-bind="task.TodoTaskName"></span>
                     </div>
@@ -60,7 +60,7 @@
             <li ng-repeat="task in tasks | filter: { TaskStateRefId: '2' }" tabindex="0" class="task-item-hidden" draggable="true">
                 <div class="taskItem-body">
                     <label class="checkbox-inline">
-                        <input type="checkbox" checked="true" ng-click="makeActiveTask(task.Id);">
+                        <input type="checkbox" checked="true" ng-click="updateStateTodoTask(task.Id, 1);">
                         <div class="taskItem-titleWrapper" tabindex="-1" aria-hidden="true">
                             <span class="taskItem-titleWrapper-title-hidden" ng-bind="task.TodoTaskName"></span>
                         </div>

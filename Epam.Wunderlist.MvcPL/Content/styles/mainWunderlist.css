@@ -44,8 +44,7 @@ body#wunderlist-base{
 }
 
 #wunderlist-base.background-06:before {
-    background-image:  url("http://mb.cision.com/Public/1797/9480529/b34cbbd27577d1a0_org.jpg") !important;
-
+    background-image:  url("../images/06.jpg") !important;
 }
 #wunderlist-base:before
 {
