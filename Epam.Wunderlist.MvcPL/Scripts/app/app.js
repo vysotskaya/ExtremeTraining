@@ -74,6 +74,16 @@ app.controller('todoTaskController', ['$scope', '$stateParams', 'todoTaskService
         $scope.tasks = response;
     });
 
+    //for drag and drop
+
+    $scope.models = {
+        selected: null,
+        lists: $scope.tasks
+    };
+    $scope.$watch('models', function(model) {
+        $scope.modelAsJson = angular.toJson(model, true);
+    }, true);
+
     //$scope.tasks = todoTaskService.find($stateParams.id);
     $scope.selectedListId = $stateParams.id;
 

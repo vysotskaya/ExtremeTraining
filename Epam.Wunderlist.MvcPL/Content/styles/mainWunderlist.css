@@ -277,15 +277,10 @@ div.content-footer{
     border-top-color: rgb(224, 224, 223);
     display: block;
     flex-shrink: 0;
-    padding-bottom: 12px;
-    padding-top: 12px;
-    padding-left: 12px;
-    padding-right: 12px;
+    padding: 12px;
     text-decoration: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    width: 392px;
-    height: 54px;
 
 }
 div.cols{
@@ -315,12 +310,15 @@ input#edit-email{
     border-color: rgb(204, 204, 204);
     background-origin: padding-box;border-radius: 3px;
     box-shadow: rgb(214, 214, 214);
+    border-style: solid;
+    border-color: rgb(224, 224, 223);
+    border-width: 1px;
     cursor: auto;
     display: inline-block;
-    font-size: 15px;
+    font-size: 13px;
     padding: 6px;
     text-align: start;
-    width: 189px;
+    width: 180px;
     -webkit-user-select: text;
 
 }
@@ -338,7 +336,8 @@ button#change-email{
     background-attachment: scroll;
     background-color: rgb(250, 250, 250);
     background-origin: padding-box;
-    border-color: rgb(115, 114, 114);
+    /*border-color: rgb(115, 114, 114);*/
+    border-color: rgb(224, 224, 223);
     border-radius: 3px;
     border-width: 1px;
     border-style: solid;
@@ -350,7 +349,8 @@ button#change-email{
     display: inline-block;
     line-height: 13px;
     font-weight: bold;
-    font-size: 13px;overflow: hidden;
+    font-size: 13px;
+    overflow: hidden;
     padding-bottom: 8px;
     padding-top: 9px;
     padding-left: 12px;
@@ -1535,7 +1535,7 @@ div#user-popover{
     background-size: auto;
     border-radius: 3px;
     display: block;
-    height: 236px;
+    height: 200px;
     font-weight: 14px;
     font-weight: 500;
     left: 5px;
@@ -1739,7 +1739,7 @@ label.checkbox-inline{
     
 }
 div#userModal div.modal-content{
-    width: 530px;
+    width: 600px;
     overflow-y: auto;
     overflow-x: hidden;    
     background-color: rgb(247, 247, 247);
@@ -1754,8 +1754,13 @@ div#userModal div.modal-header{
     padding-right: 15px;
     height: 164px;
     width: 530px;
-
+    outline: 0;
 }
+
+div#userModal div.pro-status-wrapper {
+    outline: 0;
+}
+
 div#userModal div.modal-dialog{
     flex-basis: 0%;
     width: 530px;
@@ -1765,15 +1770,11 @@ div#userModal div.modal-dialog{
 }
 
 div#userModal div.modal-dialog div.cols{
-    padding-right: 15px;
     padding-left: 7px;
     zoom:1;
-    margin-bottom: 14px;
-    margin-top: 0px;
-    height: 150px;
     width: 530px;
 }
-div#userModal div.modal-body{
+/*div#userModal div.modal-body{
     width: 530px;
     padding-top: 14px;
     padding-bottom: 14px;
@@ -1782,7 +1783,7 @@ div#userModal div.modal-body{
     padding-left: 0px;
     display: block;
     font-size: 14px;
-}
+}*/
 
 div#userModal div.modal-body div.cols{
     padding-right: 15px;
@@ -1800,8 +1801,7 @@ div#userModal div.modal-body div.cols div.col-32-text-right{
     text-align: right;
     font-size: 13px;
     padding-left: 7px;
-    padding-top: 0px;
-    margin-top: -106px;
+    padding-top: 0;
     display: inline-block;
     box-sizing: border-box;
     zoom:1;
@@ -1896,7 +1896,6 @@ div#userModal div.modal-dialog div.cols div.col-68{
     vertical-align: middle;
     zoom: 1;
     width: 340px;
-    height: 130px;
 }
 li.task-item{
     display: list-item;
@@ -1907,4 +1906,47 @@ li.task-item-hidden{
     display: list-item;
     padding-bottom: 2px;
     opacity: 0.7;
+}
+
+#wunderlist-base button.blue {
+    -webkit-box-shadow: inset 0 0 0 1px #328ad6;
+    box-shadow: inset 0 0 0 1px #328ad6;
+    background-color: #328ad6;
+    color: #fff;
+}
+
+#wunderlist-base button.full {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float: none;
+    text-align: center;
+    width: 120px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+
+#wunderlist-base button {
+    position: relative;
+    cursor: pointer;
+    color: #737272;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 13px;
+    padding: 8px 12px;
+    background: #fafafa;
+    -webkit-box-shadow: inset 0 0 0 1px #d6d6d6;
+    box-shadow: inset 0 0 0 1px #d6d6d6;
+    border: none;
+    margin-right: 7px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+li {
+    outline: 0;
 }

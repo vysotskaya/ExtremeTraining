@@ -5,10 +5,13 @@
 <head>
     <meta charset="utf-8">
     <title>Wunderlist</title>
+    <script scr="~/Scripts/angular-drag-and-drop-lists.js"></script>
+    <script scr="~/Scripts/ngDraggable.js"></script>
+
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
     <link href="~/Content/styles/styleWunderlist.css" rel="stylesheet">
     <link href="~/Content/styles/mainWunderlist.css" rel="stylesheet">
-
+    <link href="~/Content/styles/drag-and-drop.css" rel="stylesheet"/>
     <script src="~/Scripts/angular.min.js"></script>
     @*<script src="~/Scripts//main.angular.js"></script>*@
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
@@ -28,150 +31,161 @@
         <!-- модальные окна -->
         <div id="modal">
             <!-- User redactor/view profile -->
-            <div id="userModal" class="modal fade" aria-hidden="true" tabindex="-1" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header" tabindex="0">
-                            <div class="cols">
-                                <div class="col-32">
-                                    <div class="avatar-frame">
-                                        <div class="avatar large hover choose">
-                                            <span class="icon-options" style="display: block;"></span>
-                                            <img src="~/Content/images/photo.png" class="opaque">
-                                        </div>
-                                        <div class="avatar-upload">
-                                            <div class="drop-zone"></div>
-                                        </div>
+        <div id="userModal" class="modal fade" aria-hidden="true" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content settings-content-inner-wrapper">
+                    <div class="modal-header" tabindex="0">
+                        <div class="cols">
+                            <div class="col-32">
+                                <div class="avatar-frame">
+                                    <div class="avatar large hover choose">
+                                        <span class="icon-options" style="display: block;"></span>
+                                        <img src="~/Content/images/photo.png" class="opaque">
                                     </div>
-                                </div>
-                                <div class="col-68">
-                                    <div class="pro-status-wrapper">
-                                        <div tabindex="0" class="pro-status pro-section-style tabStart">
-                                            <h3>
-                                                <text rel="settings_account_header_account_$" data="$settings_account_header_free">Учетная запись <token class="token_0" title="Бесплатно">Бесплатно</token></text>
-                                            </h3>
-                                            <p>
-                                                <text rel="settings_account_pro_description">Вы можете назначать задачи добавлять к ним файлы. Ваша работа еще никогда не была настолько простой!</text>
-                                            </p>
-                                        </div>
+                                    <div class="avatar-upload">
+                                        <div class="drop-zone"></div>
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="col-68">
+                                <div class="pro-status-wrapper">
+                                    <div tabindex="0" class="pro-status pro-section-style tabStart">
+                                        <h3>
+                                            <text rel="settings_account_header_account_$" data="$settings_account_header_free">Учетная запись <token class="token_0" title="Бесплатно">Бесплатно</token></text>
+                                        </h3>
+                                        <p>
+                                            <text rel="settings_account_pro_description">Вы можете назначать задачи добавлять к ним файлы. Ваша работа еще никогда не была настолько простой!</text>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            <div class="cols">
-                                <div class="col-32-text-right">
-                                    <text rel="label_name" class="label-name">Имя</text>
-                                </div>
-                                <div class="col-68">
-                                    <input type="text" id="edit-full-name" data-key-aria-label="label_name" data-key-placeholder="label_name" value="Екатерина Цмыг" initial-value="" tabindex="0" placeholder="Имя" aria-label="Имя">
-                                </div>
-                            </div> <!-- Email -->
-                            <div class="cols">
-                                <div class="col-32-text-right">
-                                    <text rel="label_email">Электронная почта</text>
-                                </div>
-                                <div class="col-40">
-                                    <input type="text" id="edit-email" data-key-aria-label="label_email" data-key-placeholder="label_email" value="czmyg96@mail.ru" initial-value="" disabled="" tabindex="0" placeholder="Электронная почта" aria-label="Электронная почта">
-                                </div>
-                                <div class="col-28">
-                                    <button id="change-email" class="full" data-key-aria-label="settings_account_change_email" tabindex="0" aria-label="Изменить адрес электронной почты">
-                                        <text rel="settings_account_change_email">Изменить адрес электронной почты</text>
-                                    </button>
-                                </div>
-                            </div> <!-- Password for email confirm -->
-                            <div class="cols password-confirm">
-                                <div class="col-32 text-right">
-                                    <text rel="label_password">Пароль</text>
-                                </div>
-                                <div class="col-40">
-                                    <input type="password" id="edit-email-pw-confirm" data-key-aria-label="label_password" disabled="" tabindex="0" aria-label="Пароль">
-                                </div>
-                                <div class="col-28"></div>
-                            </div> <!-- Change Email -->
-                            <div class="cols change-email-buttons">
-                                <div class="col-32 text-right"></div>
-                                <div class="col-40">
-                                    <div class="cols email-error error-message">
-                                        <div class="col-100">
-                                            <text rel="api_error_incorrect_password">Неверный пароль.</text>
-                                        </div>
-                                    </div>
-                                    <div class="cols">
-                                        <div class="col-50">
-                                            <button class="full" id="cancel-email" data-key-aria-label="button_cancel" tabindex="0" aria-label="Отмена">
-                                                <text rel="button_cancel">Отмена</text>
-                                            </button>
-                                        </div>
-                                        <div class="col-50">
-                                            <button class="full blue disabled" id="save-email" disabled="" data-key-aria-label="button_save" tabindex="0" aria-label="Сохранить">
-                                                <text rel="button_save">Сохранить</text>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-28"></div>
-                            </div>  <!-- Additional Emails -->
-                            <div class="cols">
-                                <div class="col-32 text-right"></div>
-                                <div class="col-68">
-                                    <p class="settings-account-manage-emails">
-                                        <a href="/account/emails" target="_blank">
-                                            <text rel="settings_account_manage_emails">Добавление и изменение адресов электронной почты</text>
-                                        </a>
-                                    </p>
-                                </div>
-                            </div> <!-- Change Password -->
-                            <div class="cols show-password-buttons">
-                                <div class="col-32 text-right">
-                                    <text rel="label_password">Пароль</text>
-                                </div>
-                                <div class="col-40">
-                                    <input type="password" class="old-password" data-key-placeholder="settings_account_current_password" data-key-aria-label="settings_account_current_password" tabindex="0" placeholder="Текущий пароль" aria-label="Текущий пароль">
-                                    <button id="change-password" class="full" data-key-aria-label="settings_account_change_password" tabindex="0" aria-label="Изменить пароль…">
-                                        <text rel="settings_account_change_password">Изменить пароль…</text>
-                                    </button>
-                                </div>
-                                <div class="col-28"></div>
+
+                    </div>
+                    <div class="modal-body">
+                        <div class="cols">
+                            <div class="col-32-text-right">
+                                <text rel="label_name" class="label-name">Имя</text>
                             </div>
-                            <div class="cols change-password-buttons">
-                                <div class="col-32"></div>
-                                <div class="col-40">
-                                    <div class="cols">
-                                        <div class="col-100">
-                                            <input type="password" class="new-password" data-key-placeholder="settings_account_new_password" data-key-aria-label="settings_account_new_password" tabindex="0" placeholder="Новый пароль" aria-label="Новый пароль">
-                                        </div>
-                                    </div>
-                                    <div class="cols">
-                                        <div class="col-100">
-                                            <input id="confirm-password" type="password" class="confirm-password" data-key-placeholder="settings_account_repeat_new_password" data-key-aria-label="settings_account_repeat_new_password" tabindex="0" placeholder="Повторите новый пароль" aria-label="Повторите новый пароль">
-                                        </div>
-                                    </div>
-                                    <div class="cols change-password-error error-message">
-                                        <div class="col-100">
-                                            <text rel="settings_account_change_password_error">При попытке изменить пароль произошла ошибка. Попробуйте еще раз.</text>
-                                        </div>
-                                    </div>
-                                    <div class="cols">
-                                        <div class="col-50">
-                                            <button class="full" id="cancel-password" data-key-aria-label="button_cancel" tabindex="0" aria-label="Отмена">
-                                                <text rel="button_cancel">Отмена</text>
-                                            </button>
-                                        </div>
-                                        <div class="col-50">
-                                            <button class="full blue" id="save-password" data-key-aria-label="button_save" tabindex="0" aria-label="Сохранить">
-                                                <text rel="button_save">Сохранить</text>
-                                            </button>
-                                        </div>
+                            <div class="col-68">
+                                <input type="text" id="edit-full-name" data-key-aria-label="label_name" data-key-placeholder="label_name" value="@User.Identity.Name" initial-value="" tabindex="0" placeholder="Имя" aria-label="Имя">
+                            </div>
+                        </div> <!-- Email -->
+                        <div class="cols">
+                            <div class="col-32-text-right">
+                                <text rel="label_email">Электронная почта</text>
+                            </div>
+                            <div class="col-68">
+                                <input type="text" id="edit-email" data-key-aria-label="label_email" data-key-placeholder="label_email" value="@User.Identity.GetUserEmail()" initial-value="" disabled tabindex="0" placeholder="Электронная почта" aria-label="Электронная почта">
+                            </div>
+                            @*<div class="col-28">
+                                <button id="change-email" class="full" data-key-aria-label="settings_account_change_email" tabindex="0" aria-label="Изменить адрес электронной почты">
+                                    <text rel="settings_account_change_email">Изменить адрес электронной почты</text>
+                                </button>
+                            </div>*@
+                        </div> <!-- Password for email confirm -->
+                        @*<div class="cols password-confirm">
+                            <div class="col-32 text-right">
+                                <text rel="label_password">Пароль</text>
+                            </div>
+                            <div class="col-40">
+                                <input type="password" id="edit-email-pw-confirm" data-key-aria-label="label_password" disabled="" tabindex="0" aria-label="Пароль">
+                            </div>
+                            <div class="col-28"></div>
+                        </div> <!-- Change Email -->
+                        <div class="cols change-email-buttons">
+                            <div class="col-32 text-right"></div>
+                            <div class="col-40">
+                                <div class="cols email-error error-message">
+                                    <div class="col-100">
+                                        <text rel="api_error_incorrect_password">Неверный пароль.</text>
                                     </div>
                                 </div>
-                                <div class="col-28"></div>
+                                <div class="cols">
+                                    <div class="col-50">
+                                        <button class="full" id="cancel-email" data-key-aria-label="button_cancel" tabindex="0" aria-label="Отмена">
+                                            <text rel="button_cancel">Отмена</text>
+                                        </button>
+                                    </div>
+                                    <div class="col-50">
+                                        <button class="full blue disabled" id="save-email" disabled="" data-key-aria-label="button_save" tabindex="0" aria-label="Сохранить">
+                                            <text rel="button_save">Сохранить</text>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-28"></div>
+                        </div> <!-- Additional Emails -->
+                        <div class="cols">
+                            <div class="col-32 text-right"></div>
+                            <div class="col-68">
+                                <p class="settings-account-manage-emails">
+                                    <a href="/account/emails" target="_blank">
+                                        <text rel="settings_account_manage_emails">Добавление и изменение адресов электронной почты</text>
+                                    </a>
+                                </p>
+                            </div>
+                        </div> <!-- Change Password -->
+                        <div class="cols show-password-buttons">
+                            <div class="col-32 text-right">
+                                <text rel="label_password">Пароль</text>
+                            </div>
+                            <div class="col-40">
+                                <input type="password" class="old-password" data-key-placeholder="settings_account_current_password" data-key-aria-label="settings_account_current_password" tabindex="0" placeholder="Текущий пароль" aria-label="Текущий пароль">
+                                <button id="change-password" class="full" data-key-aria-label="settings_account_change_password" tabindex="0" aria-label="Изменить пароль…">
+                                    <text rel="settings_account_change_password">Изменить пароль…</text>
+                                </button>
+                            </div>
+                            <div class="col-28"></div>
+                        </div>
+                        <div class="cols change-password-buttons">
+                            <div class="col-32"></div>
+                            <div class="col-40">
+                                <div class="cols">
+                                    <div class="col-100">
+                                        <input type="password" class="new-password" data-key-placeholder="settings_account_new_password" data-key-aria-label="settings_account_new_password" tabindex="0" placeholder="Новый пароль" aria-label="Новый пароль">
+                                    </div>
+                                </div>
+                                <div class="cols">
+                                    <div class="col-100">
+                                        <input id="confirm-password" type="password" class="confirm-password" data-key-placeholder="settings_account_repeat_new_password" data-key-aria-label="settings_account_repeat_new_password" tabindex="0" placeholder="Повторите новый пароль" aria-label="Повторите новый пароль">
+                                    </div>
+                                </div>
+                                <div class="cols change-password-error error-message">
+                                    <div class="col-100">
+                                        <text rel="settings_account_change_password_error">При попытке изменить пароль произошла ошибка. Попробуйте еще раз.</text>
+                                    </div>
+                                </div>
+                                <div class="cols">
+                                    <div class="col-50">
+                                        <button class="full" id="cancel-password" data-key-aria-label="button_cancel" tabindex="0" aria-label="Отмена">
+                                            <text rel="button_cancel">Отмена</text>
+                                        </button>
+                                    </div>
+                                    <div class="col-50">
+                                        <button class="full blue" id="save-password" data-key-aria-label="button_save" tabindex="0" aria-label="Сохранить">
+                                            <text rel="button_save">Сохранить</text>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-28"></div>
+                        </div>*@
+                    </div>
+                    <div class="content-footer">
+                        <div class="cols">
+                            <div class="col-40"></div>
+                            <div class="col-40"></div>
+                            <div class="col-20" style="display: inline-block">
+                                <button class="full blue close">
+                                    <text rel="button_done">Done</text>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
             <!-- Modal add list -->
         <form>
             <div id="addListModal" class="modal fade" aria-hidden="true" tabindex="-1" role="dialog">
@@ -307,7 +321,7 @@
                         </svg>
                     </a>
                     <div class="search-input-wrapper">
-                        <input id="searchInput" class="chromeless search-input" type="text" data-key-aria-label="placeholder_search" aria-label="Поиск…" onkeyup="startSearch();">
+                        <input id="searchInput" ng-model="searchTerm" class="chromeless search-input" type="text" data-key-aria-label="placeholder_search" aria-label="Поиск…" onkeyup="startSearch();">
                     </div>
                     <span class="search-icon-wrapper">
                         <a class="search-icon" role="button" id="searchIconId" tabindex="0" data-key-aria-label="aria_search" aria-label="Поиск" onclick="startSearch();">
@@ -355,35 +369,6 @@
                 </div>
                 <!-- панель списков дел -->
                 <div class="lists-scroll">
-                    <ul class="filters-collection">
-                        <li id="inputTask" name="listItem" role="menuitem" tabindex="0" class="slidebarItem" rel="inbox" aria-label="inbox, задачи 0" onclick="chooseTaskOwnerList(id);">
-                            <a href="#" aria-hidden="true" class="input-task" ng-click="selectTodoList(0, 'Входящие')">
-                                <span class="list-icon" title="Входящие">
-                                    <svg class="inbox" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                        <g stroke="none" stroke-width="1" fill-rule="evenodd">
-                                            <g>
-                                                <path d="M10,15 C8.8,15 7.78,14.14 7.56,13 L2.5,13 C2.22,13 2,12.78 2,12.5 L2,3.5 C2,2.68 2.68,2 3.5,2 L16.5,2 C17.32,2 18,2.68 18,3.5 L18,12.5 C18,12.78 17.78,13 17.5,13 L12.44,13 C12.22,14.14 11.2,15 10,15 L10,15 Z M3,12 L8,12 C8.28,12 8.5,12.22 8.5,12.5 C8.5,13.32 9.18,14 10,14 C10.82,14 11.5,13.32 11.5,12.5 C11.5,12.22 11.72,12 12,12 L17,12 L17,3.5 C17,3.22 16.78,3 16.5,3 L3.5,3 C3.22,3 3,3.22 3,3.5 L3,12 Z M5.5,6 C5.22,6 5,5.78 5,5.5 C5,5.22 5.22,5 5.5,5 L14.5,5 C14.78,5 15,5.22 15,5.5 C15,5.78 14.78,6 14.5,6 L5.5,6 Z M5.5,8 C5.22,8 5,7.78 5,7.5 C5,7.22 5.22,7 5.5,7 L14.5,7 C14.78,7 15,7.22 15,7.5 C15,7.78 14.78,8 14.5,8 L5.5,8 Z M5.5,10 C5.22,10 5,9.78 5,9.5 C5,9.22 5.22,9 5.5,9 L14.5,9 C14.78,9 15,9.22 15,9.5 C15,9.78 14.78,10 14.5,10 L5.5,10 Z M3.5,18 C2.68,18 2,17.32 2,16.5 L2,14.5 C2,14.22 2.22,14 2.5,14 C2.78,14 3,14.22 3,14.5 L3,16.5 C3,16.78 3.22,17 3.5,17 L16.5,17 C16.78,17 17,16.78 17,16.5 L17,14.5 C17,14.22 17.22,14 17.5,14 C17.78,14 18,14.22 18,14.5 L18,16.5 C18,17.32 17.32,18 16.5,18 L3.5,18 Z" id="A"></path>
-                                            </g>
-                                        </g>
-                                    </svg>
-                                </span>
-                                <span class="title">
-                                    <text class="task-name" rel="smart_list_inbox">Входящие</text>
-                                </span>
-                                <span class="overdue-count" aria-hidden="true"></span>
-                                <span class="count" aria-hidden="true"></span>
-                                <span hidden data-toggle="modal" data-target="#editListModal" ng-click="prepareForEdit(Id)" class="list-options" data-key-aria-label="sharing_list_options" data-key-title="sharing_list_options" title="Параметры списка" aria-label="Параметры списка">
-                                    <svg class="options rtl-flip" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                        <g stroke="none" stroke-width="1" fill-rule="evenodd">
-                                            <g id="options">
-                                                <path d="M17.1330617,2.8594383 C15.9930617,1.7194383 14.0130617,1.7194383 12.8930617,2.8594383 L5.5130617,10.2394383 C5.3330617,10.4394383 5.3330617,10.7594383 5.5130617,10.9594383 C5.7130617,11.1394383 6.0330617,11.1394383 6.2330617,10.9594383 L13.5930617,3.5594383 C14.3530617,2.7994383 15.6730617,2.7994383 16.4130617,3.5594383 C17.1730617,4.3194383 17.1930617,5.5594383 16.4130617,6.3394383 L9.0330617,13.7594383 C8.7130617,14.0794383 8.9330617,14.6194383 9.3730617,14.6194383 C9.5130617,14.6194383 9.6330617,14.5594383 9.7330617,14.4594383 L17.1330617,7.0394383 C18.2930617,5.8794383 18.2930617,4.0194383 17.1330617,2.8594383 L17.1330617,2.8594383 Z M8.4930617,15.3594383 C8.0330617,13.4594383 6.5130617,11.9394383 4.6130617,11.4794383 C4.3530617,11.4194383 4.0930617,11.5794383 4.0130617,11.8194383 L2.0330617,17.3194383 C1.8730617,17.7194383 2.2730617,18.1194383 2.6730617,17.9594383 C8.6730617,15.7794383 8.2530617,15.9594383 8.3730617,15.8194383 C8.4930617,15.6994383 8.5330617,15.5194383 8.4930617,15.3594383 L8.4930617,15.3594383 Z M3.3330617,16.6594383 L4.8130617,12.5794383 C6.0130617,12.9994383 6.9730617,13.9794383 7.3930617,15.1794383 L3.3330617,16.6594383 Z" id="N"></path>
-                                            </g>
-                                        </g>
-                                    </svg>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
                     <ul class="lists-collections">
                         <li ng-repeat="list in lists" name="listItem" ui-sref-active="selected" role="menuitem" id="{{list.Id}}" tabindex="0" class="slidebarItem-owner-list" draggable="true" onclick="chooseTaskOwnerList(id)">
                             <a  href="#" ui-sref="todoTasks({id: list.Id})" aria-hidden="true" ng-click="selectTodoList(list.Id, list.TodoListName)">
@@ -449,11 +434,6 @@
                         </a>
                     </li>
                     <li role="menuitem" tabindex="0">
-                        <a data-path="backgrounds" data-analytics-action="clickChangeBackground">
-                            <text rel="userbar_change_background">Изменить фоновое изображение</text>
-                        </a>
-                    </li>
-                    <li role="menuitem" tabindex="0">
                         <a href="https://github.com/wunderlist/changelog/blob/master/webapp/changelog.md#whats-new-in-wunderlist" target="_blank">
                             <text rel="settings_show_whats_new">Что нового?</text>
                         </a>
@@ -468,9 +448,9 @@
                             <text rel="settings_website_wunderlist">Сайт Wunderlist</text>
                         </a>
                     </li>
-                    <li class="email-disabled" aria-visible="false">user email</li>
+                    <li class="email-disabled" aria-visible="false">@User.Identity.GetUserEmail()</li>
                     <li role="menuitem" tabindex="0">
-                        <a class="logout">
+                        <a class="logout" href="@Url.Action("LogOff", "Account")">
                             <text rel="button_log_out">Выход</text>
                         </a>
                     </li>
