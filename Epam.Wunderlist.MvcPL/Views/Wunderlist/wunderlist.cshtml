@@ -1,0 +1,484 @@
+﻿@using Epam.Wunderlist.MvcPL.Identity
+@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html dir="ltr" lang="ru_RU">
+<head>
+    <meta charset="utf-8">
+    <title>Wunderlist</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/styles/styleWunderlist.css" rel="stylesheet">
+    <link href="~/Content/styles/mainWunderlist.css" rel="stylesheet">
+
+    <script src="~/Scripts/angular.min.js"></script>
+    @*<script src="~/Scripts//main.angular.js"></script>*@
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/app/main.js"></script>
+    <script src="~/Scripts/jquery-ui-1.9.2.custom.min.js"></script>
+    @*<script src="~/Scripts/AngularUI/ui-router.min.js"></script>*@
+    <script src="~/Scripts/angular-ui-router.js"></script>
+    <script src="~/Scripts/angular-resource.js"></script>
+    <script src="~/Scripts/app/app.js"></script>
+    <script src="~/Scripts/app/todolistService.js"></script>
+    <script src="~/Scripts/app/todotaskService.js"></script>
+</head>
+<body ng-app="wunderlistApp" class="wlapp-parent chrome animate platform-windows application main background-06 focus-sidebar" style="opacity: 1;" role="application" id="wunderlist-base">
+    <!-- главный интерфейс -->
+    <div class="main-interface" ng-controller="wunderlistAppController">
+        <!-- модальные окна -->
+        <div id="modal">
+            <!-- User redactor/view profile -->
+            <div id="userModal" class="modal fade" aria-hidden="true" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" tabindex="0">
+                            <div class="cols">
+                                <div class="col-32">
+                                    <div class="avatar-frame">
+                                        <div class="avatar large hover choose">
+                                            <span class="icon-options" style="display: block;"></span>
+                                            <img src="~/Content/images/photo.png" class="opaque">
+                                        </div>
+                                        <div class="avatar-upload">
+                                            <div class="drop-zone"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-68">
+                                    <div class="pro-status-wrapper">
+                                        <div tabindex="0" class="pro-status pro-section-style tabStart">
+                                            <h3>
+                                                <text rel="settings_account_header_account_$" data="$settings_account_header_free">Учетная запись <token class="token_0" title="Бесплатно">Бесплатно</token></text>
+                                            </h3>
+                                            <p>
+                                                <text rel="settings_account_pro_description">Вы можете назначать задачи добавлять к ним файлы. Ваша работа еще никогда не была настолько простой!</text>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-body">
+                            <div class="cols">
+                                <div class="col-32-text-right">
+                                    <text rel="label_name" class="label-name">Имя</text>
+                                </div>
+                                <div class="col-68">
+                                    <input type="text" id="edit-full-name" data-key-aria-label="label_name" data-key-placeholder="label_name" value="Екатерина Цмыг" initial-value="" tabindex="0" placeholder="Имя" aria-label="Имя">
+                                </div>
+                            </div> <!-- Email -->
+                            <div class="cols">
+                                <div class="col-32-text-right">
+                                    <text rel="label_email">Электронная почта</text>
+                                </div>
+                                <div class="col-40">
+                                    <input type="text" id="edit-email" data-key-aria-label="label_email" data-key-placeholder="label_email" value="czmyg96@mail.ru" initial-value="" disabled="" tabindex="0" placeholder="Электронная почта" aria-label="Электронная почта">
+                                </div>
+                                <div class="col-28">
+                                    <button id="change-email" class="full" data-key-aria-label="settings_account_change_email" tabindex="0" aria-label="Изменить адрес электронной почты">
+                                        <text rel="settings_account_change_email">Изменить адрес электронной почты</text>
+                                    </button>
+                                </div>
+                            </div> <!-- Password for email confirm -->
+                            <div class="cols password-confirm">
+                                <div class="col-32 text-right">
+                                    <text rel="label_password">Пароль</text>
+                                </div>
+                                <div class="col-40">
+                                    <input type="password" id="edit-email-pw-confirm" data-key-aria-label="label_password" disabled="" tabindex="0" aria-label="Пароль">
+                                </div>
+                                <div class="col-28"></div>
+                            </div> <!-- Change Email -->
+                            <div class="cols change-email-buttons">
+                                <div class="col-32 text-right"></div>
+                                <div class="col-40">
+                                    <div class="cols email-error error-message">
+                                        <div class="col-100">
+                                            <text rel="api_error_incorrect_password">Неверный пароль.</text>
+                                        </div>
+                                    </div>
+                                    <div class="cols">
+                                        <div class="col-50">
+                                            <button class="full" id="cancel-email" data-key-aria-label="button_cancel" tabindex="0" aria-label="Отмена">
+                                                <text rel="button_cancel">Отмена</text>
+                                            </button>
+                                        </div>
+                                        <div class="col-50">
+                                            <button class="full blue disabled" id="save-email" disabled="" data-key-aria-label="button_save" tabindex="0" aria-label="Сохранить">
+                                                <text rel="button_save">Сохранить</text>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-28"></div>
+                            </div>  <!-- Additional Emails -->
+                            <div class="cols">
+                                <div class="col-32 text-right"></div>
+                                <div class="col-68">
+                                    <p class="settings-account-manage-emails">
+                                        <a href="/account/emails" target="_blank">
+                                            <text rel="settings_account_manage_emails">Добавление и изменение адресов электронной почты</text>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div> <!-- Change Password -->
+                            <div class="cols show-password-buttons">
+                                <div class="col-32 text-right">
+                                    <text rel="label_password">Пароль</text>
+                                </div>
+                                <div class="col-40">
+                                    <input type="password" class="old-password" data-key-placeholder="settings_account_current_password" data-key-aria-label="settings_account_current_password" tabindex="0" placeholder="Текущий пароль" aria-label="Текущий пароль">
+                                    <button id="change-password" class="full" data-key-aria-label="settings_account_change_password" tabindex="0" aria-label="Изменить пароль…">
+                                        <text rel="settings_account_change_password">Изменить пароль…</text>
+                                    </button>
+                                </div>
+                                <div class="col-28"></div>
+                            </div>
+                            <div class="cols change-password-buttons">
+                                <div class="col-32"></div>
+                                <div class="col-40">
+                                    <div class="cols">
+                                        <div class="col-100">
+                                            <input type="password" class="new-password" data-key-placeholder="settings_account_new_password" data-key-aria-label="settings_account_new_password" tabindex="0" placeholder="Новый пароль" aria-label="Новый пароль">
+                                        </div>
+                                    </div>
+                                    <div class="cols">
+                                        <div class="col-100">
+                                            <input id="confirm-password" type="password" class="confirm-password" data-key-placeholder="settings_account_repeat_new_password" data-key-aria-label="settings_account_repeat_new_password" tabindex="0" placeholder="Повторите новый пароль" aria-label="Повторите новый пароль">
+                                        </div>
+                                    </div>
+                                    <div class="cols change-password-error error-message">
+                                        <div class="col-100">
+                                            <text rel="settings_account_change_password_error">При попытке изменить пароль произошла ошибка. Попробуйте еще раз.</text>
+                                        </div>
+                                    </div>
+                                    <div class="cols">
+                                        <div class="col-50">
+                                            <button class="full" id="cancel-password" data-key-aria-label="button_cancel" tabindex="0" aria-label="Отмена">
+                                                <text rel="button_cancel">Отмена</text>
+                                            </button>
+                                        </div>
+                                        <div class="col-50">
+                                            <button class="full blue" id="save-password" data-key-aria-label="button_save" tabindex="0" aria-label="Сохранить">
+                                                <text rel="button_save">Сохранить</text>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-28"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal add list -->
+        <form>
+            <div id="addListModal" class="modal fade" aria-hidden="true" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" tabindex="0">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h3 class="center"><text id="createListText" rel="label_new_list">Создать список</text>
+                            </h3>
+                            <div class="separator-noline">
+                                <input id="listName" ng-model="todoList.TodoListName" class="big-listOptions-title" onkeyup="inputNameOfList('saveButtonId');" type="text" data-key-placeholder="placeholder_list_name" data-key-aria-label="placeholder_list_name" maxlength="255" value="" placeholder="Название списка" aria-label="Название списка">
+                            </div>
+
+                        </div>
+                        <div class="tab-members">
+                            <div class="content-inner-members">
+                                <ul class="content-people">
+                                    <li id="20563809" class="disabled">
+                                        <span class="content-people-image">
+                                                <div class="avatar-medium" title="Екатерина Цмыг">
+                                                    <img class="small-avatar" src="~/Content/images/photo.png">
+                                                </div>
+                                            </span>
+                                        <div class="content-people-meta">
+                                            <div class="content-people-name">
+                                                <span class="content-people-name-label">@User.Identity.GetUserName()</span>
+                                                <div class="content-people-name-badge">
+                                                    <span class="badge-blue">Владелец</span>
+                                                </div>
+                                            </div>
+                                            <span class="content-people-email">@User.Identity.GetUserEmail()</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+
+
+                            <div class="form-group">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4">
+                                    <button class="cancel-full-close close" data-dismiss="modal">
+                                        <text id="closeText" rel="button_cancel"> Отмена</text>
+                                    </button>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="submit" data-dismiss="modal" class="submit-full-blue-disabled" aria-disabled="true" role="button" id="saveButtonId" tabindex="-1" value="Сохранить" ng-click="addNewTodoList(@User.Identity.GetUserId())">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+            <!-- Edit add list -->
+        <form>
+                <div id="editListModal" class="modal fade" aria-hidden="true" tabindex="-1" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" tabindex="0">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h3 class="center"><text id="createListText" rel="label_new_list">Изменить список</text></h3>
+                                <div class="separator-noline">
+                                    <input ng-model="editedTodoList.TodoListName" class="big-listOptions-title" onkeyup="inputNameOfList('saveEditedButtonId');" type="text" data-key-placeholder="placeholder_list_name" data-key-aria-label="placeholder_list_name" maxlength="255" value="" placeholder="Название списка" aria-label="Название списка">
+                                </div>
+
+                            </div>
+                            <div class="tab-members">
+                                <div class="content-inner-members">
+                                    <ul class="content-people">
+                                        <li id="20563809" class="disabled">
+                                            <span class="content-people-image">
+                                                <div class="avatar-medium" title="@User.Identity.GetUserName()">
+                                                    <img class="small-avatar" src="~/Content/images/photo.png">
+                                                </div>
+                                            </span>
+                                            <div class="content-people-meta">
+                                                <div class="content-people-name">
+                                                    <span class="content-people-name-label">@User.Identity.GetUserName()</span>
+                                                    <div class="content-people-name-badge">
+                                                        <span class="badge-blue">Владелец</span>
+                                                    </div>
+                                                </div>
+                                                <span class="content-people-email">@User.Identity.GetUserEmail()</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="text-align: left;">
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <a tabindex="0" data-dismiss="modal" ng-click="deleteTodoList(editedTodoList.Id)" role="button" class="delete-list" data-key-aria-label="label_delete_list" data-key-title="label_delete_list" title="Delete List" aria-label="Delete List">
+                                             <svg class="trash" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                <g stroke="none" stroke-width="1" fill-rule="evenodd">
+                                                    <g id="trash">
+                                                        <path d="M12,3.5 C12,2.4 11.1,1.5 10,1.5 C8.9,1.5 8,2.4 8,3.5 L5.5,3.5 C4.68,3.5 4,4.18 4,5 L4,7 C4,7.28 4.22,7.5 4.5,7.5 L15.5,7.5 C15.78,7.5 16,7.28 16,7 L16,5 C16,4.18 15.32,3.5 14.5,3.5 L12,3.5 Z M10,2.5 C10.56,2.5 11,2.94 11,3.5 L9,3.5 C9,2.94 9.44,2.5 10,2.5 L10,2.5 Z M15,6.5 L5,6.5 L5,5 C5,4.72 5.22,4.5 5.5,4.5 L14.5,4.5 C14.78,4.5 15,4.72 15,5 L15,6.5 Z M14.5,8.5 C14.22,8.5 14,8.72 14,9 L14,16 C14,16.28 13.78,16.5 13.5,16.5 L6.5,16.5 C6.22,16.5 6,16.28 6,16 L6,9 C6,8.72 5.78,8.5 5.5,8.5 C5.22,8.5 5,8.72 5,9 L5,16 C5,16.82 5.68,17.5 6.5,17.5 L13.5,17.5 C14.32,17.5 15,16.82 15,16 L15,9 C15,8.72 14.78,8.5 14.5,8.5 L14.5,8.5 Z M9,9 C9,8.72 8.78,8.5 8.5,8.5 C8.22,8.5 8,8.72 8,9 L8,15 C8,15.28 8.22,15.5 8.5,15.5 C8.78,15.5 9,15.28 9,15 L9,9 Z M12,9 C12,8.72 11.78,8.5 11.5,8.5 C11.22,8.5 11,8.72 11,9 L11,15 C11,15.28 11.22,15.5 11.5,15.5 C11.78,15.5 12,15.28 12,15 L12,9 Z" id="j"></path>
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <button class="cancel-full-close close" data-dismiss="modal">
+                                            <text id="closeText" rel="button_cancel"> Отмена</text>
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="submit" data-dismiss="modal" class="submit-full-blue-enable" aria-disabled="false" role="button" id="saveEditedButtonId" tabindex="-1" value="Сохранить" ng-click="editTodoList()">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- боковая панель -->
+        <div id="lists" role="navigation">
+            <div tabindex="0" class="lists-inner">
+                <!-- панель поиска -->
+                <div id="searchtoolbar">
+                    <a class="toggle-icon" role="button" tabindex="0" data-key-title="toggle_sidebar" title="Toggle Sidebar" onclick="collapseNavBar();">
+                        <svg class="list-toggle" widht="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="0" y1="3" x2="22.5" y2="3" stroke="white" stroke-width="1" />
+                            <line x1="0" y1="10" x2="22.5" y2="10" stroke="white" stroke-width="1" />
+                            <line x1="0" y1="17" x2="22.5" y2="17" stroke="white" stroke-width="1" />
+                        </svg>
+                    </a>
+                    <div class="search-input-wrapper">
+                        <input id="searchInput" class="chromeless search-input" type="text" data-key-aria-label="placeholder_search" aria-label="Поиск…" onkeyup="startSearch();">
+                    </div>
+                    <span class="search-icon-wrapper">
+                        <a class="search-icon" role="button" id="searchIconId" tabindex="0" data-key-aria-label="aria_search" aria-label="Поиск" onclick="startSearch();">
+                            <svg class="search rtl-flip" id="searchIcon" width="20px" , height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="8" cy="9" r="6.2" troke-width="1.3" stroke="white" fill="rgba(0,0,0,0)" />
+                                <line x1="13" y1="13.8" x2="20" y2="22" stroke="white" stroke-width="1" />
+                            </svg>
+                        </a>
+                        <a class="search-stop-icon" id="stopSearchIconId" role="button" tabindex="0" data-key-aria-label="aria-exit-search" data-key-title="aria_exit_search" title="Выйти из поиска" aria-label="Выйти из поиска" onclick="stopSearch();">
+                            <svg width="20px" , height="20px" viewBox="0 0 20 20">
+                                <line x1="3" y1="3" x2="15" y2="15" stroke="white" stroke-width="1" />
+                                <line x1="15" y1="3" x2="3" y2="15" stroke="white" stroke-width="1" />
+                            </svg>
+                        </a>
+                    </span>
+
+
+                </div>
+                <!-- панель пользователя -->
+                <div id="usertoolbar">
+                    <a class="user" role="button" tabindex="0" onclick="userMenuShow();" aria-label="User Name Меню пользователя.">
+                        <span class="user-avatar">
+                            <div class="avata-medium" title="User Name">
+                                <img class="avatar" src="~/Content/images/photo.png">
+                            </div>
+                        </span>
+                        <span class="user-name">@User.Identity.GetUserName()</span>
+                        <span class="user-arrow">
+                            <svg class="arrow" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                <line x1="5" y1="8" x2="10" y2="13" stroke="rgb(115, 114, 114)" stroke-width="1"></line>
+                                <line x1="15" y1="8" x2="10" y2="13" stroke="rgb(115, 114, 114)" stroke-width="1"></line>
+                            </svg>
+                        </span>
+                        <div id="sync">
+
+                        </div>
+                    </a>
+                    <div class="stream-counts">
+                        <a data-key-title="label_activity_center" class="activities-count" title="Действия" arail-label="Действия 3" data-path="activities">
+                            <svg class="bell" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                <g class="bellLines" stroke="none" stroke-width="1" fill-rule="evenodd"> <g id="bellId"> <path d="M15.2,10.14 C14.74,9.6 14.46,8.92 14.4,8.2 L14.28,6.94 C14.14,5.08 12.76,3.54 11,3.12 L11,3 C11,2.44 10.56,2 10,2 C9.44,2 9,2.44 9,3 L9,3.12 C7.24,3.54 5.86,5.08 5.72,6.94 L5.6,8.2 C5.54,8.92 5.28,9.6 4.8,10.16 L4.04,11.06 C3.38,11.88 3,12.9 3,13.94 L3,14.5 C3,14.78 3.22,15 3.5,15 L16.5,15 C16.78,15 17,14.78 17,14.5 L17,13.94 C17,12.9 16.62,11.88 15.96,11.06 L15.2,10.14 Z M16,14 L4,14 L4,13.94 C4,13.14 4.28,12.34 4.82,11.7 L5.58,10.8 C6.18,10.08 6.52,9.2 6.6,8.28 L6.7,7.02 C6.84,5.34 8.3,4 10,4 C11.7,4 13.16,5.34 13.3,7.02 L13.4,8.28 C13.48,9.2 13.84,10.08 14.42,10.8 L15.18,11.7 C15.72,12.34 16,13.14 16,13.94 L16,14 Z M12.3,16.1 C12.08,15.94 11.76,15.98 11.58,16.2 C10.82,17.22 9.18,17.22 8.4,16.2 C8.24,15.98 7.92,15.94 7.7,16.1 C7.48,16.26 7.44,16.58 7.62,16.8 C8.18,17.56 9.06,18 10,18 C10.94,18 11.82,17.56 12.38,16.8 C12.56,16.58 12.52,16.26 12.3,16.1 L12.3,16.1 Z" id="m"></path> </g> </g>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <!-- панель списков дел -->
+                <div class="lists-scroll">
+                    <ul class="filters-collection">
+                        <li id="inputTask" name="listItem" role="menuitem" tabindex="0" class="slidebarItem" rel="inbox" aria-label="inbox, задачи 0" onclick="chooseTaskOwnerList(id);">
+                            <a href="#" aria-hidden="true" class="input-task" ng-click="selectTodoList(0, 'Входящие')">
+                                <span class="list-icon" title="Входящие">
+                                    <svg class="inbox" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        <g stroke="none" stroke-width="1" fill-rule="evenodd">
+                                            <g>
+                                                <path d="M10,15 C8.8,15 7.78,14.14 7.56,13 L2.5,13 C2.22,13 2,12.78 2,12.5 L2,3.5 C2,2.68 2.68,2 3.5,2 L16.5,2 C17.32,2 18,2.68 18,3.5 L18,12.5 C18,12.78 17.78,13 17.5,13 L12.44,13 C12.22,14.14 11.2,15 10,15 L10,15 Z M3,12 L8,12 C8.28,12 8.5,12.22 8.5,12.5 C8.5,13.32 9.18,14 10,14 C10.82,14 11.5,13.32 11.5,12.5 C11.5,12.22 11.72,12 12,12 L17,12 L17,3.5 C17,3.22 16.78,3 16.5,3 L3.5,3 C3.22,3 3,3.22 3,3.5 L3,12 Z M5.5,6 C5.22,6 5,5.78 5,5.5 C5,5.22 5.22,5 5.5,5 L14.5,5 C14.78,5 15,5.22 15,5.5 C15,5.78 14.78,6 14.5,6 L5.5,6 Z M5.5,8 C5.22,8 5,7.78 5,7.5 C5,7.22 5.22,7 5.5,7 L14.5,7 C14.78,7 15,7.22 15,7.5 C15,7.78 14.78,8 14.5,8 L5.5,8 Z M5.5,10 C5.22,10 5,9.78 5,9.5 C5,9.22 5.22,9 5.5,9 L14.5,9 C14.78,9 15,9.22 15,9.5 C15,9.78 14.78,10 14.5,10 L5.5,10 Z M3.5,18 C2.68,18 2,17.32 2,16.5 L2,14.5 C2,14.22 2.22,14 2.5,14 C2.78,14 3,14.22 3,14.5 L3,16.5 C3,16.78 3.22,17 3.5,17 L16.5,17 C16.78,17 17,16.78 17,16.5 L17,14.5 C17,14.22 17.22,14 17.5,14 C17.78,14 18,14.22 18,14.5 L18,16.5 C18,17.32 17.32,18 16.5,18 L3.5,18 Z" id="A"></path>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span class="title">
+                                    <text class="task-name" rel="smart_list_inbox">Входящие</text>
+                                </span>
+                                <span class="overdue-count" aria-hidden="true"></span>
+                                <span class="count" aria-hidden="true"></span>
+                                <span hidden data-toggle="modal" data-target="#editListModal" ng-click="prepareForEdit(Id)" class="list-options" data-key-aria-label="sharing_list_options" data-key-title="sharing_list_options" title="Параметры списка" aria-label="Параметры списка">
+                                    <svg class="options rtl-flip" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        <g stroke="none" stroke-width="1" fill-rule="evenodd">
+                                            <g id="options">
+                                                <path d="M17.1330617,2.8594383 C15.9930617,1.7194383 14.0130617,1.7194383 12.8930617,2.8594383 L5.5130617,10.2394383 C5.3330617,10.4394383 5.3330617,10.7594383 5.5130617,10.9594383 C5.7130617,11.1394383 6.0330617,11.1394383 6.2330617,10.9594383 L13.5930617,3.5594383 C14.3530617,2.7994383 15.6730617,2.7994383 16.4130617,3.5594383 C17.1730617,4.3194383 17.1930617,5.5594383 16.4130617,6.3394383 L9.0330617,13.7594383 C8.7130617,14.0794383 8.9330617,14.6194383 9.3730617,14.6194383 C9.5130617,14.6194383 9.6330617,14.5594383 9.7330617,14.4594383 L17.1330617,7.0394383 C18.2930617,5.8794383 18.2930617,4.0194383 17.1330617,2.8594383 L17.1330617,2.8594383 Z M8.4930617,15.3594383 C8.0330617,13.4594383 6.5130617,11.9394383 4.6130617,11.4794383 C4.3530617,11.4194383 4.0930617,11.5794383 4.0130617,11.8194383 L2.0330617,17.3194383 C1.8730617,17.7194383 2.2730617,18.1194383 2.6730617,17.9594383 C8.6730617,15.7794383 8.2530617,15.9594383 8.3730617,15.8194383 C8.4930617,15.6994383 8.5330617,15.5194383 8.4930617,15.3594383 L8.4930617,15.3594383 Z M3.3330617,16.6594383 L4.8130617,12.5794383 C6.0130617,12.9994383 6.9730617,13.9794383 7.3930617,15.1794383 L3.3330617,16.6594383 Z" id="N"></path>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="lists-collections">
+                        <li ng-repeat="list in lists" name="listItem" ui-sref-active="selected" role="menuitem" id="{{list.Id}}" tabindex="0" class="slidebarItem-owner-list" draggable="true" onclick="chooseTaskOwnerList(id)">
+                            <a  href="#" ui-sref="todoTasks({id: list.Id})" aria-hidden="true" ng-click="selectTodoList(list.Id, list.TodoListName)">
+                                <span class="list-icon">
+                                    <svg class="list-rtl-flip" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        <g id="Web-svgs" stroke="none" stroke-width="1" fill-rule="evenodd">
+                                            <g id="list">
+                                                <path d="M3,7 C2.44,7 2,6.56 2,6 L2,5 C2,4.44 2.44,4 3,4 L4,4 C4.56,4 5,4.44 5,5 L5,6 C5,6.56 4.56,7 4,7 L3,7 Z M4,5 L3,5 L3,6 L4,6 L4,5 Z M7.5,6 C7.22,6 7,5.78 7,5.5 C7,5.22 7.22,5 7.5,5 L17.5,5 C17.78,5 18,5.22 18,5.5 C18,5.78 17.78,6 17.5,6 L7.5,6 Z M3,12 C2.44,12 2,11.56 2,11 L2,10 C2,9.44 2.44,9 3,9 L4,9 C4.56,9 5,9.44 5,10 L5,11 C5,11.56 4.56,12 4,12 L3,12 Z M4,10 L3,10 L3,11 L4,11 L4,10 Z M7.5,11 C7.22,11 7,10.78 7,10.5 C7,10.22 7.22,10 7.5,10 L17.5,10 C17.78,10 18,10.22 18,10.5 C18,10.78 17.78,11 17.5,11 L7.5,11 Z M3,17 C2.44,17 2,16.56 2,16 L2,15 C2,14.44 2.44,14 3,14 L4,14 C4.56,14 5,14.44 5,15 L5,16 C5,16.56 4.56,17 4,17 L3,17 Z M4,15 L3,15 L3,16 L4,16 L4,15 Z M7.5,16 C7.22,16 7,15.78 7,15.5 C7,15.22 7.22,15 7.5,15 L17.5,15 C17.78,15 18,15.22 18,15.5 C18,15.78 17.78,16 17.5,16 L7.5,16 Z" id="K"> </path>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span ng-bind="list.TodoListName" class="title" id="nameoflistId"></span>
+                                <span hidden data-toggle="modal" data-target="#editListModal" ng-click="prepareForEdit(list.Id)" class="list-options" data-key-aria-label="sharing_list_options" data-key-title="sharing_list_options" title="Параметры списка" aria-label="Параметры списка">
+                                    <svg class="options rtl-flip" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        <g stroke="none" stroke-width="1" fill-rule="evenodd">
+                                            <g id="options">
+                                                <path d="M17.1330617,2.8594383 C15.9930617,1.7194383 14.0130617,1.7194383 12.8930617,2.8594383 L5.5130617,10.2394383 C5.3330617,10.4394383 5.3330617,10.7594383 5.5130617,10.9594383 C5.7130617,11.1394383 6.0330617,11.1394383 6.2330617,10.9594383 L13.5930617,3.5594383 C14.3530617,2.7994383 15.6730617,2.7994383 16.4130617,3.5594383 C17.1730617,4.3194383 17.1930617,5.5594383 16.4130617,6.3394383 L9.0330617,13.7594383 C8.7130617,14.0794383 8.9330617,14.6194383 9.3730617,14.6194383 C9.5130617,14.6194383 9.6330617,14.5594383 9.7330617,14.4594383 L17.1330617,7.0394383 C18.2930617,5.8794383 18.2930617,4.0194383 17.1330617,2.8594383 L17.1330617,2.8594383 Z M8.4930617,15.3594383 C8.0330617,13.4594383 6.5130617,11.9394383 4.6130617,11.4794383 C4.3530617,11.4194383 4.0930617,11.5794383 4.0130617,11.8194383 L2.0330617,17.3194383 C1.8730617,17.7194383 2.2730617,18.1194383 2.6730617,17.9594383 C8.6730617,15.7794383 8.2530617,15.9594383 8.3730617,15.8194383 C8.4930617,15.6994383 8.5330617,15.5194383 8.4930617,15.3594383 L8.4930617,15.3594383 Z M3.3330617,16.6594383 L4.8130617,12.5794383 C6.0130617,12.9994383 6.9730617,13.9794383 7.3930617,15.1794383 L3.3330617,16.6594383 Z" id="N"></path>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <ul class="new-list-dropzone"></ul>
+
+                </div>
+                <!-- создание списка -->
+                <div class="sidebarActions" data-toggle="modal" data-target="#addListModal">
+                    <a class="sidebarActions-addList">
+                        <span class="sidebarActions-icon">
+                            <svg class="plus-small-blue" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"> 
+                            <g> 
+                            <path d="M10,10l0,6.5c-0.003,0.053 -0.008,0.103 -0.024,0.155c-0.038,0.116 -0.12,0.217 -0.226,0.278c-0.047,0.027 -0.094,0.042 -0.146,0.056c-0.052,0.008 -0.051,0.008 -0.104,0.011c-0.053,-0.003 -0.103,-0.008 -0.155,-0.024c-0.15,-0.05 -0.271,-0.171 -0.321,-0.321c-0.016,-0.052 -0.021,-0.102 -0.024,-0.155l0,-6.5l-6.5,0c-0.046,-0.002 -0.058,-0.001 -0.104,-0.011c-0.103,-0.022 -0.197,-0.076 -0.268,-0.154c-0.169,-0.188 -0.169,-0.482 0,-0.67c0.035,-0.038 0.077,-0.072 0.122,-0.098c0.078,-0.045 0.161,-0.062 0.25,-0.067l6.5,0l0,-6.5c0.005,-0.089 0.022,-0.172 0.067,-0.25c0.126,-0.219 0.406,-0.31 0.636,-0.207c0.048,0.022 0.093,0.05 0.132,0.085c0.078,0.071 0.132,0.165 0.154,0.268c0.01,0.046 0.009,0.058 0.011,0.104l0,6.5l6.5,0c0.046,0.002 0.058,0.001 0.104,0.011c0.103,0.022 0.197,0.076 0.268,0.154c0.169,0.188 0.169,0.482 0,0.67c-0.035,0.038 -0.077,0.072 -0.122,0.098c-0.078,0.045 -0.161,0.062 -0.25,0.067l-6.5,0Z"></path> 
+							</g>
+					    </svg>
+                        </span>
+                        <span class="sidebarActions-label"><text rel="placeholder_create_list">Создать список</text></span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <!-- главное окно -->
+        <div id="tasks" ng-controller="todoTaskController" role="main">
+            <div id="list-toolbar">
+                <h1 class="title" id="titleNameId" ng-bind="selectedTodoListName"></h1>
+            </div>
+            <div class="tasks-scroll" ui-view></div>
+        </div>
+    </div>
+    <div id="user-popover" class="popover-bottom">
+        <div class="arrow" style="margin-left: -112px;"></div>
+        <div role="menu" tabindex="0" class="inner" aria-label="Меню пользователя. Чтобы закрыть, нажмите клавишу ESCAPE.">
+            <div class="user-set-content">
+                <ul class="list-menu">
+                    <li role="menuitem" tabindex="0">
+                        <a data-path="preferences/account" data-analytics-action="clickAccountSettings" onclick="userMenuShow();" data-toggle="modal" data-target="#userModal">
+                            <text rel="userbar_account_settings">Параметры учетной записи</text>
+                        </a>
+                    </li>
+                    <li role="menuitem" tabindex="0">
+                        <a data-path="backgrounds" data-analytics-action="clickChangeBackground">
+                            <text rel="userbar_change_background">Изменить фоновое изображение</text>
+                        </a>
+                    </li>
+                    <li role="menuitem" tabindex="0">
+                        <a href="https://github.com/wunderlist/changelog/blob/master/webapp/changelog.md#whats-new-in-wunderlist" target="_blank">
+                            <text rel="settings_show_whats_new">Что нового?</text>
+                        </a>
+                    </li>
+                    <li role="menuitem" tabindex="0">
+                        <a data-path="rate" data-analytics-action="clickRateApp">
+                            <text rel="rate_label">Нравится Wunderlist?</text>
+                        </a>
+                    </li>
+                    <li class="separator" role="menuitem" tabindex="0">
+                        <a href="/home" data-analytics-action="clickWebsite" target="_blank">
+                            <text rel="settings_website_wunderlist">Сайт Wunderlist</text>
+                        </a>
+                    </li>
+                    <li class="email-disabled" aria-visible="false">user email</li>
+                    <li role="menuitem" tabindex="0">
+                        <a class="logout">
+                            <text rel="button_log_out">Выход</text>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

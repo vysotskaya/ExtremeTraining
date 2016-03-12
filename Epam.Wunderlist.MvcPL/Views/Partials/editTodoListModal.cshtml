@@ -1,0 +1,56 @@
+﻿@using Epam.Wunderlist.MvcPL.Identity
+@using Microsoft.AspNet.Identity
+<form>
+    <div id="editListModal" class="modal fade" aria-hidden="true" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" tabindex="0">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="center"><text id="createListText" rel="label_new_list">Создать список</text></h3>
+                    <div class="separator-noline">
+                        <input id="listName" class="big-listOptions-title" onkeyup="inputNameOfList();" type="text" data-key-placeholder="placeholder_list_name" data-key-aria-label="placeholder_list_name" maxlength="255" value="" placeholder="Название списка" aria-label="Название списка">
+                    </div>
+
+                </div>
+                <div class="tab-members">
+                    <div class="content-inner-members">
+                        <ul class="content-people">
+                            <li id="20563809" class="disabled">
+                                <span class="content-people-image">
+                                    <div class="avatar-medium" title="Екатерина Цмыг">
+                                        <img class="small-avatar" src="~/Content/images/photo.png">
+                                    </div>
+                                </span>
+                                <div class="content-people-meta">
+                                    <div class="content-people-name">
+                                        <span class="content-people-name-label">@User.Identity.GetUserName()</span>
+                                        <div class="content-people-name-badge">
+                                            <span class="badge-blue">Владелец</span>
+                                        </div>
+                                    </div>
+                                    <span class="content-people-email">@User.Identity.GetUserEmail()</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+
+                    <div class="form-group">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4">
+                            <button class="cancel-full-close close" data-dismiss="modal">
+                                <text id="closeText" rel="button_cancel"> Отмена</text>
+                            </button>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="submit" data-dismiss="modal" class="submit-full-blue-disabled" aria-disabled="true" role="button" id="saveButtonId" tabindex="-1" value="Сохранить" ng-click="addNewTodoList(@User.Identity.GetUserId())">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

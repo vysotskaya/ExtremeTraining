@@ -38,7 +38,6 @@ namespace Epam.Wunderlist.MvcPL.Controllers
             {
                 var user = new UserProfile()
                 {
-                    //Name = model.Name,
                     Email = model.Email,
                     Password = Crypto.HashPassword(model.Password),
                     UserName = model.Name
@@ -47,7 +46,7 @@ namespace Epam.Wunderlist.MvcPL.Controllers
                 if (result.Succeeded)
                 {
                     await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("wunderlist", "Wunderlist");
                 }
                 ModelState.AddModelError("", result.Errors.ToString());
             }

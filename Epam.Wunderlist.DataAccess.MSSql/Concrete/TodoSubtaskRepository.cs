@@ -24,10 +24,12 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
             });
         }
 
-        public bool Create(TodoSubtask entity)
+        public int Create(TodoSubtask entity)
         {
             var todoSubtask = Mapper.Map<TodoSubtask, TodoSubtaskDbModel>(entity);
-            return _dbContext.Set<TodoSubtaskDbModel>().Add(todoSubtask) != null;
+            _dbContext.Set<TodoSubtaskDbModel>().Add(todoSubtask);
+            _dbContext.SaveChanges();
+            return  todoSubtask.Id;
         }
 
         public void Delete(TodoSubtask entity)

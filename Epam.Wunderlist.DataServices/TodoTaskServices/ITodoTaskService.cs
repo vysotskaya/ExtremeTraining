@@ -7,7 +7,7 @@ namespace Epam.Wunderlist.DataServices.TodoTaskServices
     {
         IEnumerable<TodoTask> GetByListId(int todoListId);
         TodoTask GetById(int id);
-        void Create(TodoTask entity);
+        TodoTask Create(TodoTask entity);
         void Update(TodoTask entity);
         void Delete(TodoTask entity);
     }

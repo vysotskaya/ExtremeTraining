@@ -74,6 +74,7 @@
     <Compile Include="Concrete\AttachedTaskFileRepository.cs" />
     <Compile Include="Concrete\TaskStateRepository.cs" />
     <Compile Include="Concrete\TodoSubtaskRepository.cs" />
+    <Compile Include="MapperConfiguration\AutoMapperInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

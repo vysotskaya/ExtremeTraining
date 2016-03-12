@@ -40,18 +40,19 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
             throw new NotImplementedException();
         }
 
-        public bool Create(TodoTask entity)
+        public int Create(TodoTask entity)
         {
             var todoTask = Mapper.Map<TodoTask, TodoTaskDbModel>(entity);
-            return _dbContext.Set<TodoTaskDbModel>().Add(todoTask) != null;
+            _dbContext.Set<TodoTaskDbModel>().Add(todoTask);
+            _dbContext.SaveChanges();
+            return  todoTask.Id;
         }
 
         public void Update(TodoTask entity)
         {
-            var updatedTodoTask = Mapper.Map<TodoTask, TodoTaskDbModel>(entity);
             var existedTodoTask = _dbContext.Entry<TodoTaskDbModel>
                 (
-                    _dbContext.Set<TodoTaskDbModel>().Find(updatedTodoTask.Id)
+                    _dbContext.Set<TodoTaskDbModel>().Find(entity.Id)
                 );
             if (existedTodoTask == null)
             {
@@ -63,6 +64,7 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
             existedTodoTask.Entity.TaskStateRefId = entity.TaskStateRefId;
             existedTodoTask.Entity.DueDate = entity.DueDate;
             existedTodoTask.Entity.Priority = entity.Priority;
+            existedTodoTask.Entity.TodoListRefId = entity.TodoListRefId;
         }
 
         public void Delete(TodoTask entity)
