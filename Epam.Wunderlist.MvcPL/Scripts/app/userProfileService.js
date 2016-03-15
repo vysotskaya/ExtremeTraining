@@ -1,9 +1,9 @@
-﻿angular.module('wunderlistApp').factory('userProfileService', function ($resource) {
-    var userProfile = {};
+﻿angular.module('wunderlistApp')
+    .factory('userProfileService', function ($resource, WUNDERLIST_CONSTANTS) {
+        var userProfile = {};
 
-    return {
-        getUserProfile: function() {
-            var resource = $resource('http://localhost:53028/api/userprofile/', {},
+        function getUserProfile() {
+            var resource = $resource(WUNDERLIST_CONSTANTS.URL + '/api/userprofile/', {},
             {
                 get: {
                     method: 'GET',
@@ -11,36 +11,39 @@
                 }
             });
             return resource.get.apply(this, arguments);
-        },
+        }
 
-        setUserProfileData: function(userProfileData) {
-            userProfile.UserName = userProfileData.UserName;
-            userProfile.Email = userProfileData.Email;
-            userProfile.Avatar = "data:image/jpeg;base64," + userProfileData.Avatar;
-        },
-
-        updateUserProfileDataOnView: function (name, email, avatar) {
+        function updateUserProfileDataOnView(name, email, avatar) {
             userProfile.UserName = name;
             userProfile.Email = email;
             userProfile.Avatar = avatar;
-        },
+        }
 
-        getUserProfileData: function () {
-            return userProfile;
-        },
+        function setUserProfileData(userProfileData) {
+            userProfile.UserName = userProfileData.UserName;
+            userProfile.Email = userProfileData.Email;
+            userProfile.Avatar = "data:image/jpeg;base64," + userProfileData.Avatar;
+        }
 
-        updateUserProfile: function (userProfile) {
-            var resource = $resource('http://localhost:53028/account/edit/', {},
-			{
-			    save: {
-			        method: 'POST',
-			        transformRequest: angular.identity,
+        function updateUserProfile(userProfile) {
+            var resource = $resource(WUNDERLIST_CONSTANTS.URL + '/account/edit/', {},
+            {
+                save: {
+                    method: 'POST',
+                    transformRequest: angular.identity,
                     headers: { 'Content-Type': undefined }
-                    //headers : {'Content-Type': 'application/x-www-form-urlencoded'}
-			    }
-			});
+                }
+            });
             return resource.save.apply(this, arguments);
         }
 
-    }
-});
+        return {
+            getUserProfile: getUserProfile,
+            setUserProfileData: setUserProfileData,
+            updateUserProfileDataOnView: updateUserProfileDataOnView,
+            updateUserProfile: updateUserProfile,
+            getUserProfileData: function () {
+                return userProfile;
+            }
+        }
+    });

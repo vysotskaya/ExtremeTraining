@@ -10,7 +10,6 @@ namespace Epam.Wunderlist.MvcPL.Controllers
 {
     public class TodoListController : ApiController
     {
-        [Inject]
         private readonly ITodoListService _todoListService;
 
         public TodoListController()

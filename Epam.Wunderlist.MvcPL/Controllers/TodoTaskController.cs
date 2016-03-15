@@ -51,6 +51,12 @@ namespace Epam.Wunderlist.MvcPL.Controllers
             _todoTaskService.Update(todoTask);
         }
 
+        [HttpPut]
+        public void Put(IEnumerable<TodoTask> todoTasks)
+        {
+            _todoTaskService.UpdatePriority(todoTasks);
+        }
+
         [HttpDelete]
         public void Delete(int id)
         {

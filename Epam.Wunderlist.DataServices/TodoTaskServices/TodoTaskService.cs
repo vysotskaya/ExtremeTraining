@@ -38,6 +38,15 @@ namespace Epam.Wunderlist.DataServices.TodoTaskServices
             _unitOfWork.Commit();
         }
 
+        public void UpdatePriority(IEnumerable<TodoTask> list)
+        {
+            foreach (var task in list)
+            {
+                _todoTaskRepository.Update(task);
+            }
+            _unitOfWork.Commit();
+        }
+
         public void Delete(TodoTask entity)
         {
             _todoTaskRepository.Delete(entity);
