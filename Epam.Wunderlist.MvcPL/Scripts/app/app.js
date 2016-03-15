@@ -1,14 +1,88 @@
 ﻿var app = angular.module('wunderlistApp', ['ngResource', 'ui.router']);
 
-app.controller('wunderlistAppController',['todoListService', '$scope', function (todoListService, $scope) {
+app.controller('editUserProfileController', ['$scope', '$rootScope', 'fileReader', 'userProfileService',
+        function ($scope, $rootScope, fileReader, userProfileService) {
 
-    $scope.getTodoLists = function() {
+    $scope.userProfile = {};
+
+    $rootScope.setUserProfileData = function () {
+        debugger;
+        var userProfile = userProfileService.getUserProfileData();
+        $scope.imageSrc = userProfile.Avatar;
+        $scope.userProfile.UserName = userProfile.UserName;
+        $scope.userProfile.Email = userProfile.Email;
+    }
+
+    $scope.getFile = function () {
+        fileReader.readAsDataUrl($scope.file, $scope)
+            .then(function (result) {
+                $scope.imageSrc = result;
+            });
+    };
+
+    $scope.updateUserProfile = function () {
+        debugger;
+        if ($scope.userProfile.UserName == "") {
+            return;
+        }
+        console.log($scope.userProfile);
+        var userProfile = new FormData();
+        userProfile.append('Avatar', $scope.userProfile.Avatar);
+        userProfile.append('UserName', $scope.userProfile.UserName);
+        userProfileService.updateUserProfile(userProfile);
+
+        userProfileService.updateUserProfileDataOnView($scope.userProfile.UserName, 
+            $scope.userProfile.Email, $scope.imageSrc);
+        $rootScope.$broadcast('handleUserProfileChange');
+    }
+}]);
+
+app.directive("ngFileSelect", function() {
+    return {
+        link: function($scope, el) {
+            el.bind("change", function(e) {
+                $scope.file = (e.srcElement || e.target).files[0];
+                if ($scope.file.type.match('image.*')) {
+                    $scope.userProfile.Avatar = $scope.file;
+                    $scope.getFile();
+                }
+            });
+
+        }
+    };
+});
+
+app.controller('userProfileController', ['$scope', '$rootScope',
+        function ($scope, $rootScope) {
+            $scope.prepareUserProfileModalForEdit = function () {
+                $rootScope.setUserProfileData();
+            }
+}]);
+
+app.controller('wunderlistAppController', ['todoListService', 'userProfileService', '$scope',
+    function (todoListService, userProfileService, $scope) {
+
+    $scope.$on('handleUserProfileChange', function () {
+        debugger;
+        var userProfile = userProfileService.getUserProfileData();
+        $scope.imageSrc = userProfile.Avatar;
+        $scope.userName = userProfile.UserName;
+    });
+
+    $scope.getListsAndUserProfileData = function() {
         todoListService.getTodolists(function (response) {
             $scope.lists = response;
+            userProfileService.getUserProfile(function (response) {
+                debugger;
+                userProfileService.setUserProfileData(response);
+                var userProfile = userProfileService.getUserProfileData();
+                $scope.imageSrc = userProfile.Avatar;
+                $scope.userName = userProfile.UserName;
+            });
         });
     };
 
-    $scope.getTodoLists();
+    $scope.getListsAndUserProfileData();
 
     $scope.selectTodoList = function (listId, listName) {
         $scope.selectedTodoListName = listName;
@@ -121,13 +195,4 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             templateUrl: '/Partials/TodoTasks',
             controller: 'todoTaskController'
         });
-    //.state('edit',{
-    //    url: '/edit',
-    //    views: {
-    //        'editModal': {
-    //            templateUrl: '/Partials/EditTodoListModal',
-    //            controller: 'wunderlistAppController'
-    //        }
-    //    }
-    //});
 }]);

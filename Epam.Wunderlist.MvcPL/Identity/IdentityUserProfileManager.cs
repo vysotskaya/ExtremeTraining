@@ -1,8 +1,10 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Helpers;
 using Epam.Wunderlist.DataAccess.Entities;
 using Epam.Wunderlist.DataServices.UserProfileServices;
+using Epam.Wunderlist.MvcPL.Convertor;
 using Microsoft.AspNet.Identity;
 
 namespace Epam.Wunderlist.MvcPL.Identity
@@ -38,18 +40,14 @@ namespace Epam.Wunderlist.MvcPL.Identity
 
         public override Task<ClaimsIdentity> CreateIdentityAsync(UserProfile user, string authenticationType)
         {
-            //var identity = new ClaimsIdentity();
-            //identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
-            //return Task.FromResult(identity);
             ClaimsIdentity claim = new ClaimsIdentity(authenticationType, 
                 ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             claim.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString(), ClaimValueTypes.String));
             claim.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserName, ClaimValueTypes.String));
             claim.AddClaim(new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.String));
+            //claim.AddClaim(new Claim("Avatar", Convert.ToBase64String(user.Avatar.ImageToByteArray()), ClaimValueTypes.String));
             claim.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider",
                 "OWIN Provider", ClaimValueTypes.String));
-            //claim.AddClaim(new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
-            //    user.UserName, ClaimValueTypes.String));
             return Task.FromResult(claim);
         }
     }

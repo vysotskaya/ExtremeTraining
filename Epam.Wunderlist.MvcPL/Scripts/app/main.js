@@ -82,7 +82,6 @@ function userMenuShow(){
 	
 }
 
-
 function showHideElement (elId){	
 	if ($('#' + elId).is(':visible')){
 		$('#' + elId).hide();
@@ -90,3 +89,20 @@ function showHideElement (elId){
 		$('#' + elId).show();
 	}
 }
+
+//$(document).ready(function() {
+//    $('#file-input').change(function(event) {
+//        var selectedFile = event.target.files[0];
+//        if (!selectedFile.type.match('image.*')) {
+//            return;
+//        }
+//        var reader = new FileReader();
+//        reader.onload = function (event) {
+//            debugger;
+//            console.log(event.target.result);
+//            $("#avatar").attr('src', event.target.result);
+//        };
+//        reader.readAsDataURL(selectedFile);
+//    });
+//});
+

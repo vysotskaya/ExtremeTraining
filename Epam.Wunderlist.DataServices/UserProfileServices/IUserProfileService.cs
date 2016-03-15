@@ -8,7 +8,7 @@ namespace Epam.Wunderlist.DataServices.UserProfileServices
         IEnumerable<UserProfile> GetAll();
         UserProfile GetById(int id);
         UserProfile GetByEmail(string email);
-        bool Create(UserProfile entity);
+        int Create(UserProfile entity);
         void Update(UserProfile entity);
         void Delete(UserProfile entity);
     }

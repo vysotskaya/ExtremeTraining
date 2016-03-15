@@ -13,6 +13,7 @@
     <link href="~/Content/styles/mainWunderlist.css" rel="stylesheet">
     <link href="~/Content/styles/drag-and-drop.css" rel="stylesheet"/>
     <script src="~/Scripts/angular.min.js"></script>
+
     @*<script src="~/Scripts//main.angular.js"></script>*@
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
@@ -22,8 +23,10 @@
     <script src="~/Scripts/angular-ui-router.js"></script>
     <script src="~/Scripts/angular-resource.js"></script>
     <script src="~/Scripts/app/app.js"></script>
+    <script src="~/Scripts/upload.js"></script>
     <script src="~/Scripts/app/todolistService.js"></script>
     <script src="~/Scripts/app/todotaskService.js"></script>
+    <script src="~/Scripts/app/userProfileService.js"></script>
 </head>
 <body ng-app="wunderlistApp" class="wlapp-parent chrome animate platform-windows application main background-06 focus-sidebar" style="opacity: 1;" role="application" id="wunderlist-base">
     <!-- главный интерфейс -->
@@ -32,15 +35,18 @@
         <div id="modal">
             <!-- User redactor/view profile -->
         <div id="userModal" class="modal fade" aria-hidden="true" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
+            <div class="modal-dialog" ng-controller="editUserProfileController">
                 <div class="modal-content settings-content-inner-wrapper">
                     <div class="modal-header" tabindex="0">
                         <div class="cols">
                             <div class="col-32">
                                 <div class="avatar-frame">
-                                    <div class="avatar large hover choose">
+                                    <div class="avatar large hover choose" >
                                         <span class="icon-options" style="display: block;"></span>
-                                        <img src="~/Content/images/photo.png" class="opaque">
+                                        <label for="file-input">
+                                            <img ng-src="{{imageSrc}}" class="opaque" id="avatar">
+                                        </label>
+                                        <input type="file" ng-model="userProfile.Avatar" id="file-input" ng-file-select="onFileSelect($files)" style="display: none;">
                                     </div>
                                     <div class="avatar-upload">
                                         <div class="drop-zone"></div>
@@ -68,7 +74,7 @@
                                 <text rel="label_name" class="label-name">Имя</text>
                             </div>
                             <div class="col-68">
-                                <input type="text" id="edit-full-name" data-key-aria-label="label_name" data-key-placeholder="label_name" value="@User.Identity.Name" initial-value="" tabindex="0" placeholder="Имя" aria-label="Имя">
+                                <input type="text" id="edit-full-name" ng-model="userProfile.UserName" data-key-aria-label="label_name" data-key-placeholder="label_name" initial-value="" tabindex="0" placeholder="Имя" aria-label="Имя">
                             </div>
                         </div> <!-- Email -->
                         <div class="cols">
@@ -76,108 +82,16 @@
                                 <text rel="label_email">Электронная почта</text>
                             </div>
                             <div class="col-68">
-                                <input type="text" id="edit-email" data-key-aria-label="label_email" data-key-placeholder="label_email" value="@User.Identity.GetUserEmail()" initial-value="" disabled tabindex="0" placeholder="Электронная почта" aria-label="Электронная почта">
-                            </div>
-                            @*<div class="col-28">
-                                <button id="change-email" class="full" data-key-aria-label="settings_account_change_email" tabindex="0" aria-label="Изменить адрес электронной почты">
-                                    <text rel="settings_account_change_email">Изменить адрес электронной почты</text>
-                                </button>
-                            </div>*@
-                        </div> <!-- Password for email confirm -->
-                        @*<div class="cols password-confirm">
-                            <div class="col-32 text-right">
-                                <text rel="label_password">Пароль</text>
-                            </div>
-                            <div class="col-40">
-                                <input type="password" id="edit-email-pw-confirm" data-key-aria-label="label_password" disabled="" tabindex="0" aria-label="Пароль">
-                            </div>
-                            <div class="col-28"></div>
-                        </div> <!-- Change Email -->
-                        <div class="cols change-email-buttons">
-                            <div class="col-32 text-right"></div>
-                            <div class="col-40">
-                                <div class="cols email-error error-message">
-                                    <div class="col-100">
-                                        <text rel="api_error_incorrect_password">Неверный пароль.</text>
-                                    </div>
-                                </div>
-                                <div class="cols">
-                                    <div class="col-50">
-                                        <button class="full" id="cancel-email" data-key-aria-label="button_cancel" tabindex="0" aria-label="Отмена">
-                                            <text rel="button_cancel">Отмена</text>
-                                        </button>
-                                    </div>
-                                    <div class="col-50">
-                                        <button class="full blue disabled" id="save-email" disabled="" data-key-aria-label="button_save" tabindex="0" aria-label="Сохранить">
-                                            <text rel="button_save">Сохранить</text>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-28"></div>
-                        </div> <!-- Additional Emails -->
-                        <div class="cols">
-                            <div class="col-32 text-right"></div>
-                            <div class="col-68">
-                                <p class="settings-account-manage-emails">
-                                    <a href="/account/emails" target="_blank">
-                                        <text rel="settings_account_manage_emails">Добавление и изменение адресов электронной почты</text>
-                                    </a>
-                                </p>
-                            </div>
-                        </div> <!-- Change Password -->
-                        <div class="cols show-password-buttons">
-                            <div class="col-32 text-right">
-                                <text rel="label_password">Пароль</text>
-                            </div>
-                            <div class="col-40">
-                                <input type="password" class="old-password" data-key-placeholder="settings_account_current_password" data-key-aria-label="settings_account_current_password" tabindex="0" placeholder="Текущий пароль" aria-label="Текущий пароль">
-                                <button id="change-password" class="full" data-key-aria-label="settings_account_change_password" tabindex="0" aria-label="Изменить пароль…">
-                                    <text rel="settings_account_change_password">Изменить пароль…</text>
-                                </button>
-                            </div>
-                            <div class="col-28"></div>
+                                <input type="text" id="edit-email" ng-model="userProfile.Email" data-key-aria-label="label_email" data-key-placeholder="label_email" initial-value="" disabled tabindex="0" placeholder="Электронная почта" aria-label="Электронная почта">
+                            </div> <!---->
                         </div>
-                        <div class="cols change-password-buttons">
-                            <div class="col-32"></div>
-                            <div class="col-40">
-                                <div class="cols">
-                                    <div class="col-100">
-                                        <input type="password" class="new-password" data-key-placeholder="settings_account_new_password" data-key-aria-label="settings_account_new_password" tabindex="0" placeholder="Новый пароль" aria-label="Новый пароль">
-                                    </div>
-                                </div>
-                                <div class="cols">
-                                    <div class="col-100">
-                                        <input id="confirm-password" type="password" class="confirm-password" data-key-placeholder="settings_account_repeat_new_password" data-key-aria-label="settings_account_repeat_new_password" tabindex="0" placeholder="Повторите новый пароль" aria-label="Повторите новый пароль">
-                                    </div>
-                                </div>
-                                <div class="cols change-password-error error-message">
-                                    <div class="col-100">
-                                        <text rel="settings_account_change_password_error">При попытке изменить пароль произошла ошибка. Попробуйте еще раз.</text>
-                                    </div>
-                                </div>
-                                <div class="cols">
-                                    <div class="col-50">
-                                        <button class="full" id="cancel-password" data-key-aria-label="button_cancel" tabindex="0" aria-label="Отмена">
-                                            <text rel="button_cancel">Отмена</text>
-                                        </button>
-                                    </div>
-                                    <div class="col-50">
-                                        <button class="full blue" id="save-password" data-key-aria-label="button_save" tabindex="0" aria-label="Сохранить">
-                                            <text rel="button_save">Сохранить</text>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-28"></div>
-                        </div>*@
                     </div>
                     <div class="content-footer">
                         <div class="cols">
                             <div class="col-40"></div>
                             <div class="col-40"></div>
                             <div class="col-20" style="display: inline-block">
-                                <button class="full blue close">
+                                <button class="full blue close" data-dismiss="modal" ng-click="updateUserProfile()">
                                     <text rel="button_done">Done</text>
                                 </button>
                             </div>
@@ -206,12 +120,12 @@
                                     <li id="20563809" class="disabled">
                                         <span class="content-people-image">
                                                 <div class="avatar-medium" title="Екатерина Цмыг">
-                                                    <img class="small-avatar" src="~/Content/images/photo.png">
+                                                    <img class="small-avatar" ng-src="{{imageSrc}}">
                                                 </div>
                                             </span>
                                         <div class="content-people-meta">
                                             <div class="content-people-name">
-                                                <span class="content-people-name-label">@User.Identity.GetUserName()</span>
+                                                <span class="content-people-name-label" ng-bind="userName"></span>
                                                 <div class="content-people-name-badge">
                                                     <span class="badge-blue">Владелец</span>
                                                 </div>
@@ -261,13 +175,13 @@
                                     <ul class="content-people">
                                         <li id="20563809" class="disabled">
                                             <span class="content-people-image">
-                                                <div class="avatar-medium" title="@User.Identity.GetUserName()">
-                                                    <img class="small-avatar" src="~/Content/images/photo.png">
+                                                <div class="avatar-medium">
+                                                    <img class="small-avatar" ng-src="{{imageSrc}}">
                                                 </div>
                                             </span>
                                             <div class="content-people-meta">
                                                 <div class="content-people-name">
-                                                    <span class="content-people-name-label">@User.Identity.GetUserName()</span>
+                                                    <span class="content-people-name-label" ng-bind="userName"></span>
                                                     <div class="content-people-name-badge">
                                                         <span class="badge-blue">Владелец</span>
                                                     </div>
@@ -345,10 +259,10 @@
                     <a class="user" role="button" tabindex="0" onclick="userMenuShow();" aria-label="User Name Меню пользователя.">
                         <span class="user-avatar">
                             <div class="avata-medium" title="User Name">
-                                <img class="avatar" src="~/Content/images/photo.png">
+                                <img class="avatar" ng-src="{{imageSrc}}">
                             </div>
                         </span>
-                        <span class="user-name">@User.Identity.GetUserName()</span>
+                        <span class="user-name" ng-bind="userName"></span>
                         <span class="user-arrow">
                             <svg class="arrow" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
                                 <line x1="5" y1="8" x2="10" y2="13" stroke="rgb(115, 114, 114)" stroke-width="1"></line>
@@ -423,13 +337,13 @@
             <div class="tasks-scroll" ui-view></div>
         </div>
     </div>
-    <div id="user-popover" class="popover-bottom">
+    <div id="user-popover" class="popover-bottom" ng-controller="userProfileController">
         <div class="arrow" style="margin-left: -112px;"></div>
         <div role="menu" tabindex="0" class="inner" aria-label="Меню пользователя. Чтобы закрыть, нажмите клавишу ESCAPE.">
             <div class="user-set-content">
                 <ul class="list-menu">
                     <li role="menuitem" tabindex="0">
-                        <a data-path="preferences/account" data-analytics-action="clickAccountSettings" onclick="userMenuShow();" data-toggle="modal" data-target="#userModal">
+                        <a data-path="preferences/account" ng-click="prepareUserProfileModalForEdit()" data-analytics-action="clickAccountSettings" onclick="userMenuShow();" data-toggle="modal" data-target="#userModal">
                             <text rel="userbar_account_settings">Параметры учетной записи</text>
                         </a>
                     </li>

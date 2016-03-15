@@ -32,5 +32,29 @@ namespace Epam.Wunderlist.MvcPL.Identity
             var email = ci?.FindFirst(ClaimTypes.Email)?.Value;
             return email ?? String.Empty;
         }
+
+        public static string GetUserAvatar(this IIdentity identity)
+        {
+            if (identity == null)
+            {
+                throw new ArgumentNullException(nameof(identity));
+            }
+            var ci = identity as ClaimsIdentity;
+            var avatar = ci?.FindFirst("Avatar")?.Value;
+            return avatar ?? String.Empty;
+        }
+
+        public static void UpdateClaim(this IPrincipal currentPrincipal, string key, string value, string type)
+        {
+            var identity = currentPrincipal.Identity as ClaimsIdentity;
+            if (identity == null)
+                return;
+
+            var existingClaim = identity.FindFirst(key);
+            if (existingClaim != null)
+                identity.RemoveClaim(existingClaim);
+
+            identity.AddClaim(new Claim(key, value, type));
+        }
     }
 }

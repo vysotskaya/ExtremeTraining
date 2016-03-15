@@ -1950,3 +1950,42 @@ li.task-item-hidden{
 li {
     outline: 0;
 }
+
+.avatar.large {
+    width: 120px;
+    height: 120px;
+}
+
+.avatar {
+    display: block;
+    position: relative;
+    width: 25px;
+    height: 25px;
+}
+
+.avatar.large img {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.avatar.large img:hover {
+    opacity:0.5;
+    -moz-opacity:0.5;
+    filter: light black;
+    -khtml-opacity: 0.5;
+}
+
+.avatar img {
+    height: 25px;
+    width: 25px;
+    position: relative;
+}
+
+.avatar img {
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 1;
+}
