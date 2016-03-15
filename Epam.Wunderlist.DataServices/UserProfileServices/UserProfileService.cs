@@ -28,14 +28,14 @@ namespace Epam.Wunderlist.DataServices.UserProfileServices
 
         public UserProfile GetByEmail(string email)
         {
-            return _userProfileRepository.GetAll().FirstOrDefault(u => u.Email == email);
+            return _userProfileRepository.GetUserProfileByEmail(email);
         }
 
-        public bool Create(UserProfile entity)
+        public int Create(UserProfile entity)
         {
             var result = _userProfileRepository.Create(entity);
             _unitOfWork.Commit();
-            return result != 0;
+            return result;
         }
 
         public void Update(UserProfile entity)

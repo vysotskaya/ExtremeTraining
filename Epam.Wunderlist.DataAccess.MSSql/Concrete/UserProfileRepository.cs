@@ -18,28 +18,21 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
         public UserProfileRepository(DbContext dbContext)
         {
             _dbContext = dbContext;
-            Mapper.Initialize(cfg => {
-                cfg.CreateMap<UserProfileDbModel, UserProfile>()
-                    .ForMember(x => x.Avatar, y => y.MapFrom(s => s.Avatar.ByteArrayToImage()))
-                    .ForMember(x => x.UserName, y => y.MapFrom(s => s.Name));
-                cfg.CreateMap<UserProfile, UserProfileDbModel>()
-                    .ForSourceMember(x => x.Id, y => y.Ignore())
-                    .ForMember(x => x.Avatar, y => y.MapFrom(s => s.Avatar.ImageToByteArray()))
-                    .ForMember(x => x.Name, y => y.MapFrom(s => s.UserName)); ;
-            });
         }
 
         public IEnumerable<UserProfile> GetAll()
         {
             var users = _dbContext.Set<UserProfileDbModel>().ToList();
-            var mappedUsers = users.Select(u => Mapper.Map<UserProfileDbModel, UserProfile>(u));
+            var mappedUsers = users.Select(u => Mapper.DynamicMap<UserProfileDbModel, UserProfile>(u));
             return mappedUsers;
         }
 
         public UserProfile GetById(int key)
         {
             var user = _dbContext.Set<UserProfileDbModel>().FirstOrDefault(u => u.Id == key);
-            return Mapper.Map<UserProfileDbModel, UserProfile>(user);
+            var mappedUserProfile = Mapper.DynamicMap<UserProfileDbModel, UserProfile>(user);
+            mappedUserProfile.UserName = user?.Name;
+            return mappedUserProfile;
         }
 
         public UserProfile GetByPredicate(Expression<Func<UserProfile, bool>> expression)
@@ -67,16 +60,22 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
                 return;
             }
             existedUser.State = EntityState.Modified;
-            //existedUser.Entity.Name = entity.Name;
             existedUser.Entity.Name = entity.UserName;
-            existedUser.Entity.Email = entity.Email;
-            existedUser.Entity.Password = entity.Password;
+            existedUser.Entity.Avatar = entity.Avatar;
         }
 
         public void Delete(UserProfile entity)
         {
             var user = _dbContext.Set<UserProfileDbModel>().Single(u => u.Id == entity.Id);
             _dbContext.Set<UserProfileDbModel>().Remove(user);
+        }
+
+        public UserProfile GetUserProfileByEmail(string email)
+        {
+            var user = _dbContext.Set<UserProfileDbModel>().FirstOrDefault(u => u.Email == email);
+            var mappedUserProfile = Mapper.DynamicMap<UserProfileDbModel, UserProfile>(user);
+            mappedUserProfile.UserName = user?.Name;
+            return mappedUserProfile;
         }
     }
 }

@@ -24,7 +24,9 @@ namespace Epam.Wunderlist.MvcPL.Identity
         }
         public Task CreateAsync(UserProfile user)
         {
-            return Task.FromResult<bool>(UserProfileService.Create(user));
+            var userProfileId = UserProfileService.Create(user);
+            user.Id = userProfileId;
+            return Task.FromResult<bool>(userProfileId == 0);
         }
         public Task<string> GetPasswordHashAsync(UserProfile user)
         {

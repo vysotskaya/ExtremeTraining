@@ -1,9 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using Epam.Wunderlist.DataAccess.Entities;
 using Epam.Wunderlist.DataServices.UserProfileServices;
+using Epam.Wunderlist.MvcPL.Convertor;
 using Epam.Wunderlist.MvcPL.Identity;
 using Epam.Wunderlist.MvcPL.Models;
 using Microsoft.AspNet.Identity;
@@ -36,11 +41,13 @@ namespace Epam.Wunderlist.MvcPL.Controllers
         {
             if (ModelState.IsValid)
             {
+                var defaultAvatar = Image.FromFile(Server.MapPath("~/Content/images/photo.png"));
                 var user = new UserProfile()
                 {
                     Email = model.Email,
                     Password = Crypto.HashPassword(model.Password),
-                    UserName = model.Name
+                    UserName = model.Name,
+                    Avatar = defaultAvatar.ImageToByteArray()
                 };
                 var result = await UserProfileManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -72,7 +79,10 @@ namespace Epam.Wunderlist.MvcPL.Controllers
                 var user = await UserProfileManager.FindAsync(model.Email, model.Password);
                 if (user != null)
                 {
+                    //user.Avatar.Save(Server.MapPath("~/Content/photo.png"));
+                    //user.Avatar = Image.FromFile(Server.MapPath("~/Content/photo.png"));
                     await SignInAsync(user, true);
+                    //return RedirectToAction("wunderlist", "Wunderlist");
                     return RedirectToLocal(returnUrl);
                 }
                 ModelState.AddModelError("", "Invalid email or password.");
@@ -93,14 +103,28 @@ namespace Epam.Wunderlist.MvcPL.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = await UserProfileManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
-            //identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
-            //identity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
             AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
-            //var authenticationManager = System.Web.HttpContext.Current.GetOwinContext().Authentication;
-            //authenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-            //var identity = await manager.CreateIdentityAsync(user, DeffaultAuthenticationTypes.ApplicationCookie);
-            //authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task Edit(UserProfileEditViewModel userProfile)
+        {
+            var existedUserProfile = _userProfileService.GetByEmail(User.Identity.GetUserEmail());
+            if (existedUserProfile != null)
+            {
+                Image avatar = ResizeImage(userProfile.Avatar);
+                existedUserProfile.UserName = userProfile.UserName;
+                existedUserProfile.Avatar = avatar.ImageToByteArray();
+                _userProfileService.Update(existedUserProfile);
+                User.UpdateClaim(ClaimsIdentity.DefaultNameClaimType, userProfile.UserName, ClaimValueTypes.String);
+                //User.UpdateClaim("Avatar", Convert.ToBase64String(avatar.ImageToByteArray()), ClaimValueTypes.String);
+                var identity = User.Identity as ClaimsIdentity;
+                AuthenticationManager.SignOut();
+                AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = true }, identity);
+            }
+        }
+
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
@@ -117,5 +141,11 @@ namespace Epam.Wunderlist.MvcPL.Controllers
         //{
         //    return PartialView("_LoginPartial");
         //}
+
+        private Image ResizeImage(HttpPostedFileBase avatar)
+        {
+            Image image = Image.FromStream(avatar.InputStream);
+            return image?.GetThumbnailImage(128, (128 * image.Height) / image.Width, null, IntPtr.Zero);
+        }
     }
 }

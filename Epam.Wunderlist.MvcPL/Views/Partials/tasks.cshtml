@@ -35,7 +35,7 @@
 <!-- tasks of list -->
 <div class="task-list">
     <ol class="tasks">
-        <li ng-repeat="task in tasks | filter: { TaskStateRefId: '1' }" tabindex="0" class="task-item" draggable="true">
+        <li ng-repeat="task in tasks | filter: TaskStateRefId: '1'| filter: searchTerm" tabindex="0" class="task-item">
             <div class="taskItem-body">
                 <label class="checkbox-inline">
                     <input type="checkbox" ng-click="updateStateTodoTask(task.Id, 2);">
