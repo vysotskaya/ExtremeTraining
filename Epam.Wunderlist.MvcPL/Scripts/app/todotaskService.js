@@ -41,7 +41,6 @@
         }
 
         function updateTodotask(todoTask) {
-            debugger;
             var resource = $resource(WUNDERLIST_CONSTANTS.URL + '/api/todotask/' + todoTask.Id, {},
             {
                 update: { method: 'PUT' }

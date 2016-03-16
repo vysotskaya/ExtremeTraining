@@ -9,6 +9,11 @@ namespace Epam.Wunderlist.MvcPL.Controllers
             return PartialView("tasks");
         }
 
+        public ActionResult DetailOfTodoTask()
+        {
+            return PartialView("detailOfTodoTask");
+        }
+
         public ActionResult EditTodoListModal()
         {
             return PartialView("editTodoListModal");

@@ -11,9 +11,9 @@ namespace Epam.Wunderlist.MvcPL.Controllers
     {
         private readonly IUserProfileService _userProfileService;
 
-        public UserProfileController()
+        public UserProfileController(IUserProfileService userProfileService)
         {
-            _userProfileService = (IUserProfileService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IUserProfileService));
+            _userProfileService = userProfileService;
         }
 
         [HttpGet]

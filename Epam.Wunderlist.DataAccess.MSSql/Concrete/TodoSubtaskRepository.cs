@@ -17,19 +17,14 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
         public TodoSubtaskRepository(DbContext dbContext)
         {
             _dbContext = dbContext;
-            Mapper.Initialize(cfg => {
-                cfg.CreateMap<TodoSubtaskDbModel, TodoSubtask>();
-                cfg.CreateMap<TodoSubtask, TodoSubtaskDbModel>()
-                    .ForSourceMember(x => x.Id, y => y.Ignore());
-            });
         }
 
         public int Create(TodoSubtask entity)
         {
-            var todoSubtask = Mapper.Map<TodoSubtask, TodoSubtaskDbModel>(entity);
+            var todoSubtask = Mapper.DynamicMap<TodoSubtask, TodoSubtaskDbModel>(entity);
             _dbContext.Set<TodoSubtaskDbModel>().Add(todoSubtask);
             _dbContext.SaveChanges();
-            return  todoSubtask.Id;
+            return todoSubtask.Id;
         }
 
         public void Delete(TodoSubtask entity)
@@ -49,7 +44,7 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
         public TodoSubtask GetById(int key)
         {
             var subtask = _dbContext.Set<TodoSubtaskDbModel>().FirstOrDefault(st => st.Id == key);
-            return Mapper.Map<TodoSubtaskDbModel, TodoSubtask>(subtask);
+            return Mapper.DynamicMap<TodoSubtaskDbModel, TodoSubtask>(subtask);
         }
 
         public TodoSubtask GetByPredicate(Expression<Func<TodoSubtask, bool>> expression)
@@ -57,23 +52,28 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
             throw new NotImplementedException();
         }
 
-        public IEnumerable<TodoSubtask> GetByTaskId(int taskId)
+        public ICollection<TodoSubtask> GetByTaskId(int taskId)
         {
-            return _dbContext.Set<TodoSubtaskDbModel>().Where(subtask => subtask.TodoTaskRefId == taskId)
-                .Select(subtask => Mapper.Map<TodoSubtaskDbModel, TodoSubtask>(subtask));
+            return _dbContext.Set<TodoSubtaskDbModel>()
+                .Where(subtask => subtask.TodoTaskRefId == taskId).ToList()
+                .Select(subtask => Mapper.DynamicMap<TodoSubtaskDbModel, TodoSubtask>(subtask)).ToList();
         }
 
         public void Update(TodoSubtask entity)
         {
 
-            var subtask = _dbContext.Entry(Mapper.Map<TodoSubtask, TodoSubtaskDbModel>(entity));
-            foreach (var property in subtask.OriginalValues.PropertyNames)//subtask.GetType().GetTypeInfo().DeclaredProperties
+            var existedSubtask = _dbContext.Entry<TodoSubtaskDbModel>
+                (
+                    _dbContext.Set<TodoSubtaskDbModel>().Find(entity.Id)
+                );
+            if (existedSubtask == null)
             {
-                var original = subtask.Property(property).OriginalValue;
-                var current = subtask.Property(property).CurrentValue;
-                if (original != null && !original.Equals(current))
-                    subtask.Property(property).IsModified = true;
+                return;
             }
+            existedSubtask.State = EntityState.Modified;
+            existedSubtask.Entity.TodoSubtaskName = entity.TodoSubtaskName;
+            existedSubtask.Entity.TodoTaskRefId = entity.TodoTaskRefId;
+            existedSubtask.Entity.TaskStateRefId = entity.TaskStateRefId;
         }
     }
 }

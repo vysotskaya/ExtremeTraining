@@ -11,22 +11,31 @@
     <link href="~/Content/styles/styleWunderlist.css" rel="stylesheet">
     <link href="~/Content/styles/mainWunderlist.css" rel="stylesheet">
     <link href="~/Content/styles/drag-and-drop.css" rel="stylesheet"/>
+    <link href="~/Content/styles/detailOfTodoTask.css" rel="stylesheet"/>
+    <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
     <script src="~/Scripts/angular.min.js"></script>
-    
     @*<script src="~/Scripts//main.angular.js"></script>*@
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/app/main.js"></script>
     <script src="~/Scripts/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+    <script src="~/Scripts/angular-animate.min.js"></script>
     @*<script src="~/Scripts/AngularUI/ui-router.min.js"></script>*@
     <script src="~/Scripts/angular-ui-router.js"></script>
     <script src="~/Scripts/angular-resource.js"></script>
+    <script src="~/Scripts/app/main.js"></script>
     <script src="~/Scripts/app/dnd.js"></script>
     <script src="~/Scripts/app/app.js"></script>
+    <script src="~/Scripts/app/userProfileController.js"></script>
+    <script src="~/Scripts/app/wunderlistAppController.js"></script>
+    <script src="~/Scripts/app/todoSubtaskController.js"></script>
+    <script src="~/Scripts/app/todoTaskController.js"></script>
     <script src="~/Scripts/upload.js"></script>
     <script src="~/Scripts/app/todolistService.js"></script>
     <script src="~/Scripts/app/todotaskService.js"></script>
     <script src="~/Scripts/app/userProfileService.js"></script>
+    <script src="~/Scripts/app/todoSubtaskService.js"></script>
 </head>
 <body ng-app="wunderlistApp" class="wlapp-parent chrome animate platform-windows application main background-06 focus-sidebar" style="opacity: 1;" role="application" id="wunderlist-base">
     <!-- главный интерфейс -->
@@ -284,8 +293,8 @@
                 <!-- панель списков дел -->
                 <div class="lists-scroll">
                     <ul class="lists-collections">
-                        <li ng-repeat="list in lists" dnd-list="list.draggedTasks" name="listItem" ui-sref-active="selected" role="menuitem" id="{{list.Id}}" tabindex="0" class="slidebarItem-owner-list" draggable="true" onclick="chooseTaskOwnerList(id)">
-                            <a  href="#" ui-sref="todoTasks({id: list.Id})" aria-hidden="true" ng-click="selectTodoList(list.Id, list.TodoListName)">
+                        <li ng-repeat="list in lists" dnd-list="list.draggedTasks" dnd-inserted="insertDraggedTask()" name="listItem" ui-sref-active="selected" role="menuitem" id="{{list.Id}}" tabindex="0" class="slidebarItem-owner-list" draggable="true" onclick="chooseTaskOwnerList(id)">
+                            <a  href="#"  ui-sref="todoTasks({id: list.Id})" aria-hidden="true" ng-click="selectTodoList(list.Id, list.TodoListName)">
                                 <span class="list-icon">
                                     <svg class="list-rtl-flip" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                         <g id="Web-svgs" stroke="none" stroke-width="1" fill-rule="evenodd">

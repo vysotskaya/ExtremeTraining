@@ -12,31 +12,33 @@ namespace Epam.Wunderlist.MvcPL.Controllers
 {
     public class TodoTaskController : ApiController
     {
-        [Inject]
         private readonly ITodoTaskService _todoTaskService;
 
-        public TodoTaskController()
+        public TodoTaskController(ITodoTaskService todoTaskService)
         {
-            _todoTaskService = (ITodoTaskService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(ITodoTaskService));
-        }
-
-        //public TodoListController(ITodoListService todoListService)
-        //{
-        //    _todoListService = todoListService;
-        //}
-
-        [HttpGet]
-        public object Get(int id)
-        {
-            var task = _todoTaskService.GetById(id);
-            return task;
+            _todoTaskService = todoTaskService;
         }
 
         [HttpGet]
-        public IEnumerable<object> GetByListId(int todoListId)
+        public object Get(int? id)
         {
-            var tasks = _todoTaskService.GetByListId(todoListId);
-            return tasks;
+            if (id.HasValue)
+            {
+                var task = _todoTaskService.GetById(id.Value);
+                return task;
+            }
+            return null;
+        }
+
+        [HttpGet]
+        public IEnumerable<object> GetByListId(int? todoListId)
+        {
+            if (todoListId.HasValue)
+            {
+                var tasks = _todoTaskService.GetByListId(todoListId.Value);
+                return tasks;
+            }
+            return new List<object>();
         }
 
         [HttpPost]

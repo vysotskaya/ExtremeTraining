@@ -55,8 +55,16 @@
                     </li>
                 </ul>
                 <div class="wunderlist-actions">
-                    <a class="wunderlist-button wunderlist-login-button blank" href="@Url.Action("Login", "Account")">Вход</a>
-                    <a class="wunderlist-button wunderlist-signup-button" href="@Url.Action("Register", "Account")">Создать бесплатную учетную запись</a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+
+                        <a class="wunderlist-button wunderlist-login-button blank" style="background-color:#01deb8; color:#ffffff; fill:#ffffff;" role="button" href="http://localhost:53028/Wunderlist/wunderlist">@User.Identity.GetUserName()</a>
+
+                    }
+                    else {
+                        <a class="wunderlist-button wunderlist-login-button blank" href="@Url.Action("Login", "Account")">Вход</a>
+                        <a class="wunderlist-button wunderlist-signup-button" href="@Url.Action("Register", "Account")">Создать бесплатную учетную запись</a>
+                    }
                 </div>
             </div>
         </div>

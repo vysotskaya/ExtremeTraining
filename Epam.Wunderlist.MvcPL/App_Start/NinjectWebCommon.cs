@@ -1,3 +1,4 @@
+using System.Web.Http;
 using Ninject.Extensions.Xml;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Epam.Wunderlist.MvcPL.App_Start.NinjectWebCommon), "Start")]
@@ -50,8 +51,9 @@ namespace Epam.Wunderlist.MvcPL.App_Start
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-
                 RegisterServices(kernel);
+                GlobalConfiguration.Configuration.DependencyResolver = 
+                    new Ninject.Web.WebApi.NinjectDependencyResolver(kernel);
                 return kernel;
             }
             catch (Exception ex)

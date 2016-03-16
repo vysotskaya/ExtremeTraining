@@ -18,6 +18,12 @@ namespace Epam.Wunderlist.MvcPL
             );
 
             config.Routes.MapHttpRoute(
+                name: "GetManyTodoSubtaskApi",
+                routeTemplate: "api/todotask/{todoTaskId}/{controller}",
+                defaults: new { todoTaskId = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }

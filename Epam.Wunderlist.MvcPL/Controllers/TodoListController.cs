@@ -12,15 +12,10 @@ namespace Epam.Wunderlist.MvcPL.Controllers
     {
         private readonly ITodoListService _todoListService;
 
-        public TodoListController()
+        public TodoListController(ITodoListService todoListService)
         {
-            _todoListService = (ITodoListService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(ITodoListService));
+            _todoListService = todoListService;
         }
-
-        //public TodoListController(ITodoListService todoListService)
-        //{
-        //    _todoListService = todoListService;
-        //}
 
         [HttpGet]
         public IEnumerable<object> Get()

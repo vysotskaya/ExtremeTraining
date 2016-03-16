@@ -90,19 +90,91 @@ function showHideElement (elId){
 	}
 }
 
-//$(document).ready(function() {
-//    $('#file-input').change(function(event) {
-//        var selectedFile = event.target.files[0];
-//        if (!selectedFile.type.match('image.*')) {
-//            return;
-//        }
-//        var reader = new FileReader();
-//        reader.onload = function (event) {
-//            debugger;
-//            console.log(event.target.result);
-//            $("#avatar").attr('src', event.target.result);
-//        };
-//        reader.readAsDataURL(selectedFile);
-//    });
-//});
+function showTaskMenu() {
+    $(document).ready(function () {
+        $('#tasksElementId').mousemove(function (e) {
+            event.preventDefault();
+            if (event.button == 2) {
+                $('#contextMenuId').is(':visible')
+                {
+                    $('#contextMenuId').show();
+                    $("#contextMenuId").css('left', (e.pageX + 10) + 'px').css('top', (e.pageY + 10) + 'px');
+                }
+            }
+        });
+    });
 
+}
+
+function showDetails() {
+    if ($('#detail').width() == 0) {
+        $('#detail').width(367);
+    }
+    else {
+        $('#detail').width(0);
+    }
+}
+
+function allowChange() {
+    $('#taskTextField').removeClass('hidden');
+    $('#taskNameId').addClass('hidden');
+}
+function stopChangeTaskName() {
+    $('#taskTextField').addClass('hidden');
+    $('#taskNameId').removeClass('hidden');
+}
+function showTextAriaNote() {
+    debugger;
+    $('#textFieldNote').removeClass('hidden');
+    $('#textFieldNoteId').removeClass('hidden');
+    $('#taskNoteId').addClass('hidden');
+}
+
+function stopAddingNode() {
+    $('#textFieldNote').addClass('hidden');
+    $('#textFieldNoteId').addClass('hidden');
+    $('#taskNoteId').removeClass('hidden');
+
+}
+
+function showSubtuckEdit() {
+    $('#subtaskInputId').removeClass('hidden');
+    $('#subtaskViewId').addClass('hidden');
+
+}
+
+function showEditSubtask() {
+    $('#existingSubtaskEdit').removeClass('hidden');
+    $('#existingSubtask').addClass('hidden');
+}
+
+function hideEditSubtask() {
+    $('#existingSubtask').removeClass('hidden');
+    $('#existingSubtaskEdit').addClass('hidden');
+}
+function hideContextMenu() {
+    $('#contextMenuId').hide();
+}
+
+function loadDetails() {
+    var el = document.querySelector('#detail');
+    el.classList += 'transition';
+}
+
+function datePickerShow() {
+    $.datepicker.setDefaults($.extend($.datepicker.regional["ru"]));
+
+    $('#datepicker').datepicker({
+        showButtonPanel: true,
+        dateFormat: "yy-mm-dd",
+        beforeShow: function (input) {
+        },
+        onSelect: function (dateText, inst) {
+            $(this).css("text-decoration-color", "#67ae2b");
+
+        },
+        onClose: function (dateText, inst) {
+            $(this).focus();
+        }
+    });
+}

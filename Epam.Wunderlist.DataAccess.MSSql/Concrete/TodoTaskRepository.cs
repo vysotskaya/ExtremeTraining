@@ -77,7 +77,7 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
         {
             return _dbContext.Set<TodoTaskDbModel>()
                 .Where(t => t.TodoListRefId == listId).ToList()
-                .Select(t => Mapper.Map<TodoTaskDbModel, TodoTask>(t)).ToList();
+                .Select(t => Mapper.DynamicMap<TodoTaskDbModel, TodoTask>(t)).ToList();
         }
     }
 }

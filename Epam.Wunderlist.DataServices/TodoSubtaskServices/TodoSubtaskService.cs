@@ -16,10 +16,11 @@ namespace Epam.Wunderlist.DataServices.TodoSubtaskServices
             _subtaskRepository = subtaskRepository;
         }
 
-        public void Create(TodoSubtask entity)
+        public TodoSubtask Create(TodoSubtask entity)
         {
-            _subtaskRepository.Create(entity);
+            var id = _subtaskRepository.Create(entity);
             _unitOfWork.Commit();
+            return id != 0 ? _subtaskRepository.GetById(id) : null;
         }
 
         public void Delete(TodoSubtask entity)
