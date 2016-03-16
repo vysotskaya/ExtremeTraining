@@ -67,7 +67,7 @@
             $rootScope.setUserProfileData();
         }
     })
-    .controller('wunderlistAppController', function(todoListService, userProfileService, $scope) {
+    .controller('wunderlistAppController', function(todoListService, todoTaskService, userProfileService, $scope) {
 
         $scope.$on('handleUserProfileChange', function() {
             debugger;
@@ -79,6 +79,20 @@
         $scope.getListsAndUserProfileData = function() {
             todoListService.getTodolists(function(response) {
                 $scope.lists = response;
+
+                angular.forEach($scope.lists, function(u, i) {
+                    $scope.lists[i].draggedTasks = [];
+                    $scope.$watch(function () { return $scope.lists[i]; }, function (newModel, oldModel) {
+                        if (newModel.draggedTasks.length > oldModel.draggedTasks.length) {
+                            var draggedTask = newModel.draggedTasks[0];
+                            draggedTask.Priority = -1;
+                            draggedTask.TodoListRefId = newModel.Id;
+                            todoTaskService.updateTodotask(draggedTask);
+                            newModel.draggedTasks = [];
+                        }
+                    }, true);
+                });
+
                 userProfileService.getUserProfile(function(response) {
                     userProfileService.setUserProfileData(response);
                     var userProfile = userProfileService.getUserProfileData();
@@ -180,20 +194,6 @@ angular.module('wunderlistApp')
                 todoTaskService.updatePriorityTodotasks($scope.activeTasks);
             }
         }, true);
-
-        $scope.dragoverCallback = function (event, index, external, type) {
-            //console.log(event, index, external, type);
-            return index < 10;
-        };
-
-        $scope.dropCallback = function (event, index, item, external, type, allowedType) {
-            console.log(event, index, item, external, type, allowedType);
-            if (external) {
-                if (allowedType === 'itemType' && !item.label) return false;
-                if (allowedType === 'containerType' && !angular.isArray(item)) return false;
-            }
-            return item;
-        };
 
         $scope.selectedListId = $stateParams.id;
 

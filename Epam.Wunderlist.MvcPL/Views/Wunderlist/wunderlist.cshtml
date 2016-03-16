@@ -284,11 +284,7 @@
                 <!-- панель списков дел -->
                 <div class="lists-scroll">
                     <ul class="lists-collections">
-                        <li ng-repeat="list in lists"
-                            dnd-draggable="list"
-                            dnd-type="'containerType'"
-                            dnd-effect-allowed="copyMove"
-                            name="listItem" ui-sref-active="selected" role="menuitem" id="{{list.Id}}" tabindex="0" class="slidebarItem-owner-list" draggable="true" onclick="chooseTaskOwnerList(id)">
+                        <li ng-repeat="list in lists" dnd-list="list.draggedTasks" name="listItem" ui-sref-active="selected" role="menuitem" id="{{list.Id}}" tabindex="0" class="slidebarItem-owner-list" draggable="true" onclick="chooseTaskOwnerList(id)">
                             <a  href="#" ui-sref="todoTasks({id: list.Id})" aria-hidden="true" ng-click="selectTodoList(list.Id, list.TodoListName)">
                                 <span class="list-icon">
                                     <svg class="list-rtl-flip" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

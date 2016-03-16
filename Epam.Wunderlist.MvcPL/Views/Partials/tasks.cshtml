@@ -34,13 +34,7 @@
 </form>
 <!-- tasks of list -->
 <div class="task-list">
-    <ol class="tasks" dnd-list="activeTasks"
-        dnd-horizontal-list="true"
-        dnd-external-sources="true"
-        dnd-dragover="dragoverCallback(event, index, external, type)"
-        dnd-drop="dropCallback(event, index, item, external, type, 'itemType')"
-        class="itemlist"
-        >
+    <ol class="tasks" dnd-list="activeTasks">
         <li ng-repeat="task in activeTasks | filter: searchTerm" tabindex="0" class="task-item"
             dnd-draggable="task"
             dnd-moved="activeTasks.splice($index, 1)"
