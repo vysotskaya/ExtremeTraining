@@ -1,21 +1,19 @@
+using System;
+using System.Web;
 using System.Web.Http;
+using Epam.Wunderlist.MvcPL.App_Start;
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+using Ninject;
 using Ninject.Extensions.Xml;
+using Ninject.Web.Common;
+using Ninject.Web.WebApi;
+using WebActivatorEx;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Epam.Wunderlist.MvcPL.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Epam.Wunderlist.MvcPL.App_Start.NinjectWebCommon), "Stop")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
+[assembly: ApplicationShutdownMethod(typeof(NinjectWebCommon), "Stop")]
 
 namespace Epam.Wunderlist.MvcPL.App_Start
 {
-    using System;
-    using System.Web;
-    using System.Web.Mvc;
-
-    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
-    using Ninject;
-    using Ninject.Web.Common;
-    using Infrastructure;
-
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -53,7 +51,7 @@ namespace Epam.Wunderlist.MvcPL.App_Start
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
                 RegisterServices(kernel);
                 GlobalConfiguration.Configuration.DependencyResolver = 
-                    new Ninject.Web.WebApi.NinjectDependencyResolver(kernel);
+                    new NinjectDependencyResolver(kernel);
                 return kernel;
             }
             catch (Exception ex)
@@ -69,7 +67,7 @@ namespace Epam.Wunderlist.MvcPL.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
+            System.Web.Mvc.DependencyResolver.SetResolver(new Infrastructure.NinjectDependencyResolver(kernel));
         }        
     }
 }

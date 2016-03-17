@@ -13,15 +13,12 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
     public class TodoTaskRepository : ITodoTaskRepository
     {
         private readonly DbContext _dbContext;
+        private readonly ITodoSubtaskRepository _todoSubtaskRepository;
 
-        public TodoTaskRepository(DbContext dbContext)
+        public TodoTaskRepository(DbContext dbContext, ITodoSubtaskRepository todoSubtaskRepository)
         {
             _dbContext = dbContext;
-            Mapper.Initialize(cfg => {
-                cfg.CreateMap<TodoTaskDbModel, TodoTask>();
-                cfg.CreateMap<TodoTask, TodoTaskDbModel>()
-                    .ForSourceMember(x => x.Id, y => y.Ignore());
-            });
+            _todoSubtaskRepository = todoSubtaskRepository;
         }
 
         public IEnumerable<TodoTask> GetAll()
@@ -32,7 +29,7 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
         public TodoTask GetById(int key)
         {
             var todoTask = _dbContext.Set<TodoTaskDbModel>().FirstOrDefault(t => t.Id == key);
-            return Mapper.Map<TodoTaskDbModel, TodoTask>(todoTask);
+            return Mapper.DynamicMap<TodoTaskDbModel, TodoTask>(todoTask);
         }
 
         public TodoTask GetByPredicate(Expression<Func<TodoTask, bool>> expression)
@@ -69,6 +66,12 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
 
         public void Delete(TodoTask entity)
         {
+            var subtasks = _todoSubtaskRepository.GetByTaskId(entity.Id);
+            foreach (var subtask in subtasks)
+            {
+                var item = _todoSubtaskRepository.GetById(subtask.Id);
+                _todoSubtaskRepository.Delete(item);
+            }
             var todoTask = _dbContext.Set<TodoTaskDbModel>().Single(t => t.Id == entity.Id);
             _dbContext.Set<TodoTaskDbModel>().Remove(todoTask);
         }

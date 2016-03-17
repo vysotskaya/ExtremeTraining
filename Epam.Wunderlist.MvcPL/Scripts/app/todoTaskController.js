@@ -12,7 +12,6 @@
                 return;
             }
             todoTaskService.getTodotasksByListId($stateParams.id, function (response) {
-                debugger;
                 angular.forEach(response, function (task, i) {
                     if (task.TaskStateRefId == 1) {
                         $scope.activeTasks.push(task);
@@ -34,7 +33,6 @@
         };
 
         $scope.endDragTask = function () {
-            debugger;
             angular.forEach($scope.activeTasks, function (u, i) {
                 $scope.activeTasks[i].Priority = i;
             });
@@ -57,7 +55,6 @@
         }
 
         $scope.makeCompletedTodoTask = function (id) {
-            debugger;
             angular.forEach($scope.activeTasks, function (u, i) {
                 if (u.Id === id) {
                     var updateTask = u;
@@ -120,7 +117,6 @@
                 return;
             }
             todoTaskService.getTodotaskById($stateParams.idTask, function (response) {
-                debugger;
                 $scope.selectedTask = response;
                 if ($scope.selectedTask.DueDate == null) {
                     $scope.selectedTask.DueDate = "Задать дату выполнения";
@@ -140,32 +136,32 @@
         }
 
         $scope.updateTodoTaskState = function (selectedTask) {
-            debugger;
+            var ind;
             if (selectedTask.TaskStateRefId == 1) {
                 selectedTask.TaskStateRefId = 2;
                 angular.forEach($scope.activeTasks, function (t, i) {
                     if (t.Id === selectedTask.id) {
-                        $scope.$parent.activeTasks[i].splice(i, 1);
-                        $scope.$parent.completedTasks.push(selectedTask);
+                        ind = i;
                     }
                 });
-                
+                $scope.$parent.activeTasks.splice(ind, 1);
+                $scope.$parent.completedTasks.push(selectedTask);
             }
             else {
                 selectedTask.TaskStateRefId = 1;
                 angular.forEach($scope.completedTasks, function (t, i) {
                     if (t.Id === selectedTask.id) {
-                        $scope.$parent.completedTasks[i].splice(i, 1);
-                        $scope.$parent.activeTasks.push(selectedTask);
+                        ind = i;
                     }
                 });
+                $scope.$parent.completedTasks.splice(ind, 1);
+                $scope.$parent.activeTasks.push(selectedTask);
             }
             
             todoTaskService.updateTodotask(selectedTask);
         };
 
         $scope.deleteTodoTask = function (state, taskId) {
-            debugger;
             if (state == 1) {
                 angular.forEach($scope.activeTasks, function (s, i) {
                     if (s.Id === taskId) {

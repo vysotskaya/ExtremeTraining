@@ -1,10 +1,8 @@
-﻿using System;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Helpers;
 using Epam.Wunderlist.DataAccess.Entities;
 using Epam.Wunderlist.DataServices.UserProfileServices;
-using Epam.Wunderlist.MvcPL.Convertor;
 using Microsoft.AspNet.Identity;
 
 namespace Epam.Wunderlist.MvcPL.Identity

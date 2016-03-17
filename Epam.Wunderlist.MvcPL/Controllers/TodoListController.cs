@@ -4,7 +4,6 @@ using System.Web.Http;
 using Epam.Wunderlist.DataAccess.Entities;
 using Epam.Wunderlist.DataServices.TodoListServices;
 using Epam.Wunderlist.MvcPL.Identity;
-using Ninject;
 
 namespace Epam.Wunderlist.MvcPL.Controllers
 {

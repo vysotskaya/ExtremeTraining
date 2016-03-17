@@ -23,7 +23,12 @@ namespace Epam.Wunderlist.DataAccess.MSSql.MapperConfiguration
                     .ForMember(x => x.UserName, y => y.MapFrom(s => s.Name));
                 cfg.CreateMap<UserProfile, UserProfileDbModel>()
                     .ForSourceMember(x => x.Id, y => y.Ignore())
-                    .ForMember(x => x.Name, y => y.MapFrom(s => s.UserName)); ;
+                    .ForMember(x => x.Name, y => y.MapFrom(s => s.UserName));
+
+                cfg.CreateMap<TodoTaskDbModel, TodoTask>();
+                cfg.CreateMap<TodoTask, TodoTaskDbModel>()
+                    .ForSourceMember(x => x.Id, y => y.Ignore());
+
             });
         }
     }

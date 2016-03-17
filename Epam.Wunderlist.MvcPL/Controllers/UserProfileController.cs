@@ -2,7 +2,6 @@
 using System.Web.Http;
 using Epam.Wunderlist.DataAccess.Entities;
 using Epam.Wunderlist.DataServices.UserProfileServices;
-using Epam.Wunderlist.MvcPL.Convertor;
 using Epam.Wunderlist.MvcPL.Identity;
 
 namespace Epam.Wunderlist.MvcPL.Controllers

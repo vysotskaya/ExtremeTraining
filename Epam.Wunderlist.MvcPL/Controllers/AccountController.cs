@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;

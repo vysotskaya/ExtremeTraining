@@ -1,10 +1,10 @@
-﻿using Epam.Wunderlist.MvcPL.Identity;
-using Microsoft.Owin;
-using Owin;
-using Microsoft.Owin.Security.Cookies;
+﻿using Epam.Wunderlist.MvcPL.App_Start;
 using Microsoft.AspNet.Identity;
+using Microsoft.Owin;
+using Microsoft.Owin.Security.Cookies;
+using Owin;
 
-[assembly: OwinStartup(typeof(Epam.Wunderlist.MvcPL.App_Start.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
 namespace Epam.Wunderlist.MvcPL.App_Start
 {
     public class Startup

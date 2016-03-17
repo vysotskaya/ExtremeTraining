@@ -13,10 +13,12 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
     public class TodoListRepository : ITodoListRepository
     {
         private readonly DbContext _dbContext;
+        private readonly ITodoTaskRepository _todoTaskRepository;
 
-        public TodoListRepository(DbContext dbContext)
+        public TodoListRepository(DbContext dbContext, ITodoTaskRepository todoTaskRepository)
         {
             _dbContext = dbContext;
+            _todoTaskRepository = todoTaskRepository;
         }
 
         public IEnumerable<TodoList> GetAll()
@@ -45,7 +47,6 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
 
         public void Update(TodoList entity)
         {
-            //var updatedTodoList = Mapper.Map<TodoList, TodoListDbModel>(entity);
             var existedTodoList = _dbContext.Entry<TodoListDbModel>
                 (
                     _dbContext.Set<TodoListDbModel>().Find(entity.Id)
@@ -56,11 +57,16 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
             }
             existedTodoList.State = EntityState.Modified;
             existedTodoList.Entity.TodoListName = entity.TodoListName;
-            //another properties
         }
 
         public void Delete(TodoList entity)
         {
+            var tasks = _todoTaskRepository.GetByTodoListId(entity.Id);
+            foreach (var task in tasks)
+            {
+                var item = _todoTaskRepository.GetById(task.Id);
+                _todoTaskRepository.Delete(item);
+            }
             var todoList = _dbContext.Set<TodoListDbModel>().Single(l => l.Id == entity.Id);
             _dbContext.Set<TodoListDbModel>().Remove(todoList);
         }

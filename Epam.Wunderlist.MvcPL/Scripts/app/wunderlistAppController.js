@@ -1,5 +1,5 @@
 ﻿angular.module('wunderlistApp')
-    .controller('wunderlistAppController', function(todoListService, todoTaskService, userProfileService, $scope) {
+    .controller('wunderlistAppController', function($state, todoListService, todoTaskService, userProfileService, $scope) {
 
         $scope.$on('handleUserProfileChange', function() {
             debugger;
@@ -20,6 +20,10 @@
                     $scope.imageSrc = userProfile.Avatar;
                     $scope.userName = userProfile.UserName;
                 });
+                if ($scope.lists.length != 0) {
+                    $state.go('todoTasks', { id: $scope.lists[0].Id });
+                    $scope.selectedTodoListName = $scope.lists[0].TodoListName;
+                }
             });
         };
 
@@ -54,8 +58,9 @@
                 {
                     TodoListName: $scope.todoList.TodoListName,
                     Id: data.data,
-                    UserProfileRefId: $scope.todoList.UserProfileRefId
+                    UserProfileRefId: $scope.todoList.UserProfileRefId,
                 });
+                $scope.lists[$scope.lists.length - 1].draggedTasks = [];
                 $scope.todoList.TodoListName = "";
             });
         };
@@ -92,6 +97,11 @@
                 }
             });
             todoListService.deleteTodolist(listId);
-            $scope.selectedTodoListName = "";
+            if ($scope.lists.length != 0) {
+                $state.go('todoTasks', { id: $scope.lists[0].Id });
+                $scope.selectedTodoListName = $scope.lists[0].TodoListName;
+            } else {
+                $scope.selectedTodoListName = "";
+            }
         }
     });

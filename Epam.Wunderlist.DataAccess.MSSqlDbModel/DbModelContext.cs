@@ -41,9 +41,9 @@ namespace Epam.Wunderlist.DataAccess.MSSqlDbModel
                   .HasForeignKey(l => l.UserProfileRefId);
 
             modelBuilder.Entity<TodoTaskDbModel>()
-                  .HasRequired<TodoListDbModel>(t => t.TodoListDbModel)
-                  .WithMany(l => l.TodoTasks)
-                  .HasForeignKey(t => t.TodoListRefId);
+                .HasRequired<TodoListDbModel>(t => t.TodoListDbModel)
+                .WithMany(l => l.TodoTasks)
+                .HasForeignKey(t => t.TodoListRefId);
 
             modelBuilder.Entity<TodoSubtaskDbModel>()
                   .HasRequired<TodoTaskDbModel>(s => s.TodoTaskDbModel)

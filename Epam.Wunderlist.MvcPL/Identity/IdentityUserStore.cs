@@ -38,15 +38,15 @@ namespace Epam.Wunderlist.MvcPL.Identity
         }
 
         #region Not implemented methods     
-        public System.Threading.Tasks.Task DeleteAsync(UserProfile user)
+        public Task DeleteAsync(UserProfile user)
         {
             throw new NotImplementedException();
         }
-        public System.Threading.Tasks.Task<UserProfile> FindByIdAsync(string userId)
+        public Task<UserProfile> FindByIdAsync(string userId)
         {
             throw new NotImplementedException();
         }
-        public System.Threading.Tasks.Task UpdateAsync(UserProfile user)
+        public Task UpdateAsync(UserProfile user)
         {
             throw new NotImplementedException();
         }
