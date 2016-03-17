@@ -16,15 +16,11 @@ namespace Epam.Wunderlist.DataAccess.MSSqlDbModel
         public virtual IDbSet<TodoListDbModel> TodoLists { get; set; }
         public virtual IDbSet<TodoTaskDbModel> TodoTasks { get; set; }
         public virtual IDbSet<TodoSubtaskDbModel> TodoSubtasks { get; set; }
-        public virtual IDbSet<AttachedTaskFileDbModel> AttachedTaskFiles { get; set; } 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TaskStateDbModel>().HasKey(t => t.Id);
             modelBuilder.Entity<TaskStateDbModel>().Property(t => t.Id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            modelBuilder.Entity<AttachedTaskFileDbModel>().HasKey(t => t.Id);
-            modelBuilder.Entity<AttachedTaskFileDbModel>().Property(t => t.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             modelBuilder.Entity<TodoListDbModel>().HasKey(t => t.Id);
             modelBuilder.Entity<TodoListDbModel>().Property(t => t.Id)
@@ -64,12 +60,6 @@ namespace Epam.Wunderlist.DataAccess.MSSqlDbModel
                   .HasRequired<TaskStateDbModel>(s => s.TaskStateDbModel)
                   .WithMany(s => s.TodoTasks)
                   .HasForeignKey(s => s.TaskStateRefId);
-
-            modelBuilder.Entity<AttachedTaskFileDbModel>()
-                 .HasRequired<TodoTaskDbModel>(f => f.TodoTaskDbModel)
-                 .WithMany(t => t.AttachedFiles)
-                 .HasForeignKey(f => f.TodoTaskRefId);
-
         }
     }
 }

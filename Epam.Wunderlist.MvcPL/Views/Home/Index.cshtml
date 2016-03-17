@@ -58,7 +58,7 @@
                     @if (User.Identity.IsAuthenticated)
                     {
 
-                        <a class="wunderlist-button wunderlist-login-button blank" style="background-color:#01deb8; color:#ffffff; fill:#ffffff;" role="button" href="http://localhost:53028/Wunderlist/wunderlist">@User.Identity.GetUserName()</a>
+                        <a class="wunderlist-button wunderlist-login-button blank" style="background-color:#2e8b57; color:#ffffff; fill:#ffffff;" role="button" href="http://localhost:53028/Wunderlist/wunderlist">@User.Identity.GetUserName()</a>
 
                     }
                     else {
@@ -74,7 +74,7 @@
             <div class="wrapper wide top">
                 <img class="intro-image" height="527" src="~/Content/images/twodevices@2x.png" width="609" />
                 <div class="hero-wrapper">
-                    <h2>Держите свою жизнь под контролем, @User.Identity.GetUserName()</h2>
+                    <h2>Держите свою жизнь под контролем @User.Identity.GetUserName()</h2>
                     <p class="subline">
                         С Wunderlist выполнять повседневные задачи стало проще, чем когда-либо. Планируете ли вы отпуск, хотите ли поделиться списком покупок с партнером или управляете одновременно несколькими проектами, — вам поможет Wunderlist, в котором вы можете планировать выполнение, как личных, так и профессиональных задач.
                     </p>

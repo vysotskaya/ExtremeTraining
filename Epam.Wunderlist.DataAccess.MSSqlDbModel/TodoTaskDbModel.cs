@@ -20,7 +20,6 @@ namespace Epam.Wunderlist.DataAccess.MSSqlDbModel
 
         public virtual TodoListDbModel TodoListDbModel { get; set; }
         public virtual ICollection<TodoSubtaskDbModel> TodoSubtasks { get; set; }
-        public virtual ICollection<AttachedTaskFileDbModel> AttachedFiles { get; set; }
         public virtual TaskStateDbModel TaskStateDbModel { get; set; }
     }
 }

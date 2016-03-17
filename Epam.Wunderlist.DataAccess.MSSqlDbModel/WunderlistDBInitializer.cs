@@ -11,7 +11,6 @@ namespace Epam.Wunderlist.DataAccess.MSSqlDbModel
             {
                 new TaskStateDbModel() {TaskStateName = "Active"},
                 new TaskStateDbModel() {TaskStateName = "Completed"}
-                //other states
             };
             foreach (TaskStateDbModel state in states)
             {

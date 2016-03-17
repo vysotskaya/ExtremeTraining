@@ -1,8 +1,17 @@
 ﻿angular.module('wunderlistApp')
     .controller('todoSubtaskController', function ($scope, $stateParams, todoSubtaskService) {
-        todoSubtaskService.getTodoSubtasksByTaskId($stateParams.idTask, function (response) {
-            $scope.subtasks = response;
-        });
+
+        $scope.getSubtasks = function () {
+            if (typeof $stateParams.idTask == "undefined") {
+                return;
+            }
+            todoSubtaskService.getTodoSubtasksByTaskId($stateParams.idTask, function (response) {
+                $scope.subtasks = response;
+            });
+        }
+
+        $scope.getSubtasks();
+
         $scope.selectedTaskId = $stateParams.idTask;
 
         $scope.addSubtask = function () {

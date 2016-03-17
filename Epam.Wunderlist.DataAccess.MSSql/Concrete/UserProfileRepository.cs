@@ -6,7 +6,6 @@ using System.Linq.Expressions;
 using AutoMapper;
 using Epam.Wunderlist.DataAccess.Entities;
 using Epam.Wunderlist.DataAccess.Interfaces.Repositories;
-using Epam.Wunderlist.DataAccess.MSSql.Convertor;
 using Epam.Wunderlist.DataAccess.MSSqlDbModel;
 
 namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
@@ -31,7 +30,10 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
         {
             var user = _dbContext.Set<UserProfileDbModel>().FirstOrDefault(u => u.Id == key);
             var mappedUserProfile = Mapper.DynamicMap<UserProfileDbModel, UserProfile>(user);
-            mappedUserProfile.UserName = user?.Name;
+            if (mappedUserProfile != null)
+            {
+                mappedUserProfile.UserName = user?.Name;
+            }
             return mappedUserProfile;
         }
 
@@ -42,10 +44,15 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
 
         public int Create(UserProfile entity)
         {
-            UserProfileDbModel user = Mapper.Map<UserProfile, UserProfileDbModel>(entity);
-            var addedUserProfile = _dbContext.Set<UserProfileDbModel>().Add(user);
-            _dbContext.SaveChanges();
-            return user.Id;
+            UserProfileDbModel user = Mapper.DynamicMap<UserProfile, UserProfileDbModel>(entity);
+            if (user != null)
+            {
+                user.Name = entity.UserName;
+                _dbContext.Set<UserProfileDbModel>().Add(user);
+                _dbContext.SaveChanges();
+                return user.Id;
+            }
+            return 0;
         }
 
         public void Update(UserProfile entity)
@@ -74,7 +81,10 @@ namespace Epam.Wunderlist.DataAccess.MSSql.Concrete
         {
             var user = _dbContext.Set<UserProfileDbModel>().FirstOrDefault(u => u.Email == email);
             var mappedUserProfile = Mapper.DynamicMap<UserProfileDbModel, UserProfile>(user);
-            mappedUserProfile.UserName = user?.Name;
+            if (mappedUserProfile != null)
+            {
+                mappedUserProfile.UserName = user?.Name;
+            }
             return mappedUserProfile;
         }
     }

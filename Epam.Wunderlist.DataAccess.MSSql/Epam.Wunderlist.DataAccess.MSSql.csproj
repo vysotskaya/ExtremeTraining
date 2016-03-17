@@ -71,7 +71,6 @@
     <Compile Include="Concrete\UnitOfWork.cs" />
     <Compile Include="Concrete\UserProfileRepository.cs" />
     <Compile Include="Convertor\ByteImageConvertor.cs" />
-    <Compile Include="Concrete\AttachedTaskFileRepository.cs" />
     <Compile Include="Concrete\TaskStateRepository.cs" />
     <Compile Include="Concrete\TodoSubtaskRepository.cs" />
     <Compile Include="MapperConfiguration\AutoMapperInitializer.cs" />
