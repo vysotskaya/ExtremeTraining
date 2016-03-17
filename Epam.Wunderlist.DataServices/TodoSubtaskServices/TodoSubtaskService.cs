@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Epam.Wunderlist.DataAccess.Entities;
 using Epam.Wunderlist.DataAccess.Interfaces.Repositories;
+using Epam.Wunderlist.Logger;
 
 namespace Epam.Wunderlist.DataServices.TodoSubtaskServices
 {
@@ -18,31 +20,69 @@ namespace Epam.Wunderlist.DataServices.TodoSubtaskServices
 
         public TodoSubtask Create(TodoSubtask entity)
         {
-            var id = _subtaskRepository.Create(entity);
-            _unitOfWork.Commit();
-            return id != 0 ? _subtaskRepository.GetById(id) : null;
+            try
+            {
+                var id = _subtaskRepository.Create(entity);
+                _unitOfWork.Commit();
+                return id != 0 ? _subtaskRepository.GetById(id) : null;
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+                return null;
+            }
         }
 
         public void Delete(TodoSubtask entity)
         {
-            _subtaskRepository.Delete(entity);
-            _unitOfWork.Commit();
+            try
+            {
+                _subtaskRepository.Delete(entity);
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+            }
         }
 
         public TodoSubtask GetById(int key)
         {
-            return _subtaskRepository.GetById(key);
+            try
+            {
+                return _subtaskRepository.GetById(key);
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+                return null;
+            }
         }
 
         public void Update(TodoSubtask entity)
         {
-            _subtaskRepository.Update(entity);
-            _unitOfWork.Commit();
+            try
+            {
+                _subtaskRepository.Update(entity);
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+            }
         }
 
         public IEnumerable<TodoSubtask> GetByTaskId(int taskId)
         {
-            return _subtaskRepository.GetByTaskId(taskId).ToList();
+            try
+            {
+                return _subtaskRepository.GetByTaskId(taskId).ToList();
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+                return new List<TodoSubtask>();
+            }
         }
 
         

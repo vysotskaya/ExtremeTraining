@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Epam.Wunderlist.DataAccess.Entities;
 using Epam.Wunderlist.DataAccess.Interfaces.Repositories;
+using Epam.Wunderlist.Logger;
 
 namespace Epam.Wunderlist.DataServices.UserProfileServices
 {
@@ -18,36 +20,82 @@ namespace Epam.Wunderlist.DataServices.UserProfileServices
 
         public IEnumerable<UserProfile> GetAll()
         {
-            return _userProfileRepository.GetAll().ToList();
+            try
+            {
+                return _userProfileRepository.GetAll().ToList();
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+                return new List<UserProfile>();
+            }
         }
 
         public UserProfile GetById(int id)
         {
-            return _userProfileRepository.GetById(id);
+            try
+            {
+                return _userProfileRepository.GetById(id);
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+                return null;
+            }
         }
 
         public UserProfile GetByEmail(string email)
         {
-            return _userProfileRepository.GetUserProfileByEmail(email);
+            try
+            {
+                return _userProfileRepository.GetUserProfileByEmail(email);
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+                return null;
+            }
         }
 
         public int Create(UserProfile entity)
         {
-            var result = _userProfileRepository.Create(entity);
-            _unitOfWork.Commit();
-            return result;
+            try
+            {
+                var result = _userProfileRepository.Create(entity);
+                _unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+                return 0;
+            }
         }
 
         public void Update(UserProfile entity)
         {
-            _userProfileRepository.Update(entity);
-            _unitOfWork.Commit();
+            try
+            {
+                _userProfileRepository.Update(entity);
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+            }
         }
 
         public void Delete(UserProfile entity)
         {
-            _userProfileRepository.Delete(entity);
-            _unitOfWork.Commit();
+            try
+            {
+                _userProfileRepository.Delete(entity);
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+            }
         }
     }
 }

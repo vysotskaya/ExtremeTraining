@@ -5,6 +5,7 @@ using Epam.Wunderlist.DataServices.TodoTaskServices;
 
 namespace Epam.Wunderlist.MvcPL.Controllers
 {
+    [Authorize]
     public class TodoTaskController : ApiController
     {
         private readonly ITodoTaskService _todoTaskService;

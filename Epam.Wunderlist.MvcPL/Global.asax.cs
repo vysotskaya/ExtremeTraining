@@ -5,6 +5,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Epam.Wunderlist.Logger;
 
 namespace Epam.Wunderlist.MvcPL
 {
@@ -17,8 +18,8 @@ namespace Epam.Wunderlist.MvcPL
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.Email;
-        }
+            Log.LogInfo("Wunderlist application start");
+    }
     }
 }

@@ -4,7 +4,6 @@
         $scope.userProfile = {};
 
         $rootScope.setUserProfileData = function() {
-            debugger;
             var userProfile = userProfileService.getUserProfileData();
             $scope.imageSrc = userProfile.Avatar;
             $scope.userProfile.UserName = userProfile.UserName;
@@ -19,7 +18,6 @@
         };
 
         $scope.updateUserProfile = function() {
-            debugger;
             if ($scope.userProfile.UserName == "") {
                 return;
             }

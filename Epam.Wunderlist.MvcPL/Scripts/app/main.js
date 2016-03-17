@@ -124,7 +124,6 @@ function stopChangeTaskName() {
     $('#taskNameId').removeClass('hidden');
 }
 function showTextAriaNote() {
-    debugger;
     $('#textFieldNote').removeClass('hidden');
     $('#textFieldNoteId').removeClass('hidden');
     $('#taskNoteId').addClass('hidden');

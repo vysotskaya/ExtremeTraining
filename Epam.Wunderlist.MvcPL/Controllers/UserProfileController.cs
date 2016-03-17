@@ -6,6 +6,7 @@ using Epam.Wunderlist.MvcPL.Identity;
 
 namespace Epam.Wunderlist.MvcPL.Controllers
 {
+    [Authorize]
     public class UserProfileController : ApiController
     {
         private readonly IUserProfileService _userProfileService;

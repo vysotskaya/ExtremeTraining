@@ -79,6 +79,10 @@
       <Project>{10fce89d-6248-4ba3-b98c-5e49390c718d}</Project>
       <Name>Epam.Wunderlist.DataAccess.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Epam.Wunderlist.Logger\Epam.Wunderlist.Logger.csproj">
+      <Project>{47ae5f7a-eaa6-46ea-88fc-8aae5952fb26}</Project>
+      <Name>Epam.Wunderlist.Logger</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

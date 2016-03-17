@@ -1108,8 +1108,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
@@ -1152,6 +1150,10 @@
     <ProjectReference Include="..\Epam.Wunderlist.DependencyResolver\Epam.Wunderlist.DependencyResolver.csproj">
       <Project>{5bdd6aec-acff-425c-b233-487c6aec4b18}</Project>
       <Name>Epam.Wunderlist.DependencyResolver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Wunderlist.Logger\Epam.Wunderlist.Logger.csproj">
+      <Project>{47ae5f7a-eaa6-46ea-88fc-8aae5952fb26}</Project>
+      <Name>Epam.Wunderlist.Logger</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Epam.Wunderlist.DataAccess.Entities;
 using Epam.Wunderlist.DataAccess.Interfaces.Repositories;
+using Epam.Wunderlist.Logger;
 
 namespace Epam.Wunderlist.DataServices.TodoTaskServices
 {
@@ -17,40 +19,85 @@ namespace Epam.Wunderlist.DataServices.TodoTaskServices
 
         public IEnumerable<TodoTask> GetByListId(int todoListId)
         {
-            return _todoTaskRepository.GetByTodoListId(todoListId);
+            try
+            {
+                return _todoTaskRepository.GetByTodoListId(todoListId);
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+                return new List<TodoTask>();
+            }
         }
 
         public TodoTask GetById(int id)
         {
-            return _todoTaskRepository.GetById(id);
+            try
+            {
+                return _todoTaskRepository.GetById(id);
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+                return null;
+            }
         }
 
         public TodoTask Create(TodoTask entity)
         {
-            var id = _todoTaskRepository.Create(entity);
-            _unitOfWork.Commit();
-            return id != 0 ? _todoTaskRepository.GetById(id) : null;
+            try
+            {
+                var id = _todoTaskRepository.Create(entity);
+                _unitOfWork.Commit();
+                return id != 0 ? _todoTaskRepository.GetById(id) : null;
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+                return null;
+            }
         }
 
         public void Update(TodoTask entity)
         {
-            _todoTaskRepository.Update(entity);
-            _unitOfWork.Commit();
+            try
+            {
+                _todoTaskRepository.Update(entity);
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+            }
         }
 
         public void UpdatePriority(IEnumerable<TodoTask> list)
         {
-            foreach (var task in list)
+            try
             {
-                _todoTaskRepository.Update(task);
+                foreach (var task in list)
+                {
+                    _todoTaskRepository.Update(task);
+                }
+                _unitOfWork.Commit();
             }
-            _unitOfWork.Commit();
+            catch (Exception e)
+            {
+                Log.LogError(e);
+            }
         }
 
         public void Delete(TodoTask entity)
         {
-            _todoTaskRepository.Delete(entity);
-            _unitOfWork.Commit();
+            try
+            {
+                _todoTaskRepository.Delete(entity);
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+            }
         }
     }
 }

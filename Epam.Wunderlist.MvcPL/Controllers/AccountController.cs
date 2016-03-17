@@ -7,6 +7,7 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using Epam.Wunderlist.DataAccess.Entities;
 using Epam.Wunderlist.DataServices.UserProfileServices;
+using Epam.Wunderlist.Logger;
 using Epam.Wunderlist.MvcPL.Convertor;
 using Epam.Wunderlist.MvcPL.Identity;
 using Epam.Wunderlist.MvcPL.Models;
@@ -56,7 +57,6 @@ namespace Epam.Wunderlist.MvcPL.Controllers
                 }
                 ModelState.AddModelError("", result.Errors.ToString());
             }
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
@@ -66,8 +66,7 @@ namespace Epam.Wunderlist.MvcPL.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-        //
-        // POST: /Account/Login
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -78,10 +77,7 @@ namespace Epam.Wunderlist.MvcPL.Controllers
                 var user = await UserProfileManager.FindAsync(model.Email, model.Password);
                 if (user != null)
                 {
-                    //user.Avatar.Save(Server.MapPath("~/Content/photo.png"));
-                    //user.Avatar = Image.FromFile(Server.MapPath("~/Content/photo.png"));
                     await SignInAsync(user, true);
-                    //return RedirectToAction("wunderlist", "Wunderlist");
                     return RedirectToLocal(returnUrl);
                 }
                 ModelState.AddModelError("", "Invalid email or password.");
@@ -100,9 +96,16 @@ namespace Epam.Wunderlist.MvcPL.Controllers
 
         private async Task SignInAsync(UserProfile user, bool isPersistent)
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-            var identity = await UserProfileManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
-            AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
+            try
+            {
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+                var identity = await UserProfileManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+                AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+            }
         }
 
         [HttpPost]
@@ -112,15 +115,21 @@ namespace Epam.Wunderlist.MvcPL.Controllers
             var existedUserProfile = _userProfileService.GetByEmail(User.Identity.GetUserEmail());
             if (existedUserProfile != null)
             {
-                Image avatar = ResizeImage(userProfile.Avatar);
-                existedUserProfile.UserName = userProfile.UserName;
-                existedUserProfile.Avatar = avatar.ImageToByteArray();
-                _userProfileService.Update(existedUserProfile);
-                User.UpdateClaim(ClaimsIdentity.DefaultNameClaimType, userProfile.UserName, ClaimValueTypes.String);
-                //User.UpdateClaim("Avatar", Convert.ToBase64String(avatar.ImageToByteArray()), ClaimValueTypes.String);
-                var identity = User.Identity as ClaimsIdentity;
-                AuthenticationManager.SignOut();
-                AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = true }, identity);
+                try
+                {
+                    Image avatar = ResizeImage(userProfile.Avatar);
+                    existedUserProfile.UserName = userProfile.UserName;
+                    existedUserProfile.Avatar = avatar.ImageToByteArray();
+                    _userProfileService.Update(existedUserProfile);
+                    User.UpdateClaim(ClaimsIdentity.DefaultNameClaimType, userProfile.UserName, ClaimValueTypes.String);
+                    var identity = User.Identity as ClaimsIdentity;
+                    AuthenticationManager.SignOut();
+                    AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = true }, identity);
+                }
+                catch (Exception e)
+                {
+                    Log.LogError(e);
+                }
             }
         }
 
@@ -134,12 +143,6 @@ namespace Epam.Wunderlist.MvcPL.Controllers
             return RedirectToAction("Index", "Home");
 
         }
-
-        //[ChildActionOnly]
-        //public ActionResult LoginPartial()
-        //{
-        //    return PartialView("_LoginPartial");
-        //}
 
         private Image ResizeImage(HttpPostedFileBase avatar)
         {

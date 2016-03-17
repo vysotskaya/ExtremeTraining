@@ -2,7 +2,6 @@
     .controller('wunderlistAppController', function($state, todoListService, todoTaskService, userProfileService, $scope) {
 
         $scope.$on('handleUserProfileChange', function() {
-            debugger;
             var userProfile = userProfileService.getUserProfileData();
             $scope.imageSrc = userProfile.Avatar;
             $scope.userName = userProfile.UserName;

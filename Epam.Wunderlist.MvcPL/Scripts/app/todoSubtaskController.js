@@ -11,7 +11,6 @@
         }
 
         $scope.getSubtasks();
-
         $scope.selectedTaskId = $stateParams.idTask;
 
         $scope.addSubtask = function () {
@@ -58,7 +57,5 @@
             else
                 subtask.TaskStateRefId = 1;
             todoSubtaskService.updateTodoSubtask(subtask);
-        
         };
-
     });

@@ -7,6 +7,7 @@ using Epam.Wunderlist.MvcPL.Identity;
 
 namespace Epam.Wunderlist.MvcPL.Controllers
 {
+    [Authorize]
     public class TodoListController : ApiController
     {
         private readonly ITodoListService _todoListService;

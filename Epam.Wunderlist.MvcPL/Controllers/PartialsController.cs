@@ -2,6 +2,7 @@
 
 namespace Epam.Wunderlist.MvcPL.Controllers
 {
+    [Authorize]
     public class PartialsController : Controller
     {
         public ActionResult TodoTasks()

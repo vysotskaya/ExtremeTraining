@@ -2,13 +2,12 @@
 using System.Web.Http;
 using Epam.Wunderlist.DataAccess.Entities;
 using Epam.Wunderlist.DataServices.TodoSubtaskServices;
-using Ninject;
 
 namespace Epam.Wunderlist.MvcPL.Controllers
 {
+    [Authorize]
     public class TodoSubtaskController : ApiController
     {
-        [Inject]
         private readonly ITodoSubtaskService _todoSubtaskService;
 
         public TodoSubtaskController(ITodoSubtaskService todoSubtaskService)

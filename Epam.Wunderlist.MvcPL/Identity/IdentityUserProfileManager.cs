@@ -16,12 +16,6 @@ namespace Epam.Wunderlist.MvcPL.Identity
         {
         }
 
-        //public static IdentityUserProfileManager Create()
-        //{
-        //    IdentityUserProfileManager manager = new IdentityUserProfileManager();
-        //    return manager;
-        //}
-
         public override Task<UserProfile> FindAsync(string userName, string password)
         {
             Task<UserProfile> taskInvoke = Task<UserProfile>.Factory.StartNew(() =>
@@ -43,7 +37,6 @@ namespace Epam.Wunderlist.MvcPL.Identity
             claim.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString(), ClaimValueTypes.String));
             claim.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserName, ClaimValueTypes.String));
             claim.AddClaim(new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.String));
-            //claim.AddClaim(new Claim("Avatar", Convert.ToBase64String(user.Avatar.ImageToByteArray()), ClaimValueTypes.String));
             claim.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider",
                 "OWIN Provider", ClaimValueTypes.String));
             return Task.FromResult(claim);

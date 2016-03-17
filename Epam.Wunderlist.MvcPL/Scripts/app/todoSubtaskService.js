@@ -1,7 +1,6 @@
 ﻿angular.module('wunderlistApp')
     .factory('todoSubtaskService', function ($resource, WUNDERLIST_CONSTANTS) {
         function updateTodoSubtask(todoSubtask) {
-            debugger;
             var resource = $resource(WUNDERLIST_CONSTANTS.URL + '/api/todosubtask/' + todoSubtask.Id, {},
             {
                 update: { method: 'PUT' }

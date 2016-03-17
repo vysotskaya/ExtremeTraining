@@ -1,5 +1,7 @@
-﻿using Epam.Wunderlist.DataAccess.Entities;
+﻿using System;
+using Epam.Wunderlist.DataAccess.Entities;
 using Epam.Wunderlist.DataAccess.Interfaces.Repositories;
+using Epam.Wunderlist.Logger;
 
 namespace Epam.Wunderlist.DataServices.TaskStateServices
 {
@@ -16,19 +18,41 @@ namespace Epam.Wunderlist.DataServices.TaskStateServices
 
         public void Create(TaskState entity)
         {
-            _taskStateRepository.Create(entity);
-            _unitOfWork.Commit();
+            try
+            {
+                _taskStateRepository.Create(entity);
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+            }
         }
 
         public void Delete(TaskState entity)
         {
-            _taskStateRepository.Delete(entity);
-            _unitOfWork.Commit();
+            try
+            {
+                _taskStateRepository.Delete(entity);
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+            }
         }
 
         public TaskState GetById(int key)
         {
-            return _taskStateRepository.GetById(key);
+            try
+            {
+                return _taskStateRepository.GetById(key);
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e);
+                return null;
+            }
         }
     }
 }
